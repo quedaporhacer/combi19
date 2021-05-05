@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
+
+
+/** 
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true) 
+ * 
  */
 class User
 {
@@ -46,6 +52,19 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $contrasena;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\LessThan("-18 years",message = "Debe ser mayor de edad para poder registrarse")
+     */
+
+    private $nacimiento;
+
+    /**
+    * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+    */ 
+
+    private $deletedAt;
 
     public function getId(): ?int
     {
@@ -120,6 +139,30 @@ class User
     public function setContrasena(string $contrasena): self
     {
         $this->contrasena = $contrasena;
+
+        return $this;
+    }
+
+    public function getNacimiento(): ?\DateTimeInterface
+    {
+        return $this->nacimiento;
+    }
+
+    public function setNacimiento(\DateTimeInterface $nacimiento): self
+    {
+        $this->nacimiento = $nacimiento;
+
+        return $this;
+    }
+
+    public function getdeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setdeletedAt(\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }

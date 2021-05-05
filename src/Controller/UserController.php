@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/new", name="newuser")
      */
-    public function index(Request $request): Response
+    public function register(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -27,13 +27,71 @@ class UserController extends AbstractController
             if(!$otherUser){ 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($form->getData());
-                $entityManager->flush();  
-                $this->addFlash('success', 'Se registro correctamente!');
+                $entityManager->flush();
+                //return $this->redirectToRoute('login');
+               
+            } else {
+                $this->addFlash('success', 'El email ya se encuentra registrado!');
             }
         }
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/register.html.twig', [
             'controller_name' => 'UserController',
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/user", name="users")
+     */
+    public function index(Request $request): Response
+    {   
+        $users= $this->getDoctrine()->getRepository(User::class)->findAll();
+        return $this->render('user/index.html.twig', ['users' => $users]);
+      
+    }
+
+    /**
+     * @Route("/user/edit/{id}", name="edit_user")
+     * Method({"GET", "POST"})
+     */
+    public function edit(Request $request, $id) {
+
+        $user = new User();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+  
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+  
+        if($form->isSubmitted() && $form->isValid()) {
+  
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+  
+          return $this->redirectToRoute('users');
+        }
+  
+        return $this->render('user/edit.html.twig', array(
+          'form' => $form->createView()
+        ));
+      }
+
+
+      /**
+     * @Route("/user/delete/{id}", name="delete_user")
+     * Method({"GET", "POST"})
+     */
+    public function delete(Request $request, $id) {
+
+        $user = new User();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+  
+        return $this->redirectToRoute('users');
+        
+  
+      }
+
 }
