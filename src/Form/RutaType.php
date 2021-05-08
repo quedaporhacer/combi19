@@ -6,6 +6,7 @@ use App\Entity\Ruta;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class RutaType extends AbstractType
 {
@@ -14,6 +15,7 @@ class RutaType extends AbstractType
         $builder
             ->add('origen')
             ->add('destino')
+            ->add('kilometros', IntegerType::class)
             ->add('descripcion')
         ;
     }

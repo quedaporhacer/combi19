@@ -5,6 +5,13 @@
 {% block body %}
     <h1>Edit Ruta</h1>
 
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
     {{ include('ruta/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('ruta_index') }}">back to list</a>

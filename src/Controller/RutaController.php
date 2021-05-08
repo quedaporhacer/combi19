@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ruta;
+use App\Entity\Viaje;
 use App\Form\RutaType;
 use App\Repository\RutaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +38,8 @@ class RutaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rutum);
             $entityManager->flush();
@@ -55,6 +58,7 @@ class RutaController extends AbstractController
      */
     public function show(Ruta $rutum): Response
     {
+        
         return $this->render('ruta/show.html.twig', [
             'rutum' => $rutum,
         ]);
@@ -69,9 +73,16 @@ class RutaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ruta_index');
+            $repository = $this->getDoctrine()->getRepository(Viaje::class);
+            $viaje= $repository->findOneBy(['ruta' =>  $rutum ]);
+            
+            if(!$viaje){
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('ruta_index');
+            }
+            $this->addFlash('failed', 'La ruta se encuentra en uso!');
+                
         }
 
         return $this->render('ruta/edit.html.twig', [
