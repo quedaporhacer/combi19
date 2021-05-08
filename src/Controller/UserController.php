@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Tarjeta;
+use App\Form\TarjetaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,9 @@ class UserController extends AbstractController
     public function register(Request $request): Response
     {
         $user = new User();
+        $tarjeta = new Tarjeta();
         $form = $this->createForm(UserType::class, $user);
+        $formTarjeta = $this->createForm(TarjetaType::class, $tarjeta);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -36,7 +40,8 @@ class UserController extends AbstractController
         }
         return $this->render('user/register.html.twig', [
             'controller_name' => 'UserController',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formTarjeta' => $formTarjeta->createView(),
         ]);
     }
 

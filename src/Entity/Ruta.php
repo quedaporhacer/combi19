@@ -29,6 +29,11 @@ class Ruta
      */
     private $destino;
 
+    /**
+     * @ORM\Column(type="string", length=1000)
+     */
+    private $descripcion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +59,18 @@ class Ruta
     public function setDestino(Lugar $destino): self
     {
         $this->destino = $destino;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

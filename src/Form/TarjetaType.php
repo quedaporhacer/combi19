@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Tarjeta;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+class TarjetaType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('numero')
+            ->add('codigo')
+            ->add('vencimiento', DateType::class, [
+                'widget' => 'single_text', 
+                ])
+            //->add('propietario')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Tarjeta::class,
+        ]);
+    }
+}

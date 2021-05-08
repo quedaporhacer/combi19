@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Lugar{% endblock %}
+
+{% block body %}
+    <h1>Crear nuevo Lugar</h1>
+
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+    {{ include('lugar/_form.html.twig') }}
+
+    <a href="{{ path('lugar_index') }}">volver al listado</a>
+{% endblock %}
