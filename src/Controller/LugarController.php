@@ -87,8 +87,8 @@ class LugarController extends AbstractController
             if (!$otherLugar){
 
                 $repository = $this->getDoctrine()->getRepository(Ruta::class);
-                $origen= $repository->findOneBy(['origen_id' =>  $lugar ]);
-                $destino = $repository->findOneBy(['destino_id' =>  $lugar ]);
+                $origen= $repository->findOneBy(['origen' =>  $lugar ]);
+                $destino = $repository->findOneBy(['destino' =>  $lugar ]);
 
                 if (!($origen || $destino)) {
 
@@ -116,13 +116,22 @@ class LugarController extends AbstractController
      * @Route("/{id}", name="lugar_delete", methods={"POST"})
      */
     public function delete(Request $request, Lugar $lugar): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$lugar->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($lugar);
-            $entityManager->flush();
-        }
+    {   
+        $repository = $this->getDoctrine()->getRepository(Ruta::class);
+        $origen= $repository->findOneBy(['origen' =>  $lugar ]);
+        $destino = $repository->findOneBy(['destino' =>  $lugar ]);
 
+        if (!($origen || $destino)) {
+
+            if ($this->isCsrfTokenValid('delete'.$lugar->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($lugar);
+                $entityManager->flush();
+                
+            }
+            $this->addFlash('failed', 'Ese lugar se encuentra en uso!');
+        }
+        
         return $this->redirectToRoute('lugar_index');
     }
 }
