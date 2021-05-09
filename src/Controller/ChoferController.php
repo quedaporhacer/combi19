@@ -35,11 +35,20 @@ class ChoferController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($chofer);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('chofer_index');
+            $email= $form->getData()->getEmail();
+            $repository=$this->getDoctrine()->getRepository(Chofer::class);
+            $otherChofer= $repository->findOneBy(['email' =>  $email ]);
+
+            if(!$otherChofer){
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($chofer);
+                $entityManager->flush();
+                return $this->redirectToRoute('chofer_index');
+            }
+            $this->addFlash('failed', 'El email ya se encuentra registrado!');
+           
         }
 
         return $this->render('chofer/new.html.twig', [

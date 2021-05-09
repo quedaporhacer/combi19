@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ChoferRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ChoferRepository::class)
+ * @UniqueEntity("email",message="Este email ya esta siendo utilizado")
  */
 class Chofer
 {
@@ -14,12 +17,14 @@ class Chofer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @ORM\OneToMany(targetEntity=Combi::class, mappedBy="chofer",cascade={"persist"})
+     * @Assert\Email
      */
     private $email;
 
@@ -35,6 +40,7 @@ class Chofer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=6,minMessage = "La contraseña debe ser de al menos 6 caracteres")
      */
     private $contrasena;
 

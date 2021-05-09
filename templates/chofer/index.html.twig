@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chofer index{% endblock %}
+{% block title %}Choferes{% endblock %}
 
 {% block body %}
-    <h1>Chofer index</h1>
+    <h1>Choferes</h1>
 
     <table class="table">
         <thead>
@@ -12,9 +12,8 @@
                 <th>Email</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Contrasena</th>
                 <th>Contacto</th>
-                <th>actions</th>
+                <th>acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -24,20 +23,19 @@
                 <td>{{ chofer.email }}</td>
                 <td>{{ chofer.nombre }}</td>
                 <td>{{ chofer.apellido }}</td>
-                <td>{{ chofer.contrasena }}</td>
                 <td>{{ chofer.contacto }}</td>
                 <td>
-                    <a href="{{ path('chofer_show', {'id': chofer.id}) }}">show</a>
-                    <a href="{{ path('chofer_edit', {'id': chofer.id}) }}">edit</a>
+                    {{ include('chofer/_delete_form.html.twig') }}
+                    <a class="btn btn-secondary"href="{{ path('chofer_edit', {'id': chofer.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">no hay choferes disponibles</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('chofer_new') }}">Create new</a>
+    <a href="{{ path('chofer_new') }}">Crear nuevo</a>
 {% endblock %}
