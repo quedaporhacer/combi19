@@ -101,11 +101,18 @@ class CombiController extends AbstractController
      */
     public function delete(Request $request, Combi $combi): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$combi->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($combi);
-            $entityManager->flush();
+        
+        $repository = $this->getDoctrine()->getRepository(Viaje::class);
+        $viaje= $repository->findOneBy(['combi' =>  $combi ]);    
+        if(!$viaje){
+            if ($this->isCsrfTokenValid('delete'.$combi->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($combi);
+                $entityManager->flush();
+            }
         }
+        
+        
 
         return $this->redirectToRoute('combi_index');
     }

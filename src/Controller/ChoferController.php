@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chofer;
+use App\Entity\Combi;
 use App\Form\ChoferType;
 use App\Repository\ChoferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,6 +74,7 @@ class ChoferController extends AbstractController
     public function edit(Request $request, Chofer $chofer): Response
     {
         $form = $this->createForm(ChoferType::class, $chofer);
+        $form->remove('nombre')->remove('apellido');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,12 +93,21 @@ class ChoferController extends AbstractController
      * @Route("/{id}", name="chofer_delete", methods={"POST"})
      */
     public function delete(Request $request, Chofer $chofer): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$chofer->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($chofer);
-            $entityManager->flush();
+    {   
+        $repository = $this->getDoctrine()->getRepository(Combi::class);
+        $combi= $repository->findOneBy(['chofer' =>  $chofer ]);
+
+        if(!$combi){
+
+          if ($this->isCsrfTokenValid('delete'.$chofer->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($chofer);
+                $entityManager->flush();
+            }  
+
         }
+
+        
 
         return $this->redirectToRoute('chofer_index');
     }

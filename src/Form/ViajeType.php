@@ -2,30 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Chofer;
+use App\Entity\Viaje;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateAndTimeType;
 
-class ChoferType extends AbstractType
+class ViajeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('nombre')
-            ->add('apellido')
-            ->add('contrasena', PasswordType::class)
-            ->add('contacto')
+            ->add('salida')
+            ->add('llegada')
+            ->add('combi')
+            ->add('ruta')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Chofer::class,
+            'data_class' => Viaje::class,
         ]);
     }
 }

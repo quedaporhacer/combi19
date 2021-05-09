@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Viaje index{% endblock %}
+
+{% block body %}
+    <h1>Viaje index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ruta</th>
+                <th>Salida</th>
+                <th>Llegada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for viaje in viajes %}
+            <tr>
+                <td>{{ viaje.id }}</td>
+                <td>{{ viaje.ruta }}</td>
+                <td>{{ viaje.salida ? viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ viaje.llegada ? viaje.llegada|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('viaje_show', {'id': viaje.id}) }}">show</a>
+                    <a href="{{ path('viaje_edit', {'id': viaje.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('viaje_new') }}">Create new</a>
+{% endblock %}

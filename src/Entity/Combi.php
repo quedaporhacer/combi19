@@ -110,4 +110,9 @@ class Combi
 
         return $this;
     }
+
+    public function __toString(): ?string
+    {
+        return $this->patente;
+    }
 }
