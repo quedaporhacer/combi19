@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TarjetaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TarjetaRepository::class)
@@ -19,21 +20,36 @@ class Tarjeta
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *      min = 16,
+     *      max = 16,
+     *      minMessage = "el numero ingresado no es valido",
+     *      maxMessage = "el numero ingresado no es valido",
+     *      exactMessage = "el numero ingresado debe ser de 16 caracteres"
+     * 
+     * )
      */
     private $numero;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 3,
+     *      minMessage = "el numero ingresado no es valido",
+     *      maxMessage = "el numero ingresado no es valido",
+     *      exactMessage = "el numero ingresado debe ser de 3 caracteres")
      */
     private $codigo;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan("today", message="la tarjeta esta vencida")
      */
     private $vencimiento;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="id", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $propietario;

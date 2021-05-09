@@ -111,7 +111,7 @@ class CombiController extends AbstractController
                 $entityManager->flush();
             }
         }
-        
+        $this->addFlash('failed', 'La combi se encuentra en uso');
         
 
         return $this->redirectToRoute('combi_index');

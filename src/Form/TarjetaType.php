@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class TarjetaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -16,9 +16,10 @@ class TarjetaType extends AbstractType
             ->add('numero')
             ->add('codigo')
             ->add('vencimiento', DateType::class, [
-                'widget' => 'single_text', 
+                'widget' => 'single_text',
+                //'format' => 'MM-yyyy',
                 ])
-            //->add('propietario')
+            ->add('aceptar', SubmitType::class)
         ;
     }
 

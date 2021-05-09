@@ -22,18 +22,20 @@ class UserController extends AbstractController
         $user = new User();
         $tarjeta = new Tarjeta();
         $form = $this->createForm(UserType::class, $user);
-        $formTarjeta = $this->createForm(TarjetaType::class, $tarjeta);
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $email= $form->getData()->getEmail();
             $repository=$this->getDoctrine()->getRepository(User::class);
             $otherUser= $repository->findOneBy(['email' =>  $email ]);
-            if(!$otherUser){ 
+            if(!$otherUser){
+                
+                $user->setMembresia(false);    
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($form->getData());
+                $entityManager->persist($user);
                 $entityManager->flush();
-                //return $this->redirectToRoute('login');
+                return $this->redirectToRoute('gold');
                
             } else {
                 $this->addFlash('success', 'El email ya se encuentra registrado!');
@@ -42,10 +44,43 @@ class UserController extends AbstractController
         return $this->render('user/register.html.twig', [
             'controller_name' => 'UserController',
             'form' => $form->createView(),
-            'formTarjeta' => $formTarjeta->createView(),
+            
         ]);
     }
 
+    /**
+     * @Route("/user/new/gold", name="gold")
+     */
+    public function gold(Request $request): Response
+    {
+        $tarjeta = new Tarjeta();
+        $form = $this->createForm(TarjetaType::class, $tarjeta);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $tarjeta1= $form->getData()->getNumero();
+            $repository=$this->getDoctrine()->getRepository(Tarjeta::class);
+            $othertarjeta= $repository->findOneBy(['numero' =>  $tarjeta1 ]);
+
+            if(!$othertarjeta){
+                
+                $tarjeta->setPropietario($this->getDoctrine()->getRepository(User::class)->find(13));
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($tarjeta);
+                $entityManager->flush();
+
+               
+            } else {
+                $this->addFlash('success', 'La tarjeta ya se encuentra registrada!');
+            }
+        }
+        return $this->render('user/membresia.html.twig', [
+            'controller_name' => 'UserController',
+            'form' => $form->createView(),
+            
+        ]);
+    }
     /**
      * @Route("/user", name="users")
      */

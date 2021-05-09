@@ -24,7 +24,7 @@ class UserType extends AbstractType
                 'widget' => 'single_text', 
                 'years' => range(1900,2003),
                 ])
-            ->add('membresia')
+           // ->add('membresia')
             ->add('contrasena', PasswordType::class)
             ->add('registrase', SubmitType::class)
             
