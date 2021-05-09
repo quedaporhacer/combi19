@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\InsumoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=InsumoRepository::class)
@@ -28,11 +29,13 @@ class Insumo
     private $tipo;
 
     /**
+     * @Assert\Positive(message="El valor ingresado no es valido")
      * @ORM\Column(type="float")
      */
     private $precio;
 
     /**
+     * @Assert\Positive(message="El valor ingresado no es valido")
      * @ORM\Column(type="integer")
      */
     private $stock;

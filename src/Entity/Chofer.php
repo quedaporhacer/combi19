@@ -19,6 +19,7 @@ class Chofer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Combi::class, mappedBy="chofer",cascade={"persist"})
      */
     private $email;
 
@@ -83,14 +84,14 @@ class Chofer
         return $this;
     }
 
-    public function getContrase�a(): ?string
+    public function getContrasena(): ?string
     {
-        return $this->contrase�a;
+        return $this->contrasena;
     }
 
-    public function setContrase�a(string $contrase�a): self
+    public function setContrasena(string $contrasena): self
     {
-        $this->contrase�a = $contrase�a;
+        $this->contrasena = $contrasena;
 
         return $this;
     }
@@ -106,4 +107,9 @@ class Chofer
 
         return $this;
     }
+
+    public function __toString(): ?string 
+    {
+        return $this->nombre." ".$this->apellido;
+    } 
 }

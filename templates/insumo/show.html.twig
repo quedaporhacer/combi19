@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Insumo{% endblock %}
+
+{% block body %}
+    <h1>Insumo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ insumo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ insumo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ insumo.tipo }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ insumo.precio }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ insumo.stock }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('insumo_index') }}">back to list</a>
+
+    <a href="{{ path('insumo_edit', {'id': insumo.id}) }}">edit</a>
+
+    {{ include('insumo/_delete_form.html.twig') }}
+{% endblock %}

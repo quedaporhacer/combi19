@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Combi{% endblock %}
+
+{% block body %}
+    <h1>Editar Combi</h1>
+
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+    {{ include('combi/_form.html.twig') }}
+
+
+    <a href="{{ path('combi_index') }}">Volver al listado</a>
+{% endblock %}

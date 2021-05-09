@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Combi index{% endblock %}
+
+{% block body %}
+    <h1>Combi index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Patente</th>
+                <th>Modelo</th>
+                <th>Capacidad</th>
+                <th>Calidad</th>
+                 <th>chofer</th>
+                <th>acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for combi in combis %}
+            <tr>
+                <td>{{ combi.id }}</td>
+                <td>{{ combi.patente }}</td>
+                <td>{{ combi.modelo }}</td>
+                <td>{{ combi.capacidad }}</td>
+                <td>{{ combi.calidad }}</td>
+                 <td>{{ combi.chofer }}</td>
+                <td>
+                    {{ include('combi/_delete_form.html.twig') }}
+                    <a class="btn btn-secondary" href="{{ path('combi_edit', {'id': combi.id}) }}">editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no hay combis disponibles</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('combi_new') }}">Create new</a>
+{% endblock %}

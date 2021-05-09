@@ -18,13 +18,13 @@ class Ruta
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Lugar::class, cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $origen;
 
     /**
-     * @ORM\OneToOne(targetEntity=Lugar::class, cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $destino;
@@ -33,11 +33,6 @@ class Ruta
      * @ORM\Column(type="string", length=1000)
      */
     private $descripcion;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $kilometros;
 
     public function getId(): ?int
     {
@@ -76,18 +71,6 @@ class Ruta
     public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    public function getKilometros(): ?int
-    {
-        return $this->kilometros;
-    }
-
-    public function setKilometros(int $kilometros): self
-    {
-        $this->kilometros = $kilometros;
 
         return $this;
     }

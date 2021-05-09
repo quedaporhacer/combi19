@@ -96,12 +96,21 @@ class RutaController extends AbstractController
      */
     public function delete(Request $request, Ruta $rutum): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$rutum->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($rutum);
-            $entityManager->flush();
-        }
+        $repository = $this->getDoctrine()->getRepository(Viaje::class);
+        $viaje= $repository->findOneBy(['ruta' =>  $rutum ]);
 
+        if(!$viaje){
+
+            if ($this->isCsrfTokenValid('delete'.$rutum->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($rutum);
+                $entityManager->flush();
+            }
+          
+        }
         return $this->redirectToRoute('ruta_index');
+        
+
+        
     }
 }

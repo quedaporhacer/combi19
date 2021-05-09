@@ -91,4 +91,9 @@ class Viaje
 
         return $this;
     }
+
+    public function finished(): ?bool   
+    {
+        return $this->llegada < new \DateTime("now");
+    }
 }

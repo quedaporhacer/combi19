@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Combi{% endblock %}
+
+{% block body %}
+    <h1>Combi</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ combi.id }}</td>
+            </tr>
+            <tr>
+                <th>Patente</th>
+                <td>{{ combi.patente }}</td>
+            </tr>
+            <tr>
+                <th>Modelo</th>
+                <td>{{ combi.modelo }}</td>
+            </tr>
+            <tr>
+                <th>Capacidad</th>
+                <td>{{ combi.capacidad }}</td>
+            </tr>
+            <tr>
+                <th>Calidad</th>
+                <td>{{ combi.calidad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('combi_index') }}">back to list</a>
+
+    <a href="{{ path('combi_edit', {'id': combi.id}) }}">edit</a>
+
+    {{ include('combi/_delete_form.html.twig') }}
+{% endblock %}

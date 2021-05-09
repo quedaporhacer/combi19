@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Chofer{% endblock %}
+
+{% block body %}
+    <h1>Edit Chofer</h1>
+
+    {{ include('chofer/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('chofer_index') }}">back to list</a>
+
+    {{ include('chofer/_delete_form.html.twig') }}
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CombiRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CombiRepository::class)
@@ -28,6 +29,7 @@ class Combi
     private $modelo;
 
     /**
+     * @Assert\Positive(message="El valor ingresado no es valido")
      * @ORM\Column(type="integer")
      */
     private $capacidad;
@@ -38,7 +40,8 @@ class Combi
     private $calidad;
 
     /**
-     * @ORM\OneToOne(targetEntity=Chofer::class, cascade={"persist", "remove"})
+     * 
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chofer", inversedBy="id")
      * @ORM\JoinColumn(nullable=false)
      */
     private $chofer;

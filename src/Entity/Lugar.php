@@ -19,6 +19,8 @@ class Lugar
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="App\Entity\Ruta", mappedBy="origen")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ruta", mappedBy="destino")
      */
     private $nombre;
 
