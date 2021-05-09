@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Combi</th>
                 <th>Ruta</th>
                 <th>Salida</th>
                 <th>Llegada</th>
@@ -19,6 +20,7 @@
         {% for viaje in viajes %}
             <tr>
                 <td>{{ viaje.id }}</td>
+                <td>{{ viaje.combi }}</td>
                 <td>{{ viaje.ruta }}</td>
                 <td>{{ viaje.salida ? viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ viaje.llegada ? viaje.llegada|date('Y-m-d H:i:s') : '' }}</td>

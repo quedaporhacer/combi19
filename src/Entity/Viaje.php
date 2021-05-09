@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ViajeRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ViajeRepository::class)
  */
@@ -19,22 +19,24 @@ class Viaje
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today",message="la fecha ingresada no es valida")
      */
     private $salida;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today",message="la fecha ingresada no es valida")
      */
     private $llegada;
 
     /**
-     * @ORM\OneToOne(targetEntity=Combi::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Combi::class,inversedBy="patente", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $combi;
 
     /**
-     * @ORM\OneToOne(targetEntity=Ruta::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Ruta::class,inversedBy="id", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $ruta;
@@ -95,5 +97,15 @@ class Viaje
     public function finished(): ?bool   
     {
         return $this->llegada < new \DateTime("now");
+    }
+
+    public function disponible(): ?bool
+    {
+        return false;
+    }
+
+    public function enCurso(): ?bool
+    {
+        return false;
     }
 }

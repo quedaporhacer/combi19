@@ -20,6 +20,7 @@ class Combi
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="App\Entity\Chofer", mappedBy="combi")
      */
     private $patente;
 
@@ -115,4 +116,5 @@ class Combi
     {
         return $this->patente;
     }
+
 }

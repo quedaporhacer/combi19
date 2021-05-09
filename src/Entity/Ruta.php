@@ -14,6 +14,7 @@ class Ruta
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Chofer", mappedBy="ruta")
      */
     private $id;
 
@@ -33,6 +34,11 @@ class Ruta
      * @ORM\Column(type="string", length=1000)
      */
     private $descripcion;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $kilometros;
 
     public function getId(): ?int
     {
@@ -78,5 +84,17 @@ class Ruta
     public function __toString (): ?string
     {
         return $this->origen." - ".$this->destino;
+    }
+
+    public function getKilometros(): ?int
+    {
+        return $this->kilometros;
+    }
+
+    public function setKilometros(int $kilometros): self
+    {
+        $this->kilometros = $kilometros;
+
+        return $this;
     }
 }

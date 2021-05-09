@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Viaje{% endblock %}
+{% block title %}Nuevo Viaje{% endblock %}
 
 {% block body %}
-    <h1>Create new Viaje</h1>
+    <h1>Crear nuevo Viaje</h1>
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
 
     {{ include('viaje/_form.html.twig') }}
 
-    <a href="{{ path('viaje_index') }}">back to list</a>
+    <a href="{{ path('viaje_index') }}">volver a la lista</a>
 {% endblock %}
