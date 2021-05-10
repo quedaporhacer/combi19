@@ -2,8 +2,7 @@ security:
     encoders:
         App\Entity\Pasajero:
             algorithm: auto
-        App\Entity\Administrador:
-            algorithm: auto
+        
 
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -11,7 +10,7 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\Administrador
+                class: App\Entity\Pasajero
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
