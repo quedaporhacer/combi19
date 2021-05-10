@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pasajeros{% endblock %}
+
+{% block body %}
+    <h1>Pasajeros</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Nacimiento</th>
+                <th>Plan</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pasajero in pasajeros %}
+            <tr>
+                <td>{{ pasajero.id }}</td>
+                <td>{{ pasajero.email }}</td>
+                {#<td>{{ pasajero.roles ? pasajero.roles|json_encode : '' }}</td>#}
+                <td>{{ pasajero.nombre }}</td>
+                <td>{{ pasajero.apellido }}</td>
+                <td>{{ pasajero.dni }}</td>
+                <td>{{ pasajero.nacimiento ? pasajero.nacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ pasajero.plan ? 'Si' : 'No' }}</td>
+                <td>
+                      {{ include('pasajero_crud/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no hay pasajeros registrados</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

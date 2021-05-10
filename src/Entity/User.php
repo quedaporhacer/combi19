@@ -20,7 +20,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity=Tarjeta::class, mappedBy="propietario", cascade={"persist"})
+     * 
      */
     private $id;
 

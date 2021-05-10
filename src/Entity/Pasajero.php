@@ -2,19 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\AdministradorRepository;
+use App\Repository\PasajeroRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=AdministradorRepository::class)
+ * @ORM\Entity(repositoryClass=PasajeroRepository::class)
  */
-class Administrador implements UserInterface
+class Pasajero implements UserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=Tarjeta::class, mappedBy="propietario", cascade={"persist"})
      */
     private $id;
 
@@ -31,6 +33,12 @@ class Administrador implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "La contraseña debe tener al menos 6 caracteres",
+     *     
+     * 
+     * )
      */
     private $password;
 
@@ -43,6 +51,22 @@ class Administrador implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $apellido;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dni;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\LessThan("-18 years",message = "Debe ser mayor de edad para poder registrarse")
+     */
+    private $nacimiento;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $plan;
 
     public function getId(): ?int
     {
@@ -145,6 +169,42 @@ class Administrador implements UserInterface
     public function setApellido(string $apellido): self
     {
         $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    public function getDni(): ?int
+    {
+        return $this->dni;
+    }
+
+    public function setDni(int $dni): self
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    public function getNacimiento(): ?\DateTimeInterface
+    {
+        return $this->nacimiento;
+    }
+
+    public function setNacimiento(\DateTimeInterface $nacimiento): self
+    {
+        $this->nacimiento = $nacimiento;
+
+        return $this;
+    }
+
+    public function getPlan(): ?bool
+    {
+        return $this->plan;
+    }
+
+    public function setPlan(bool $plan): self
+    {
+        $this->plan = $plan;
 
         return $this;
     }

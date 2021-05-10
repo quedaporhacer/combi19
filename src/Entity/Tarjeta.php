@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\TarjetaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=TarjetaRepository::class)
+ * @UniqueEntity("numero",message="Este numero ya esta siendo utilizado")
  */
 class Tarjeta
 {
@@ -19,7 +22,8 @@ class Tarjeta
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",unique=true, length=16)
+     * 
      * @Assert\Length(
      *      min = 16,
      *      max = 16,
@@ -27,7 +31,8 @@ class Tarjeta
      *      maxMessage = "el numero ingresado no es valido",
      *      exactMessage = "el numero ingresado debe ser de 16 caracteres"
      * 
-     * )
+     * )\Numero
+     * 
      */
     private $numero;
 
@@ -49,7 +54,7 @@ class Tarjeta
     private $vencimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="id", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Pasajero::class, inversedBy="id", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $propietario;
@@ -95,12 +100,12 @@ class Tarjeta
         return $this;
     }
 
-    public function getPropietario(): ?User
+    public function getPropietario(): ?Pasajero
     {
         return $this->propietario;
     }
 
-    public function setPropietario(User $propietario): self
+    public function setPropietario(Pasajero $propietario): self
     {
         $this->propietario = $propietario;
 

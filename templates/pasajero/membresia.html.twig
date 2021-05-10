@@ -8,22 +8,17 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-    {% for message in app.flashes('success') %}
-
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
 
 
+<div class="example-wrapper">
+
+    <h1> ¿Desea ser miembro GOLD? <h1>
+    <h4> Ingrese los datos de su tarjeta<h4> 
     {{form_start(form)}}
     {{form_widget(form)}}   
-    {{form_start(form)}}  
+    {{form_start(form)}}          
 
-    {#{form(formTarjeta)}#}        
-
-  
-    
-
+    <a class="btn btn-secondary" href="/login" class="btn "> Omitir </a>
+</div>
 
 {% endblock %}

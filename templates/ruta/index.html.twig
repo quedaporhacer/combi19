@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ruta index{% endblock %}
+{% block title %}Rutas{% endblock %}
 
 {% block body %}
-    <h1>Ruta index</h1>
+    <h1>Rutas</h1>
 
     <table class="table">
         <thead>
@@ -12,7 +12,8 @@
                 <th>Origen</th>
                 <th>Destino</th>
                 <th>Descripcion</th>
-                <th>actions</th>
+                <th>kilometros</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -22,9 +23,10 @@
                 <td>{{ rutum.origen }}</td>
                 <td>{{ rutum.destino }}</td>
                 <td>{{ rutum.descripcion }}</td>
+                <td>{{ rutum.kilometros }}</td>
                 <td>
-                    <a href="{{ path('ruta_show', {'id': rutum.id}) }}">show</a>
-                    <a href="{{ path('ruta_edit', {'id': rutum.id}) }}">edit</a>
+                     {{ include('ruta/_delete_form.html.twig') }}
+                    <a href="{{ path('ruta_edit', {'id': rutum.id}) }}">editar</a>
                 </td>
             </tr>
         {% else %}

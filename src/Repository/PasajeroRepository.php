@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Administrador;
+use App\Entity\Pasajero;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @method Administrador|null find($id, $lockMode = null, $lockVersion = null)
- * @method Administrador|null findOneBy(array $criteria, array $orderBy = null)
- * @method Administrador[]    findAll()
- * @method Administrador[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Pasajero|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Pasajero|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Pasajero[]    findAll()
+ * @method Pasajero[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AdministradorRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class PasajeroRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Administrador::class);
+        parent::__construct($registry, Pasajero::class);
     }
 
     /**
@@ -27,7 +27,7 @@ class AdministradorRepository extends ServiceEntityRepository implements Passwor
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
-        if (!$user instanceof Administrador) {
+        if (!$user instanceof Pasajero) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
@@ -37,15 +37,15 @@ class AdministradorRepository extends ServiceEntityRepository implements Passwor
     }
 
     // /**
-    //  * @return Administrador[] Returns an array of Administrador objects
+    //  * @return Pasajero[] Returns an array of Pasajero objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -54,10 +54,10 @@ class AdministradorRepository extends ServiceEntityRepository implements Passwor
     */
 
     /*
-    public function findOneBySomeField($value): ?Administrador
+    public function findOneBySomeField($value): ?Pasajero
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

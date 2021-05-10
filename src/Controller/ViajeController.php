@@ -48,9 +48,11 @@ class ViajeController extends AbstractController
                 if(!$viajeeach->disponible()){
                     $disponible=false;
                 }
-            } 
+            }
 
-            if(!$viajes || $disponible){
+
+        
+            if(!$viajes || $disponible ){
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($viaje);
                 $entityManager->flush();
@@ -85,11 +87,14 @@ class ViajeController extends AbstractController
         $form = $this->createForm(ViajeType::class, $viaje);
         $form->remove('salida')->remove('llegada')->remove('ruta');
         $form->handleRequest($request);
+        
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('viaje_index');
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('viaje_index');
+
         }
 
         return $this->render('viaje/edit.html.twig', [

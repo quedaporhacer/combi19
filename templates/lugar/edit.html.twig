@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Lugar{% endblock %}
+{% block title %}Editar Lugar{% endblock %}
 
 {% block body %}
-    <h1>Edit Lugar</h1>
+    <h1>Editar Lugar</h1>
      {% for message in app.flashes('failed') %}
 
             <div class="alert alert-danger">
@@ -12,7 +12,6 @@
         {% endfor %}
     {{ include('lugar/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('lugar_index') }}">back to list</a>
+    <a href="{{ path('lugar_index') }}">volver a la lista</a>
 
-    {{ include('lugar/_delete_form.html.twig') }}
 {% endblock %}

@@ -25,8 +25,8 @@
                 <td>{{ viaje.salida ? viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ viaje.llegada ? viaje.llegada|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('viaje_show', {'id': viaje.id}) }}">show</a>
-                    <a href="{{ path('viaje_edit', {'id': viaje.id}) }}">edit</a>
+                    {{ include('viaje/_delete_form.html.twig') }}
+                    <a href="{{ path('viaje_edit', {'id': viaje.id}) }}">editar</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('viaje_new') }}">Create new</a>
+    <a href="{{ path('viaje_new') }}">Crear nueva</a>
 {% endblock %}

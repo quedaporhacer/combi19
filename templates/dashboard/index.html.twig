@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}Administrador{% endblock %}
 
 {% block body %}
 <style>
@@ -9,26 +9,14 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hola Administrador {{ controller_name }}! ✅</h1>
+    <h1>Hola Administrador</h1>
 
-    Ver:
-    <ul>
+    Ingresar a la informacion de:
         <a class="" href="{{ path('chofer_index') }}">Choferes</a>
-    </ul>
-    <ul>
         <a class="" href="{{ path('combi_index') }}">Combi</a>
-    </ul>
-    <ul>
-       <a class="" href="{{ path('viaje_index') }}">Viaje</a>
-    </ul>
-    <ul>
+        <a class="" href="{{ path('viaje_index') }}">Viaje</a>
         <a class="" href="{{ path('insumo_index') }}">Insumo</a>
-    </ul>
-    <ul>
         <a class="" href="{{ path('lugar_index') }}">Lugar</a>
-    </ul>
-    <ul>
         <a class="" href="{{ path('ruta_index') }}">Ruta</a>
-    </ul>
 </div>
 {% endblock %}
