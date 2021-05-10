@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Combi index{% endblock %}
+{% block title %}Combis{% endblock %}
 
 {% block body %}
-    <h1>Combi index</h1>
+    <h1>Combis</h1>
 
     <table class="table">
         <thead>
@@ -14,7 +14,7 @@
                 <th>Capacidad</th>
                 <th>Calidad</th>
                  <th>chofer</th>
-                <th>acciones</th>
+                <th>Acciones</th>
                 
             </tr>
         </thead>
@@ -40,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('combi_new') }}">Create new</a>
+    <a href="{{ path('combi_new') }}">Crear nueva</a>
 {% endblock %}
