@@ -1,7 +1,8 @@
 security:
     encoders:
-        App\Entity\Pasajero:
+        App\Entity\User:
             algorithm: auto
+
         
 
 
@@ -10,8 +11,9 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\Pasajero
+                class: App\Entity\User
                 property: email
+        # used to reload user from session & other features (e.g. switch_user)
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
@@ -21,14 +23,11 @@ security:
             anonymous: true
             lazy: true
             provider: app_user_provider
-            #guard:
-            #    authenticators:
-            #        - App\Security\LoginCustomAuthenticator
             logout:
                 path: app_logout
             guard:
                 authenticators:
-                    - App\Security\PasajeroCustonAunthenticatorAuthenticator
+                    - App\Security\LoginCustomAuthenticator
                 # where to redirect after logout
                 # target: app_any_route
 
