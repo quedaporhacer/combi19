@@ -88,14 +88,18 @@ class ViajeController extends AbstractController
         $form->remove('salida')->remove('llegada')->remove('ruta');
         $form->handleRequest($request);
         
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        if(!$viaje->inicio()){
+            if ($form->isSubmitted() && $form->isValid() ) {
 
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('viaje_index');
 
         }
+        }else{
+            $this->addFlash('failed','el viaje ya inicio');
+        }
+
+        
 
         return $this->render('viaje/edit.html.twig', [
             'viaje' => $viaje,
@@ -111,7 +115,7 @@ class ViajeController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket= $repository->findOneBy(['viaje' =>  $viaje ]);
         
-        if(!$ticket){
+        if(!$ticket  && !$viaje->inicio()){
             if ($this->isCsrfTokenValid('delete'.$viaje->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($viaje);

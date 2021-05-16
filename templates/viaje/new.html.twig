@@ -3,6 +3,7 @@
 {% block title %}Nuevo Viaje{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Crear nuevo Viaje</h1>
     {% for message in app.flashes('failed') %}
 

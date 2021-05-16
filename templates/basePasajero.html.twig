@@ -21,7 +21,7 @@
         {% block body %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{path('dashboard')}}">
+    <a class="navbar-brand" href="{{path('home')}}">
         <img src="/images/logo_is.png" alt="" width="80" height="80" >
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,9 +30,9 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{path('dashboard')}}">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="{{path('home')}}">Inicio</a>
         </li>
-        {#<li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link disabled" href="#">Viajes</a>
         </li>
         <li class="nav-item">
@@ -49,7 +49,7 @@
         <li class="nav-item">
           <a class="nav-link " href="{{path('app_login')}}">Iniciar sesion</a>
         </li>
-      {% endif %}#}
+      {% endif %}
        </ul>
       
     </div>

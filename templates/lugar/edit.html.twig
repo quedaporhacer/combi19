@@ -3,6 +3,7 @@
 {% block title %}Editar Lugar{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Editar Lugar</h1>
      {% for message in app.flashes('failed') %}
 

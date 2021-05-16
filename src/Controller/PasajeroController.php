@@ -113,10 +113,14 @@ class PasajeroController extends AbstractController
      */
     public function delete(Request $request, Pasajero $pasajero): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pasajero->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($pasajero);
-            $entityManager->flush();
+    
+
+        if(!$pasajero->getPlan()){
+           if ($this->isCsrfTokenValid('delete'.$pasajero->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($pasajero);
+                $entityManager->flush();
+            }  
         }
 
         return $this->redirectToRoute('pasajero_index');

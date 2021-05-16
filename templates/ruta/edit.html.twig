@@ -3,6 +3,7 @@
 {% block title %}Editar Ruta{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Editar Ruta</h1>
 
     {% for message in app.flashes('failed') %}

@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\InsumoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=InsumoRepository::class)
+ * @UniqueEntity("nombre",message="El insumo ya esta registrado")
  */
 class Insumo
 {
@@ -19,7 +21,8 @@ class Insumo
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * 
      */
     private $nombre;
 

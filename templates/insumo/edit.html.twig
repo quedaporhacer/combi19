@@ -3,6 +3,7 @@
 {% block title %}Editar Insumo{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Editar Insumo</h1>
 
     {{ include('insumo/_form.html.twig', {'button_label': 'Guardar'}) }}

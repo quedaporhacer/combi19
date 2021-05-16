@@ -96,16 +96,20 @@ class Viaje
 
     public function finished(): ?bool   
     {
-        return $this->llegada < new \DateTime("now");
+        return  $this->salida < new \DateTime("now")  &&  $this->llegada > new \DateTime("now");
     }
 
     public function disponible(): ?bool
     {
-        return false;
+        return true;
     }
 
     public function enCurso(): ?bool
     {
         return false;
+    }
+
+    public function inicio(){
+        $this->salida < new \DateTime("now") ;
     }
 }

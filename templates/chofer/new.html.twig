@@ -3,6 +3,7 @@
 {% block title %}Nuevo Chofer{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Crear nuevo Chofer</h1>
     {% for message in app.flashes('failed') %}
 

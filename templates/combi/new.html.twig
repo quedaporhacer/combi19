@@ -3,6 +3,7 @@
 {% block title %} {% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Crear nueva Combi</h1>
     {% for message in app.flashes('failed') %}
 

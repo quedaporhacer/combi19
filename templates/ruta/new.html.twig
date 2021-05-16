@@ -3,6 +3,7 @@
 {% block title %}Nueva Ruta{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Crear nueva Ruta</h1>
 
     {{ include('ruta/_form.html.twig') }}

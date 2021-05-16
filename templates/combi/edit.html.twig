@@ -3,6 +3,7 @@
 {% block title %}Editar Combi{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Editar Combi</h1>
 
     {% for message in app.flashes('failed') %}

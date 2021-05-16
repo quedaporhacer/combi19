@@ -3,6 +3,7 @@
 {% block title %}Nuevo Insumo{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Crear nuevo Insumo</h1>
 
     {{ include('insumo/_form.html.twig') }}

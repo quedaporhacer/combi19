@@ -82,7 +82,7 @@ class CombiController extends AbstractController
             $repository = $this->getDoctrine()->getRepository(Viaje::class);
             $viaje= $repository->findOneBy(['combi' =>  $combi ]);
             
-            if(!$viaje || $viaje->finished()){
+            if(!$viaje || !$viaje->finished()){
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('combi_index');
             }
@@ -111,8 +111,7 @@ class CombiController extends AbstractController
                 $entityManager->flush();
             }
         }
-        $this->addFlash('failed', 'La combi se encuentra en uso');
-        
+       
 
         return $this->redirectToRoute('combi_index');
     }

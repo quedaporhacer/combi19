@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RutaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RutaRepository::class)
@@ -19,13 +20,13 @@ class Ruta
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $origen;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Lugar::class, inversedBy="nombre", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $destino;
@@ -37,6 +38,7 @@ class Ruta
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Los kilomtros ingresados no son validos")
      */
     private $kilometros;
 

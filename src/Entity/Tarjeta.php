@@ -22,7 +22,7 @@ class Tarjeta
     private $id;
 
     /**
-     * @ORM\Column(type="integer",unique=true, length=16)
+     * @ORM\Column(type="bigint",unique=true, length=16)
      * 
      * @Assert\Length(
      *      min = 16,

@@ -3,6 +3,7 @@
 {% block title %}Pasajeros{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Pasajeros</h1>
 
     <table class="table">
@@ -15,7 +16,7 @@
                 <th>Dni</th>
                 <th>Nacimiento</th>
                 <th>Plan</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +29,7 @@
                 <td>{{ pasajero.apellido }}</td>
                 <td>{{ pasajero.dni }}</td>
                 <td>{{ pasajero.nacimiento ? pasajero.nacimiento|date('Y-m-d') : '' }}</td>
-                <td>{{ pasajero.plan ? 'Si' : 'No' }}</td>
+                <td>{{ pasajero.plan ? 'Gold' : 'Basico' }}</td>
                 <td>
                       {{ include('pasajero_crud/_delete_form.html.twig') }}
                 </td>

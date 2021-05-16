@@ -3,6 +3,7 @@
 {% block title %}Editar Chofer{% endblock %}
 
 {% block body %}
+{{parent()}}
     <h1>Editar Chofer</h1>
 
     {{ include('chofer/_form.html.twig', {'button_label': 'Update'}) }}
