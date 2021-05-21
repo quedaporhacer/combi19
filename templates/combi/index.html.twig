@@ -27,7 +27,7 @@
                 <td>{{ combi.modelo }}</td>
                 <td>{{ combi.capacidad }}</td>
                 <td>{{ combi.calidad }}</td>
-                 <td>{{ combi.chofer }}</td>
+                {#<td>{{ combi.chofer }}</td>#}
                 <td>
                     {{ include('combi/_delete_form.html.twig') }}
                     <a class="btn btn-secondary" href="{{ path('combi_edit', {'id': combi.id}) }}">editar</a>
