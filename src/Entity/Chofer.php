@@ -53,7 +53,7 @@ class Chofer
 
     public function __toString(): ?string 
     {
-        return $this->contacto." ".$this->id;
+        return $this->user;
     }
 
     public function getUser(): ?User

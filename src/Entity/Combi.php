@@ -35,10 +35,6 @@ class Combi
      */
     private $capacidad;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $calidad;
 
     /**
      * 
@@ -46,6 +42,12 @@ class Combi
      * @ORM\JoinColumn(nullable=false)
      */
     private $chofer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Calidad::class, inversedBy="combis")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $calidad;
 
     public function getId(): ?int
     {
@@ -88,18 +90,6 @@ class Combi
         return $this;
     }
 
-    public function getCalidad(): ?string
-    {
-        return $this->calidad;
-    }
-
-    public function setCalidad(string $calidad): self
-    {
-        $this->calidad = $calidad;
-
-        return $this;
-    }
-
     public function getChofer(): ?Chofer
     {
         return $this->chofer;
@@ -115,6 +105,18 @@ class Combi
     public function __toString(): ?string
     {
         return $this->patente;
+    }
+
+    public function getCalidad(): ?Calidad
+    {
+        return $this->calidad;
+    }
+
+    public function setCalidad(?Calidad $calidad): self
+    {
+        $this->calidad = $calidad;
+
+        return $this;
     }
 
 }
