@@ -17,89 +17,26 @@ class Chofer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=Combi::class, mappedBy="chofer",cascade={"persist"})
      * 
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @ORM\OneToMany(targetEntity=Combi::class, mappedBy="chofer",cascade={"persist"})
-     * @Assert\Email
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nombre;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $apellido;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=6,minMessage = "La contraseña debe ser de al menos 6 caracteres")
-     */
-    private $contrasena;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $contacto;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getApellido(): ?string
-    {
-        return $this->apellido;
-    }
-
-    public function setApellido(string $apellido): self
-    {
-        $this->apellido = $apellido;
-
-        return $this;
-    }
-
-    public function getContrasena(): ?string
-    {
-        return $this->contrasena;
-    }
-
-    public function setContrasena(string $contrasena): self
-    {
-        $this->contrasena = $contrasena;
-
-        return $this;
     }
 
     public function getContacto(): ?string
@@ -116,6 +53,18 @@ class Chofer
 
     public function __toString(): ?string 
     {
-        return $this->nombre." ".$this->apellido;
+        return $this->getUser()->getNombre()." ".$this->getUser()->getApellido();
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     } 
 }

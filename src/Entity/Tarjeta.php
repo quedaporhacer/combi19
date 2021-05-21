@@ -54,10 +54,11 @@ class Tarjeta
     private $vencimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pasajero::class, inversedBy="id", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Pasajero::class, inversedBy="tarjetas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $propietario;
+
 
     public function getId(): ?int
     {
@@ -105,10 +106,11 @@ class Tarjeta
         return $this->propietario;
     }
 
-    public function setPropietario(Pasajero $propietario): self
+    public function setPropietario(?Pasajero $propietario): self
     {
         $this->propietario = $propietario;
 
         return $this;
     }
+
 }

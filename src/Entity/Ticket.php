@@ -18,12 +18,6 @@ class Ticket
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $pasajero;
-
-    /**
      * @ORM\OneToOne(targetEntity=Viaje::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -39,22 +33,17 @@ class Ticket
      */
     private $testeo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Pasajero::class, inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pasajero;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPasajero(): ?User
-    {
-        return $this->pasajero;
-    }
-
-    public function setPasajero(User $pasajero): self
-    {
-        $this->pasajero = $pasajero;
-
-        return $this;
-    }
 
     public function getViaje(): ?Viaje
     {
@@ -88,6 +77,18 @@ class Ticket
     public function setTesteo(?bool $testeo): self
     {
         $this->testeo = $testeo;
+
+        return $this;
+    }
+
+    public function getPasajero(): ?Pasajero
+    {
+        return $this->pasajero;
+    }
+
+    public function setPasajero(?Pasajero $pasajero): self
+    {
+        $this->pasajero = $pasajero;
 
         return $this;
     }

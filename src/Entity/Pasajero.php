@@ -3,211 +3,151 @@
 namespace App\Entity;
 
 use App\Repository\PasajeroRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PasajeroRepository::class)
- * @UniqueEntity("email",message="Este email ya esta siendo utilizado")
  */
-class Pasajero implements UserInterface
+class Pasajero
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity=Tarjeta::class, mappedBy="propietario", cascade={"persist"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "La contraseña debe tener al menos 6 caracteres",
-     *     
-     * 
-     * )
-     */
-    private $password;
-
-    /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $nombre;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $apellido;
-
-    /**
-     * @ORM\Column(type="integer")
      */
     private $dni;
 
     /**
-     * @ORM\Column(type="date")
-     * @Assert\LessThan("-18 years",message = "Debe ser mayor de edad para poder registrarse")
-     */
-    private $nacimiento;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $plan;
+    private $membresia;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Tarjeta::class, mappedBy="propietario", orphanRemoval=true)
+     */
+    private $tarjetas;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="pasajero", orphanRemoval=true)
+     */
+    private $tickets;
+
+    public function __construct()
+    {
+        $this->tarjetas = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getApellido(): ?string
-    {
-        return $this->apellido;
-    }
-
-    public function setApellido(string $apellido): self
-    {
-        $this->apellido = $apellido;
-
-        return $this;
-    }
-
-    public function getDni(): ?int
+    public function getDni(): ?string
     {
         return $this->dni;
     }
 
-    public function setDni(int $dni): self
+    public function setDni(string $dni): self
     {
         $this->dni = $dni;
 
         return $this;
     }
 
-    public function getNacimiento(): ?\DateTimeInterface
+    public function getMembresia(): ?bool
     {
-        return $this->nacimiento;
+        return $this->membresia;
     }
 
-    public function setNacimiento(\DateTimeInterface $nacimiento): self
+    public function setMembresia(bool $membresia): self
     {
-        $this->nacimiento = $nacimiento;
+        $this->membresia = $membresia;
 
         return $this;
     }
 
-    public function getPlan(): ?bool
+    public function getUser(): ?User
     {
-        return $this->plan;
+        return $this->user;
     }
 
-    public function setPlan(bool $plan): self
+    public function setUser(User $user): self
     {
-        $this->plan = $plan;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tarjeta[]
+     */
+    public function getTarjetas(): Collection
+    {
+        return $this->tarjetas;
+    }
+
+    public function addTarjeta(Tarjeta $tarjeta): self
+    {
+        if (!$this->tarjetas->contains($tarjeta)) {
+            $this->tarjetas[] = $tarjeta;
+            $tarjeta->setPropietario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTarjeta(Tarjeta $tarjeta): self
+    {
+        if ($this->tarjetas->removeElement($tarjeta)) {
+            // set the owning side to null (unless already changed)
+            if ($tarjeta->getPropietario() === $this) {
+                $tarjeta->setPropietario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ticket[]
+     */
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
+    public function addTicket(Ticket $ticket): self
+    {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets[] = $ticket;
+            $ticket->setPasajero($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicket(Ticket $ticket): self
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getPasajero() === $this) {
+                $ticket->setPasajero(null);
+            }
+        }
 
         return $this;
     }
