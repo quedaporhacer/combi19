@@ -5,7 +5,13 @@
 {% block body %}
 {{parent()}}
     <h1>Rutas</h1>
+    {% for message in app.flashes('failed') %}
 
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            
+    {% endfor %}
     <table class="table">
         <thead>
             <tr>

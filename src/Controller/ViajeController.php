@@ -121,7 +121,7 @@ class ViajeController extends AbstractController
                 $entityManager->remove($viaje);
                 $entityManager->flush();
             }
-        }
+        } 
 
         return $this->redirectToRoute('viaje_index');
     }

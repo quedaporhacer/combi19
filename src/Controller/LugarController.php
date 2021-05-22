@@ -129,6 +129,8 @@ class LugarController extends AbstractController
                 $entityManager->flush();
                 
             }
+           
+        } else {
             $this->addFlash('failed', 'Ese lugar se encuentra en uso!');
         }
         

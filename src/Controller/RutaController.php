@@ -107,6 +107,8 @@ class RutaController extends AbstractController
                 $entityManager->flush();
             }
           
+        }else {
+            $this->addFlash('failed', 'La ruta se encuentra en uso!');
         }
         return $this->redirectToRoute('ruta_index');
         
