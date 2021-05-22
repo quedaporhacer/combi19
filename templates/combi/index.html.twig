@@ -3,9 +3,17 @@
 {% block title %}Combis{% endblock %}
 
 {% block body %}
+
 {{parent()}}
+
     <h1>Combis</h1>
 
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
     <table class="table">
         <thead>
             <tr>
@@ -27,7 +35,7 @@
                 <td>{{ combi.modelo }}</td>
                 <td>{{ combi.capacidad }}</td>
                 <td>{{ combi.calidad }}</td>
-                {#<td>{{ combi.chofer }}</td>#}
+                <td>{{ combi.chofer }}</td>
                 <td>
                     {{ include('combi/_delete_form.html.twig') }}
                     <a class="btn btn-secondary" href="{{ path('combi_edit', {'id': combi.id}) }}">editar</a>
