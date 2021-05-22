@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pasajero{% endblock %}
+
+{% block body %}
+    <h1>Edit Pasajero</h1>
+
+    {{ include('pasajero/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pasajero_index') }}">back to list</a>
+
+    {{ include('pasajero/_delete_form.html.twig') }}
+{% endblock %}

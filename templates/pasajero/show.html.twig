@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pasajero{% endblock %}
+
+{% block body %}
+    <h1>Pasajero</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pasajero.id }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ pasajero.dni }}</td>
+            </tr>
+            <tr>
+                <th>Membresia</th>
+                <td>{{ pasajero.membresia ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pasajero_index') }}">back to list</a>
+
+    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">edit</a>
+
+    {{ include('pasajero/_delete_form.html.twig') }}
+{% endblock %}
