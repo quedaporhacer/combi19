@@ -94,6 +94,11 @@ class Viaje
         return $this;
     }
 
+    public function __toString(): ?string
+    {
+        return $this->ruta." combi: ".$this->combi;
+    }
+    
     public function finished(): ?bool   
     {
         return  $this->salida < new \DateTime("now")  &&  $this->llegada > new \DateTime("now");
@@ -112,4 +117,6 @@ class Viaje
     public function inicio(){
         $this->salida < new \DateTime("now") ;
     }
+
+
 }

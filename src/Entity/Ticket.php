@@ -18,13 +18,13 @@ class Ticket
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Viaje::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Viaje::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $viaje;
 
     /**
-     * @ORM\OneToOne(targetEntity=Comentario::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Comentario::class, cascade={"persist"})
      */
     private $comentario;
 

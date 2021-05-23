@@ -40,6 +40,7 @@ class PasajeroController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $pasajero->getUser()->setRoles(["ROL_PASAJERO"]);
+            $pasajero->setMembresia(false);
             $entityManager->persist($pasajero); 
             $entityManager->flush();
 
