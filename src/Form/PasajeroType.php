@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Pasajero;
+use App\Form\UserType;
+use App\Form\TarjetaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PasajeroType extends AbstractType
 {
@@ -14,7 +17,16 @@ class PasajeroType extends AbstractType
         $builder
             ->add('dni')
             ->add('membresia')
-            ->add('user')
+            ->add('user', UserType::class, [
+                'label' => false,
+            ])
+           // ->add('tarjetas', CollectionType::class,  [ 
+            //        'entry_type' => TarjetaType::class, 
+            //        'allow_add' => true,
+             //       'allow_delete' => true,
+             //   ]
+                
+            //    )
         ;
     }
 

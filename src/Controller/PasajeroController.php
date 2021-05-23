@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Pasajero;
+use App\Entity\User;
 use App\Form\PasajeroType;
+use App\Form\UserType;
 use App\Repository\PasajeroRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,12 +33,14 @@ class PasajeroController extends AbstractController
     public function new(Request $request): Response
     {
         $pasajero = new Pasajero();
+
         $form = $this->createForm(PasajeroType::class, $pasajero);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($pasajero);
+            $pasajero->getUser()->setRoles(["ROL_PASAJERO"]);
+            $entityManager->persist($pasajero); 
             $entityManager->flush();
 
             return $this->redirectToRoute('pasajero_index');

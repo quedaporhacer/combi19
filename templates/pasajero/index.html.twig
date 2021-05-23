@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Email</th>
                 <th>Nombre</th>
                  <th>Apellido</th>
                  <th>Dni</th>
@@ -20,6 +21,7 @@
         {% for pasajero in pasajeros %}
             <tr>
                 <td>{{ pasajero.id }}</td>
+                <td>{{ pasajero.user.email }}</td>
                 <td>{{ pasajero.user.nombre }}</td>
                 <td>{{ pasajero.user.apellido }}</td>
                 <td>{{ pasajero.dni }}</td>
