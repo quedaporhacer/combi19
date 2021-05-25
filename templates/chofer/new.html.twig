@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Chofer{% endblock %}
+
+{% block body %}
+    <h1>Create new Chofer</h1>
+
+    {{ include('chofer/_form.html.twig') }}
+
+    <a href="{{ path('chofer_index') }}">back to list</a>
+{% endblock %}

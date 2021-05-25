@@ -2,28 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use App\Entity\Chofer;
+use App\Form\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class ChoferType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('nombre')
-            ->add('apellido')
-            ->add('password', PasswordType::class,['label' => 'Contraseña'])
+            
+            ->add('user', UserType::class, [
+                'label' => false,
+            ])
+            ->add('contacto')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Chofer::class,
         ]);
     }
 }

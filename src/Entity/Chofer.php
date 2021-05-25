@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ChoferRepository::class)
- * @UniqueEntity("email",message="Este email ya esta siendo utilizado")
+ * 
  */
 class Chofer
 {
