@@ -15,7 +15,7 @@ class Ruta
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Chofer", mappedBy="ruta")
+     * @ORM\OneToMany(targetEntity="App\Entity\Viaje", mappedBy="ruta")
      */
     private $id;
 
