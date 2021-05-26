@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PasajeroRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,8 @@ class Pasajero
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Type(type="App\Entity\User")
+     * @Assert\Valid
      */
     private $user;
 
@@ -44,6 +48,12 @@ class Pasajero
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="pasajero", orphanRemoval=true)
      */
     private $tickets;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\LessThan("-18 years", message="Debe ser mayor de edad para poder registrarse")
+     */
+    private $nacimiento;
 
     public function __construct()
     {
@@ -155,5 +165,17 @@ class Pasajero
     public function __toString(): ?string 
     {
         return $this->user;
+    }
+
+    public function getNacimiento(): ?\DateTimeInterface
+    {
+        return $this->nacimiento;
+    }
+
+    public function setNacimiento(\DateTimeInterface $nacimiento): self
+    {
+        $this->nacimiento = $nacimiento;
+
+        return $this;
     }
 }
