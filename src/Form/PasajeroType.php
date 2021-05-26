@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Pasajero;
 use App\Form\UserType;
-use App\Form\TarjetaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
