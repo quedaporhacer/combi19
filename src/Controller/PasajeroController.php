@@ -11,12 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/pasajero")
  */
 class PasajeroController extends AbstractController
-{
+{   
+     private $passwordEncoder;
+
+     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+     {
+         $this->passwordEncoder = $passwordEncoder;
+     }
+
     /**
      * @Route("/", name="pasajero_index", methods={"GET"})
      */
@@ -41,6 +49,8 @@ class PasajeroController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $pasajero->getUser()->setRoles(["ROL_PASAJERO"]);
             $pasajero->setMembresia(false);
+            $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
+            'password'));
             $entityManager->persist($pasajero); 
             $entityManager->flush();
 
