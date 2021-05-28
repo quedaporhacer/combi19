@@ -50,7 +50,7 @@ class PasajeroController extends AbstractController
             $pasajero->getUser()->setRoles(["ROL_PASAJERO"]);
             $pasajero->setMembresia(false);
             $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
-            'password'));
+            ($form['user'])['password']->getData()));
             $entityManager->persist($pasajero); 
             $entityManager->flush();
 
