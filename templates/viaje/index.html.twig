@@ -4,6 +4,7 @@
 
 {% block body %}
 {{parent()}}
+   
     <h1>Viajes</h1>
     {% for message in app.flashes('failed') %}
 
@@ -46,4 +47,5 @@
     </table>
 
     <a href="{{ path('viaje_new') }}">Crear nueva</a>
+    
 {% endblock %}

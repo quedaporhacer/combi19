@@ -47,7 +47,7 @@ class PasajeroController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $pasajero->getUser()->setRoles(["ROL_PASAJERO"]);
+            $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
             $pasajero->setMembresia(false);
             $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
             ($form['user'])['password']->getData()));

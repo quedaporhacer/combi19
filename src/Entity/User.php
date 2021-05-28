@@ -158,4 +158,9 @@ class User implements UserInterface
     {
         return $this->nombre." ".$this->apellido;
     }
+
+    public function isAdmin(): ?bool
+    {
+        return in_array('ROLE_ADMIN',$this->getRoles());
+    }
 }

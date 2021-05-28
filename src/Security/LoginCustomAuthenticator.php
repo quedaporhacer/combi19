@@ -96,8 +96,15 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator implements
             return new RedirectResponse($targetPath);
         }
 
+        //dd($token->getUser()->getRoles());
+
+        if($token->getUser()->isAdmin() ){
+            return new RedirectResponse($this->urlGenerator->generate('viaje_index'));}
+
+        return new RedirectResponse($this->urlGenerator->generate('pasajero_index'));
+
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()
