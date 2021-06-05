@@ -11,8 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/viaje")
  */
 class ViajeController extends AbstractController
@@ -42,22 +45,18 @@ class ViajeController extends AbstractController
             $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
             $viajes = $viajes->findBy(['combi' =>  $combi ]);
 
-            $disponible=true;
-            foreach ($viajes as $viajeeach)
-            {   
-                if(!$viajeeach->disponible()){
-                    $disponible=false;
-                }
-            }
+            $inicio =  $form->getData()->getSalida();
+            $llegada =  $form->getData()->getLlegada();
 
+     
 
         
-            if(!$viajes || $disponible ){
+           
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($viaje);
                 $entityManager->flush();
                 return $this->redirectToRoute('viaje_index');
-            }
+            
 
             $this->addFlash('failed','la combi no esta disponible');
             

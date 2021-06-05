@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tarjeta{% endblock %}
+
+{% block body %}
+    <h1>Edit Tarjeta</h1>
+
+    {{ include('tarjeta/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tarjeta_index') }}">back to list</a>
+
+    {{ include('tarjeta/_delete_form.html.twig') }}
+{% endblock %}

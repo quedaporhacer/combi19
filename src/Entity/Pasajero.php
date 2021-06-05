@@ -8,9 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PasajeroRepository::class)
+ * @UniqueEntity(fields="dni", message="Este dni ya se encuentra registrado")
  */
 class Pasajero
 {

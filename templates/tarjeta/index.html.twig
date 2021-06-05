@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tarjeta index{% endblock %}
+
+{% block body %}
+    <h1>Tarjeta index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Codigo</th>
+                <th>Vencimiento</th>
+                <th>Propietario</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tarjetum in tarjetas %}
+            <tr>
+                <td>{{ tarjetum.id }}</td>
+                <td>{{ tarjetum.numero }}</td>
+                <td>{{ tarjetum.codigo }}</td>
+                <td>{{ tarjetum.propietario }}</td>
+                <td>{{ tarjetum.vencimiento ? tarjetum.vencimiento|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('tarjeta_show', {'id': tarjetum.id}) }}">show</a>
+                    <a href="{{ path('tarjeta_edit', {'id': tarjetum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#<a href="{{ path('tarjeta_new') }}">Create new</a>#}
+{% endblock %}

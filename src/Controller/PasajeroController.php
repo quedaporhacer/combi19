@@ -94,6 +94,16 @@ class PasajeroController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/tarjeta", name="pasajero_tarjeta", methods={"GET","POST"})
+     */
+    public function tarjeta(Request $request, Pasajero $pasajero): Response
+    {
+        return $this->render('tarjeta/index.html.twig', [
+            'tarjetas' => $pasajero->getTarjetas(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="pasajero_delete", methods={"POST"})
      */
     public function delete(Request $request, Pasajero $pasajero): Response
