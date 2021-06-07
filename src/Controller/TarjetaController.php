@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
  * @Route("/tarjeta")
  */
@@ -32,6 +33,7 @@ class TarjetaController extends AbstractController
      */
     public function new(Pasajero $pasajero, Request $request): Response
     {
+        
         $tarjetum = new Tarjeta();
         $form = $this->createForm(Tarjeta1Type::class, $tarjetum);
         $form->handleRequest($request);
@@ -42,7 +44,7 @@ class TarjetaController extends AbstractController
             $entityManager->persist($tarjetum);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tarjeta_index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('tarjeta/new.html.twig', [

@@ -40,6 +40,7 @@ class PasajeroController extends AbstractController
      */
     public function new(Request $request): Response
     {
+ 
         $pasajero = new Pasajero();
 
         $form = $this->createForm(PasajeroType::class, $pasajero);
@@ -54,7 +55,7 @@ class PasajeroController extends AbstractController
             $entityManager->persist($pasajero); 
             $entityManager->flush();
 
-            return $this->redirectToRoute('pasajero_index');
+            return $this->redirectToRoute('tarjeta_new', ['id' => $pasajero->getId()] );
         }
 
         return $this->render('pasajero/new.html.twig', [
@@ -96,7 +97,7 @@ class PasajeroController extends AbstractController
     /**
      * @Route("/{id}/tarjeta", name="pasajero_tarjeta", methods={"GET","POST"})
      */
-    public function tarjeta(Request $request, Pasajero $pasajero): Response
+    public function tarjetas(Request $request, Pasajero $pasajero): Response
     {
         return $this->render('tarjeta/index.html.twig', [
             'tarjetas' => $pasajero->getTarjetas(),
