@@ -24,7 +24,7 @@ class Viaje
     private $salida;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      * @Assert\GreaterThan("today",message="la fecha ingresada no es valida")
      */
     private $llegada;
@@ -104,9 +104,13 @@ class Viaje
         return  $this->salida < new \DateTime("now")  &&  $this->llegada > new \DateTime("now");
     }
 
-    public function disponible(): ?bool
+    public function disponible(\DateTime $salida): ?bool
     {
-        return true;
+        return $salida <> $this->getSalida();
+        
+        /*return (($this->getSalida()>$salida && $this->getSalida()<$llegada) ||
+        ($this->getLlegada()>$salida && $this->getLlegada()<$llegada) || 
+        ($this->getSalida()<$salida && $this->getLlegada()<$llegada));*/
     }
 
     public function enCurso(): ?bool

@@ -15,8 +15,8 @@ class ViajeType extends AbstractType
         $builder
             ->add('salida', DateTimeType::class,
                 ['date_widget' => 'single_text','time_widget' => 'single_text'] )
-            ->add('llegada', DateTimeType::class,
-            ['date_widget' => 'single_text','time_widget' => 'single_text'] )
+            //->add('llegada', DateTimeType::class,
+            //['date_widget' => 'single_text','time_widget' => 'single_text'] )
             ->add('combi')
             ->add('ruta')
         ;

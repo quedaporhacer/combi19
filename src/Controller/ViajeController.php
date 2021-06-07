@@ -41,23 +41,19 @@ class ViajeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $inicio =  $form->getData()->getSalida();
             $combi = $form->getData()->getCombi();
             $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
-            $viajes = $viajes->findBy(['combi' =>  $combi ]);
+            $viajes = $viajes->findBy(['combi' =>  $combi, 'salida' => $inicio ]);
 
-            $inicio =  $form->getData()->getSalida();
-            $llegada =  $form->getData()->getLlegada();
+            if (!$viajes){
 
-     
-
-        
-           
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($viaje);
                 $entityManager->flush();
                 return $this->redirectToRoute('viaje_index');
             
-
+            }
             $this->addFlash('failed','la combi no esta disponible');
             
         }
