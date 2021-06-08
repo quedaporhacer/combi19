@@ -99,12 +99,15 @@ class PasajeroController extends AbstractController
      */
     public function delete(Request $request, Pasajero $pasajero): Response
     {
+        if(!$pasajero->getTickets()){
         if ($this->isCsrfTokenValid('delete'.$pasajero->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($pasajero);
             $entityManager->flush();
         }
-
+        }else{
+            $this->addFlash('hay_tickets', 'no se pudo borrar al usuario debido a que tiene tickets');
+        }
         return $this->redirectToRoute('pasajero_index');
     }
 
