@@ -3,7 +3,16 @@
 {% block title %}Pasajeros {% endblock %}
 
 {% block body %}
+    <div class="container">
     <h1>Pasajeros </h1>
+
+     {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            
+    {% endfor %}
 
     <table class="table">
         <thead>
@@ -40,4 +49,5 @@
     </table>
 
     <a href="{{ path('pasajero_new') }}">Crear</a>
+    </div>
 {% endblock %}

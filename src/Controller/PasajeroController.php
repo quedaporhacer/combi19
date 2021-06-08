@@ -116,7 +116,7 @@ class PasajeroController extends AbstractController
             $entityManager->flush();
         }
         }else{
-            $this->addFlash('hay_tickets', 'no se pudo borrar al usuario debido a que tiene tickets');
+            $this->addFlash('failed', 'el pasajero tiene tickets');
         }
         return $this->redirectToRoute('pasajero_index');
     }
