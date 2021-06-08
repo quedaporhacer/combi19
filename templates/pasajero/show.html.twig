@@ -59,7 +59,16 @@
        
     <h1>Mi Viajes</h1>
 
+     {% for ticket in  pasajero.tickets %}
 
+            <div class="alert alert-danger">
+                {{ ticket.viaje }}
+                {{ ticket.pasajero }}
+            </div>
+            
+    {% endfor %}
+
+            
     </div >
 
     

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 
 /**
@@ -81,7 +82,13 @@ class PasajeroController extends AbstractController
      */
     public function edit(Request $request, Pasajero $pasajero): Response
     {
-        //$pasajero = $this->getPasajero($request);
+
+        if($pasajero->getUser() != $this->getUser() )
+        {
+            dd();
+        }
+
+        $pasajero = $this->getPasajero($request);
         $form = $this->createForm(PasajeroType::class, $pasajero);
         $form->handleRequest($request);
 
