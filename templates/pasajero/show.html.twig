@@ -35,8 +35,8 @@
     {#{{ include('pasajero/_delete_form.html.twig') }}#}
 
     <br>
+    {% if pasajero.tarjeta %}
     <h1>Mi Tarjeta</h1>
-
        <div class="payment-card">
             <i class="fa fa-cc-visa payment-icon-big text-success"></i>
             <h2>
@@ -55,6 +55,7 @@
                 </div>
             </div>
         </div>
+     {% endif %}
          
        
     <h1>Mi Viajes</h1>
