@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 /**
  * @Route("/pasajero")
  */
@@ -68,6 +69,8 @@ class PasajeroController extends AbstractController
      */
     public function show(Pasajero $pasajero): Response
     {
+        
+        
         return $this->render('pasajero/show.html.twig', [
             'pasajero' => $pasajero,
         ]);

@@ -1,30 +1,66 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Pasajero{% endblock %}
 
 {% block body %}
-    <h1>Pasajero</h1>
-
+{{parent()}}
+<div class="container">
+    <h1>Mis Datos Personales</h1>
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ pasajero.id }}</td>
-            </tr>
             <tr>
                 <th>Dni</th>
                 <td>{{ pasajero.dni }}</td>
             </tr>
             <tr>
+                <th>Email</th>
+                <td>{{ pasajero.user.email }}</td>
+            </tr>
+             <tr>
+                <th>Nombre</th>
+                <td>{{ pasajero.user.nombre }}</td>
+            </tr>
+             <tr>
+                <th>Apellido</th>
+                <td>{{ pasajero.user.apellido }}</td>
+            </tr>
+            <tr>
                 <th>Membresia</th>
-                <td>{{ pasajero.membresia ? 'Yes' : 'No' }}</td>
+                <td>{{ pasajero.membresia ? 'Gold' : 'Basica' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('pasajero_index') }}">back to list</a>
+    {#<a href="{{ path('pasajero_index') }}">back to list</a>#}
+    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar perfil</a>
+    {#{{ include('pasajero/_delete_form.html.twig') }}#}
 
-    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">edit</a>
+    <br>
+    <h1>Mi Tarjeta</h1>
 
-    {{ include('pasajero/_delete_form.html.twig') }}
+       <div class="payment-card">
+            <i class="fa fa-cc-visa payment-icon-big text-success"></i>
+            <h2>
+                    **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}
+            </h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <small>
+                        <strong>Fecha de vencimiento:</strong> {{ pasajero.tarjeta.vencimiento ? pasajero.tarjeta.vencimiento|date('Y-m') : ''}}
+                    </small>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <small>
+                        <strong>Nombre:</strong>  {{pasajero.user.nombre}}
+                    </small>
+                </div>
+            </div>
+        </div>
+         
+       
+    <h1>Mi Viajes</h1>
+
+
+    </div >
+
+    
 {% endblock %}
