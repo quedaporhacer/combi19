@@ -78,6 +78,7 @@ class PasajeroController extends AbstractController
      */
     public function edit(Request $request, Pasajero $pasajero): Response
     {
+        //$pasajero = $this->getPasajero($request);
         $form = $this->createForm(PasajeroType::class, $pasajero);
         $form->handleRequest($request);
 
@@ -105,5 +106,16 @@ class PasajeroController extends AbstractController
         }
 
         return $this->redirectToRoute('pasajero_index');
+    }
+
+    private function getPasajero(Request $request): Pasajero
+    {
+        $email = $request->getSession()->get('_security.last_username');
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $idUser = $repository->findBy(['email' =>  $email ]);
+        $repository = $this->getDoctrine()->getRepository(Pasajero::class);
+        $pasajero = $repository->findBy(['user' =>  $idUser['0']]);
+        $pasajero = $pasajero['0'];
+        return $pasajero;
     }
 }
