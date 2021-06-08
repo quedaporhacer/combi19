@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Pasajero{% endblock %}
+{% block title %}Registrarse{% endblock %}
 
 {% block body %}
-    <h1>Create new Pasajero</h1>
-
-    {{ include('pasajero/_form.html.twig') }}
-
-    <a href="{{ path('pasajero_index') }}">back to list</a>
+    <div class= "container" >
+        <h1>Registrarse</h1>
+        {{ include('pasajero/_form.html.twig') }}
+        <button class="btn btn-primary"> Login </button>
+    </div>
 {% endblock %}
