@@ -40,10 +40,12 @@ class TarjetaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $tarjetum->setPropietario($pasajero);
+            //$tarjetum->setPropietario($pasajero);
+            $pasajero->setTarjeta($tarjetum);
             $entityManager->persist($tarjetum);
+            $entityManager->persist($pasajero);
             $entityManager->flush();
-
+            $this->addFlash('gold', 'Se registro con mebresia gold! \UwU/ ');
             return $this->redirectToRoute('app_login');
         }
 

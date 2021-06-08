@@ -49,12 +49,11 @@ class PasajeroController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
-            $pasajero->setMembresia(false);
             $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
             ($form['user'])['password']->getData()));
             $entityManager->persist($pasajero); 
             $entityManager->flush();
-
+            $this->addFlash('success', 'Se registro correctamente');
             return $this->redirectToRoute('tarjeta_new', ['id' => $pasajero->getId()] );
         }
 

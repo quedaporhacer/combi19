@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adquirir Mebresia{% endblock %}
+{% block title %}Adquirir Membresia{% endblock %}
 
 {% block body %}
     <div class="container">
-    <h1>Adquirir Mebresia</h1>
+    <h1>¿Desea adquirir la Membresia Gold?</h1>
     <h4>Ingresar tarjeta</h4>
 
     {{ include('tarjeta/_form.html.twig') }}
-
+     <button class="btn"> <a href="{{path('app_login')}}" >Cancelar</a> </button>
     {#<a href="{{ path('tarjeta_index') }}">back to list</a>#}
     </div>
 {% endblock %}

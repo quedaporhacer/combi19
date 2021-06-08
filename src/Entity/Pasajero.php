@@ -29,22 +29,12 @@ class Pasajero
     private $dni;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $membresia;
-
-    /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Type(type="App\Entity\User")
      * @Assert\Valid
      */
     private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Tarjeta::class, mappedBy="propietario", orphanRemoval=true)
-     */
-    private $tarjetas;
 
     /**
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="pasajero", orphanRemoval=true)
@@ -57,9 +47,13 @@ class Pasajero
      */
     private $nacimiento;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Tarjeta::class, mappedBy="propietario", cascade={"persist", "remove"})
+     */
+    private $tarjeta;
+
     public function __construct()
     {
-        $this->tarjetas = new ArrayCollection();
         $this->tickets = new ArrayCollection();
     }
 
@@ -82,15 +76,9 @@ class Pasajero
 
     public function getMembresia(): ?bool
     {
-        return $this->membresia;
+        return $this->tarjeta != null;
     }
 
-    public function setMembresia(bool $membresia): self
-    {
-        $this->membresia = $membresia;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -100,36 +88,6 @@ class Pasajero
     public function setUser(User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Tarjeta[]
-     */
-    public function getTarjetas(): Collection
-    {
-        return $this->tarjetas;
-    }
-
-    public function addTarjeta(Tarjeta $tarjeta): self
-    {
-        if (!$this->tarjetas->contains($tarjeta)) {
-            $this->tarjetas[] = $tarjeta;
-            $tarjeta->setPropietario($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTarjeta(Tarjeta $tarjeta): self
-    {
-        if ($this->tarjetas->removeElement($tarjeta)) {
-            // set the owning side to null (unless already changed)
-            if ($tarjeta->getPropietario() === $this) {
-                $tarjeta->setPropietario(null);
-            }
-        }
 
         return $this;
     }
@@ -177,6 +135,23 @@ class Pasajero
     public function setNacimiento(\DateTimeInterface $nacimiento): self
     {
         $this->nacimiento = $nacimiento;
+
+        return $this;
+    }
+
+    public function getTarjeta(): ?Tarjeta
+    {
+        return $this->tarjeta;
+    }
+
+    public function setTarjeta(Tarjeta $tarjeta): self
+    {
+        // set the owning side of the relation if necessary
+        if ($tarjeta->getPropietario() !== $this) {
+            $tarjeta->setPropietario($this);
+        }
+
+        $this->tarjeta = $tarjeta;
 
         return $this;
     }
