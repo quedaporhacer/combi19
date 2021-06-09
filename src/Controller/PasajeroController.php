@@ -83,12 +83,11 @@ class PasajeroController extends AbstractController
     public function edit(Request $request, Pasajero $pasajero): Response
     {
 
-        if($pasajero->getUser() != $this->getUser() )
+     /*   if($pasajero->getUser() != $this->getUser() )
         {
             dd();
-        }
+        }*/
 
-        $pasajero = $this->getPasajero($request);
         $form = $this->createForm(PasajeroType::class, $pasajero);
         $form->handleRequest($request);
 

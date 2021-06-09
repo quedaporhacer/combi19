@@ -49,6 +49,7 @@ class ViajeController extends AbstractController
             if (!$viajes){
 
                 $entityManager = $this->getDoctrine()->getManager();
+                $viaje->setEstado('No iniciado');
                 $entityManager->persist($viaje);
                 $entityManager->flush();
                 return $this->redirectToRoute('viaje_index');

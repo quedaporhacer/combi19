@@ -18,17 +18,6 @@ class Ticket
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Viaje::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $viaje;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Comentario::class, cascade={"persist"})
-     */
-    private $comentario;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $testeo;
@@ -39,34 +28,35 @@ class Ticket
      */
     private $pasajero;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Viaje::class, inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $viaje;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Comentario::class, inversedBy="ticket", cascade={"persist", "remove"})
+     */
+    private $comentario;
+
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    private $numero;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $codigo;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $vencimiento;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function getViaje(): ?Viaje
-    {
-        return $this->viaje;
-    }
-
-    public function setViaje(Viaje $viaje): self
-    {
-        $this->viaje = $viaje;
-
-        return $this;
-    }
-
-    public function getComentario(): ?Comentario
-    {
-        return $this->comentario;
-    }
-
-    public function setComentario(?Comentario $comentario): self
-    {
-        $this->comentario = $comentario;
-
-        return $this;
     }
 
     public function getTesteo(): ?bool
@@ -89,6 +79,66 @@ class Ticket
     public function setPasajero(?Pasajero $pasajero): self
     {
         $this->pasajero = $pasajero;
+
+        return $this;
+    }
+
+    public function getViaje(): ?Viaje
+    {
+        return $this->viaje;
+    }
+
+    public function setViaje(?Viaje $viaje): self
+    {
+        $this->viaje = $viaje;
+
+        return $this;
+    }
+
+    public function getComentario(): ?Comentario
+    {
+        return $this->comentario;
+    }
+
+    public function setComentario(?Comentario $comentario): self
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getCodigo(): ?int
+    {
+        return $this->codigo;
+    }
+
+    public function setCodigo(int $codigo): self
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    public function getVencimiento(): ?\DateTimeInterface
+    {
+        return $this->vencimiento;
+    }
+
+    public function setVencimiento(\DateTimeInterface $vencimiento): self
+    {
+        $this->vencimiento = $vencimiento;
 
         return $this;
     }

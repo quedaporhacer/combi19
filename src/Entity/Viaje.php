@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ViajeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -40,6 +42,26 @@ class Viaje
      * @ORM\JoinColumn(nullable=false)
      */
     private $ruta;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="viaje", orphanRemoval=true)
+     */
+    private $tickets;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $precio;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $estado;
+
+    public function __construct()
+    {
+        $this->tickets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +142,60 @@ class Viaje
 
     public function inicio(){
         $this->salida < new \DateTime("now") ;
+    }
+
+    /**
+     * @return Collection|Ticket[]
+     */
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
+    public function addTicket(Ticket $ticket): self
+    {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets[] = $ticket;
+            $ticket->setViaje($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicket(Ticket $ticket): self
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getViaje() === $this) {
+                $ticket->setViaje(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrecio(): ?float
+    {
+        return $this->precio;
+    }
+
+    public function setPrecio(float $precio): self
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
     }
 
 

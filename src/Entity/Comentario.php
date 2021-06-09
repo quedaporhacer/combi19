@@ -22,6 +22,11 @@ class Comentario
      */
     private $comentario;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Ticket::class, mappedBy="comentario", cascade={"persist", "remove"})
+     */
+    private $ticket;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,28 @@ class Comentario
     public function setComentario(string $comentario): self
     {
         $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    public function getTicket(): ?Ticket
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($ticket === null && $this->ticket !== null) {
+            $this->ticket->setComentario(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($ticket !== null && $ticket->getComentario() !== $this) {
+            $ticket->setComentario($this);
+        }
+
+        $this->ticket = $ticket;
 
         return $this;
     }

@@ -4,8 +4,11 @@
 {% block body %}
 {{parent()}}
 <div class="container">
-    <h1>Mis Datos Personales</h1>
-    <table class="table">
+
+    <div class="row">
+        <div class="col-6">
+            <h1>Mis Datos Personales</h1>
+    <table class="table table-borderless">
         <tbody>
             <tr>
                 <th>Dni</th>
@@ -31,13 +34,14 @@
     </table>
 
     {#<a href="{{ path('pasajero_index') }}">back to list</a>#}
-    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar perfil</a>
+    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar datos personales</a>
     {#{{ include('pasajero/_delete_form.html.twig') }}#}
-
-    <br>
-    {% if pasajero.tarjeta %}
+        </div>
+        <div class="col-6">
+            {% if pasajero.tarjeta %}
+   {# <div class="section">
     <h1>Mi Tarjeta</h1>
-       <div class="payment-card">
+        <div class="payment-card card border-dark">
             <i class="fa fa-cc-visa payment-icon-big text-success"></i>
             <h2>
                     **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}
@@ -55,22 +59,65 @@
                 </div>
             </div>
         </div>
+
+        <br><br>#}
+        <h1>Mi Tarjeta</h1>
+        <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Tarjeta de Credito</div>
+            <div class="card-body text-dark">
+            <h5 class="card-title"> **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}</h5>
+                <p class="card-text"> <div class="row">
+                    <div class="col-sm-6">
+                        
+                            <strong>Fecha de vencimiento:</strong> {{ pasajero.tarjeta.vencimiento ? pasajero.tarjeta.vencimiento|date('Y-m') : ''}}
+                        
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        
+                            <strong>Nombre:</strong>  {{pasajero.user.nombre}}
+                        
+                    </div>
+                    </div>
+                </p>
+            </div>
+     </div>
+     <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">nueva tarjeta</a>
      {% endif %}
-         
-       
+
+        </div>
+    </div>
+
+
     <h1>Mi Viajes</h1>
 
-     {% for ticket in  pasajero.tickets %}
+    {% for ticket in  pasajero.tickets %}
 
-            <div class="alert alert-danger">
-                {{ ticket.viaje }}
-                {{ ticket.pasajero }}
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{ ticket.viaje.ruta }}
+                        {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}}
+                    </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>El viaje se encuentra: {{ ticket.viaje.estado}}</strong> la combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
+                        <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
+                        <strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
+                        <br><br>
+                        <a class="btn btn-danger">cancelar<a>
+                    </div>
+                    </div>
+                </div>
             </div>
+
             
     {% endfor %}
 
             
     </div >
 
+    
     
 {% endblock %}
