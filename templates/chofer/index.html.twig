@@ -33,8 +33,9 @@
                 <td>{{ chofer.user.apellido }}</td>
                 <td>{{ chofer.contacto }}</td>
                 <td>
-                    <a href="{{ path('chofer_show', {'id': chofer.id}) }}">Ver</a>
+                   <!--<a href="{{ path('chofer_show', {'id': chofer.id}) }}">Ver</a>-->
                    {{ include('chofer/_delete_form.html.twig') }}
+                   <a class="btn btn-secondary" href="{{ path('chofer_edit', {'id': chofer.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
