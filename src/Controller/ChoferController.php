@@ -10,12 +10,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/chofer")
  */
 class ChoferController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     /**
      * @Route("/", name="chofer_index", methods={"GET"})
      */
@@ -37,6 +45,9 @@ class ChoferController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $chofer->getUser()->setRoles(["ROLE_CHOFER"]);
+            $chofer->getUser()->setPassword($this->passwordEncoder->encodePassword( $chofer->getUser(),
+            ($form['user'])['password']->getData()));
             $entityManager->persist($chofer);
             $entityManager->flush();
 
