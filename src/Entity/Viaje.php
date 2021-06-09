@@ -118,7 +118,7 @@ class Viaje
 
     public function __toString(): ?string
     {
-        return $this->ruta." combi: ".$this->combi;
+        return $this->ruta.", Combi ".$this->combi;
     }
     
     public function finished(): ?bool   

@@ -85,7 +85,7 @@ class Ruta
 
     public function __toString (): ?string
     {
-        return $this->origen." - ".$this->destino;
+        return "De ". $this->origen." a ".$this->destino;
     }
 
     public function getKilometros(): ?int
