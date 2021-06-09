@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comentario;
+use App\Entity\Ticket;
 use App\Form\ComentarioType;
 use App\Repository\ComentarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,20 +27,21 @@ class ComentarioController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="comentario_new", methods={"GET","POST"})
+     * @Route("/{id}/new", name="comentario_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Ticket $ticket): Response
     {
         $comentario = new Comentario();
         $form = $this->createForm(ComentarioType::class, $comentario);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comentario->setTicket($ticket);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comentario);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comentario_index');
+            return $this->redirectToRoute('pasajero_show',['id' => $ticket->getPasajero()->getId() ]);
         }
 
         return $this->render('comentario/new.html.twig', [

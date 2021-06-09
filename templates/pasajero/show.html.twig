@@ -95,12 +95,21 @@
                             <form method="post" action="{{ path('ticket_delete', {'id': ticket.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su ticket?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
                             <button class="btn btn-danger">Cacelar Viaje</button>
+                            </form>
                         {% endif %}
-                    </form>
+                    
                     {% if not ticket.comentario  %}
                         {% if ticket.viaje.estado == 'Finalizado'  %} 
-                                <p>Dejanos un comentario de como fue tu experiencia <a href="#">aquí</a> </p>
+                                <p>Dejanos un comentario de como fue tu experiencia <a href="{{ path('comentario_new', {'id': ticket.id}) }}">aquí</a> </p>
                         {% endif %}
+                    {% else %}
+                             Mi comentario: <br> 
+                            <div class="card">
+                                 {{ticket.comentario.comentario}}                        
+                            </div>
+                            <br>
+                           <button class="btn btn-danger">Eliminar</button>
+                           <button class="btn btn-warning">Editar</button>
                     {% endif %}
                      
                     </div>
