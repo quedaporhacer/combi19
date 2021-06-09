@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chofer index{% endblock %}
+{% block title %}Choferes{% endblock %}
 
 {% block body %}
-    <h1>Chofer index</h1>
+    <h1>Choferes</h1>
 
     {% for message in app.flashes('failed') %}
 
@@ -21,7 +21,7 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Contacto</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                 <td>{{ chofer.user.apellido }}</td>
                 <td>{{ chofer.contacto }}</td>
                 <td>
-                    <a href="{{ path('chofer_show', {'id': chofer.id}) }}">show</a>
+                    <a href="{{ path('chofer_show', {'id': chofer.id}) }}">Ver</a>
                    {{ include('chofer/_delete_form.html.twig') }}
                 </td>
             </tr>
