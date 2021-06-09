@@ -37,7 +37,6 @@
                 <td>{{ pasajero.membresia ? 'Gold' : 'Basica' }}</td>
                 <td>
                     {{ include('pasajero/_delete_form.html.twig') }}
-                    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
