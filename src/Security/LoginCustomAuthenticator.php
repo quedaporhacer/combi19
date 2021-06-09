@@ -99,7 +99,12 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator implements
         //dd($token->getUser()->getRoles());
 
         if($token->getUser()->isAdmin() ){
-            return new RedirectResponse($this->urlGenerator->generate('viaje_index'));}
+            return new RedirectResponse($this->urlGenerator->generate('viaje_index'));
+        }
+        elseif($token->getUser()->isChofer() ){
+            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
+        }
+
 
         return new RedirectResponse($this->urlGenerator->generate('pasajero_index'));
 

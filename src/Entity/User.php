@@ -163,4 +163,9 @@ class User implements UserInterface
     {
         return in_array('ROLE_ADMIN',$this->getRoles());
     }
+
+    public function isChofer(): ?bool
+    {
+        return in_array('ROLE_CHOFER',$this->getRoles());
+    }
 }
