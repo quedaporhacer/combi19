@@ -141,7 +141,7 @@ class Viaje
     }
 
     public function inicio(){
-        $this->salida < new \DateTime("now") ;
+        $this->estado = "En curso";
     }
 
     /**

@@ -8,82 +8,65 @@
     <div class="row">
         <div class="col-6">
             <h1>Mis Datos Personales</h1>
-    <table class="table table-borderless">
-        <tbody>
-            <tr>
-                <th>Dni</th>
-                <td>{{ pasajero.dni }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ pasajero.user.email }}</td>
-            </tr>
-             <tr>
-                <th>Nombre</th>
-                <td>{{ pasajero.user.nombre }}</td>
-            </tr>
-             <tr>
-                <th>Apellido</th>
-                <td>{{ pasajero.user.apellido }}</td>
-            </tr>
-            <tr>
-                <th>Membresia</th>
-                <td>{{ pasajero.membresia ? 'Gold' : 'Basica' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    {#<a href="{{ path('pasajero_index') }}">back to list</a>#}
-    <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar datos personales</a>
-    {#{{ include('pasajero/_delete_form.html.twig') }}#}
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Dni</th>
+                            <td>{{ pasajero.dni }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ pasajero.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ pasajero.user.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Apellido</th>
+                            <td>{{ pasajero.user.apellido }}</td>
+                        </tr>
+                        <tr>
+                            <th>Membresia</th>
+                            <td>{{ pasajero.membresia ? 'Gold' : 'Basica' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar datos personales</a>
         </div>
         <div class="col-6">
+         <h1>Mi Tarjeta</h1>
             {% if pasajero.tarjeta %}
-   {# <div class="section">
-    <h1>Mi Tarjeta</h1>
-        <div class="payment-card card border-dark">
-            <i class="fa fa-cc-visa payment-icon-big text-success"></i>
-            <h2>
-                    **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}
-            </h2>
-            <div class="row">
-                <div class="col-sm-6">
-                    <small>
-                        <strong>Fecha de vencimiento:</strong> {{ pasajero.tarjeta.vencimiento ? pasajero.tarjeta.vencimiento|date('Y-m') : ''}}
-                    </small>
-                </div>
-                <div class="col-sm-6 text-right">
-                    <small>
-                        <strong>Nombre:</strong>  {{pasajero.user.nombre}}
-                    </small>
-                </div>
-            </div>
-        </div>
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Tarjeta de Credito</div>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title"> **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}</h5>
+                            <p class="card-text"> <div class="row">
+                                <div class="col-sm-6">
+                                    
+                                        <spam><strong>Fecha de vencimiento:</strong> {{ pasajero.tarjeta.vencimiento ? pasajero.tarjeta.vencimiento|date('Y-m') : ''}}</spam>
+                                    
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    
+                                        <spam><strong>Nombre:</strong>  {{pasajero.user.nombre}}</spam>
+                                    
+                                </div>
 
-        <br><br>#}
-        <h1>Mi Tarjeta</h1>
-        <div class="card border-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">Tarjeta de Credito</div>
-            <div class="card-body text-dark">
-            <h5 class="card-title"> **** **** ****  {{pasajero.tarjeta.numero | slice(12,4) }}</h5>
-                <p class="card-text"> <div class="row">
-                    <div class="col-sm-6">
-                        
-                            <strong>Fecha de vencimiento:</strong> {{ pasajero.tarjeta.vencimiento ? pasajero.tarjeta.vencimiento|date('Y-m') : ''}}
-                        
+                            </p>
                     </div>
-                    <div class="col-sm-6 text-right">
-                        
-                            <strong>Nombre:</strong>  {{pasajero.user.nombre}}
-                        
-                    </div>
-                    </div>
-                </p>
-            </div>
-     </div>
-     <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">nueva tarjeta</a>
-     {% endif %}
-
+                </div>
+                </div>
+               <div class="delete">
+                    <form method="post" action="{{ path('tarjeta_delete', {'id': pasajero.tarjeta.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su tarjeta? Dejara de tener los veneficios de la membresia Gold');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pasajero.tarjeta.id) }}">
+                        <button class="btn">Borrar</button>
+                    </form>
+               </div>
+            {% else %}
+                <p> No tiene una tarjeta asociada </p>
+                <p>Si desae ser miebro Gold precione <a href="{{ path('tarjeta_new', {'id': pasajero.id}) }}">aquí</a><p>
+            {% endif %}
         </div>
     </div>
 
@@ -107,13 +90,20 @@
                         <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
                         <br><strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
                         <br><br>
-                        <a class="btn btn-danger">cancelar viaje<a>
+                        <form method="post" action="{{ path('ticket_delete', {'id': ticket.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su ticket?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
+                        <button class="btn btn-danger">Cacelar Viaje</button>
+                    </form>
                     </div>
                     </div>
                 </div>
             </div>
 
             
+    {% else %}
+        <tr>
+            <td colspan="4">No tiene viajes pendientes</td>
+        </tr>
     {% endfor %}
 
             

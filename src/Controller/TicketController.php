@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
+use App\Entity\Viaje;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,12 +84,17 @@ class TicketController extends AbstractController
      */
     public function delete(Request $request, Ticket $ticket): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($ticket);
-            $entityManager->flush();
-        }
+    
+        if($ticket->getViaje()->getEstado()!='Iniciado'){
 
-        return $this->redirectToRoute('ticket_index');
+            if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($ticket);
+                $entityManager->flush();
+            }
+        }else{
+            $this->addFlash('failed', 'El viaje ya inicio, no puede ser cancelado');
+        }    
+        return $this->redirectToRoute('pasajero_show',['id' => $ticket->getPasajero()->getId() ]);
     }
 }

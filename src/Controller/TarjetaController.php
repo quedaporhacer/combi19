@@ -45,7 +45,7 @@ class TarjetaController extends AbstractController
             $entityManager->persist($tarjetum);
             $entityManager->persist($pasajero);
             $entityManager->flush();
-            $this->addFlash('gold', 'Se registro con mebresia gold! \UwU/ ');
+            $this->addFlash('gold', 'Se registro con mebresia gold!');
             return $this->redirectToRoute('app_login');
         }
 
@@ -95,7 +95,6 @@ class TarjetaController extends AbstractController
             $entityManager->remove($tarjetum);
             $entityManager->flush();
         }
-
-        return $this->redirectToRoute('tarjeta_index');
+        return $this->redirectToRoute('pasajero_show',['id' => $tarjetum->getPropietario()->getId() ]);
     }
 }
