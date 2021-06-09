@@ -94,19 +94,20 @@
 
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h2 class="accordion-header" id="{{ ticket.id }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ ticket.id }}" aria-expanded="true" aria-controls="collapse{{ ticket.id }}">
                         {{ ticket.viaje.ruta }}
                         {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}}
                     </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapse{{ ticket.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ ticket.id }}" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <strong>El viaje se encuentra: {{ ticket.viaje.estado}}</strong> la combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
+                        <strong>El viaje se encuentra: {{ ticket.viaje.estado}}</strong>
+                        <br>La combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
                         <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
                         <strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
                         <br><br>
-                        <a class="btn btn-danger">cancelar<a>
+                        <a class="btn btn-danger">cancelar viaje<a>
                     </div>
                     </div>
                 </div>
