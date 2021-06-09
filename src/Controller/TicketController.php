@@ -87,11 +87,17 @@ class TicketController extends AbstractController
     
         if($ticket->getViaje()->getEstado()!='Iniciado'){
 
+           // dd(mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
+           // dd(mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")) <= date("d-m-Y",strtotime($ticket->getViaje()->getSalida()."- 2 days")));
+            
             if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($ticket);
                 $entityManager->flush();
             }
+
+
+
         }else{
             $this->addFlash('failed', 'El viaje ya inicio, no puede ser cancelado');
         }    

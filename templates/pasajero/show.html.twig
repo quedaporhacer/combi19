@@ -89,11 +89,20 @@
                         <br>La combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
                         <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
                         <br><strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
+                        <br><strong>Se abono: </strong> ${{ ticket.viaje.precio }}
                         <br><br>
-                        <form method="post" action="{{ path('ticket_delete', {'id': ticket.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su ticket?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
-                        <button class="btn btn-danger">Cacelar Viaje</button>
+                        {% if ticket.viaje.estado == 'No iniciado' %}
+                            <form method="post" action="{{ path('ticket_delete', {'id': ticket.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su ticket?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
+                            <button class="btn btn-danger">Cacelar Viaje</button>
+                        {% endif %}
                     </form>
+                    {% if not ticket.comentario  %}
+                        {% if ticket.viaje.estado == 'Finalizado'  %} 
+                                <p>Dejanos un comentario de como fue tu experiencia <a href="#">aquí</a> </p>
+                        {% endif %}
+                    {% endif %}
+                     
                     </div>
                     </div>
                 </div>
