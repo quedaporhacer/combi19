@@ -105,7 +105,7 @@
                         <strong>El viaje se encuentra: {{ ticket.viaje.estado}}</strong>
                         <br>La combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
                         <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
-                        <strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
+                        <br><strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
                         <br><br>
                         <a class="btn btn-danger">cancelar viaje<a>
                     </div>
