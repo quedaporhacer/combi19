@@ -4,8 +4,13 @@
 
 {% block body %}
     <div class= "container" >
-        <h1>Registrarse</h1>
-        {{ include('pasajero/_form.html.twig') }}
-        <button class="btn btn-primary"> Login </button>
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Registrarse</h1>
+            {{ include('pasajero/_form.html.twig') }}
+            Si ya tienes cuenta, inicia<a href="{{path('app_login')}}" class=""> aquí </a>
+        </div>
     </div>
 {% endblock %}

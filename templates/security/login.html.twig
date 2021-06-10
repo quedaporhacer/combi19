@@ -4,59 +4,63 @@
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block body %}
-{{parent()}}
 <div class="container">
-    <form method="post" style= "margin-top: 50px">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-        {% for message in app.flashes('success') %}
-
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-                
-        {% endfor %}
-        {% for message in app.flashes('gold') %}
-
-                <div class="alert alert-warning">
-                    {{ message }}
-                </div>
-                
-        {% endfor %}
-
-        <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesión</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-        <label for="inputPassword">Contrasena</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-        #}
-        <br>
-        <button class="btn btn-lg btn-primary" type="submit">
-            Iniciar Sesión
-        </button>
-    </form>
     <br>
-    <p> Si no tiene cuenta registrese <a href="{{path('pasajero_new')}}"> aquí </a> </p>
+    <br>
+    <br>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <form method="post" style= "margin-top: 50px">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+            {% for message in app.flashes('success') %}
+
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
+            {% for message in app.flashes('gold') %}
+
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
+
+            <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesión</h1>
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+            <label for="inputPassword">Contrasena</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
+            <br>
+            <button class="btn btn-lg btn-primary" type="submit">
+                Iniciar Sesión
+            </button>
+        </form>
+        <br>
+        <p> Si no tiene cuenta registrese <a href="{{path('pasajero_new')}}"> aquí </a> </p>
+    </div>
 </div>    
 {% endblock %}
