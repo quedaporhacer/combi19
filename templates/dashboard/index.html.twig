@@ -11,20 +11,21 @@
 
 <div class="example-wrapper">
 
-    {% if app.user %}
+    {#{% if app.user %}
         <div class="mb-3">
             Estas logueado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
-    {% endif %}
+    {% endif %}#}
 
     <div class="mb-3">
-        <h1 class=""> Bienvenido 
+        <h1 class="fw-bold"> Bienvenido 
         {% if app.user %}
             {{ app.user.nombre }}        
         {% endif %} 
         </h1> 
     </div>
 
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -33,24 +34,24 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-            <img src="/images/combi.jpg" class="d-block w-100" alt="/images/combi.jpg">
+            <img src="/images/1.jpg" class="d-block w-100" alt="/images/combi.jpg">
             <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Some representative placeholder content for the first slide.</p>
+                <h1>Te llevamos a donde quieras</h1>
+                {#<p>Some representative placeholder content for the first slide.</p>#}
             </div>
             </div>
             <div class="carousel-item">
-            <img src="/images/combi.jpg" class="d-block w-100" alt="/images/combi.jpg">
+            <img src="/images/salta.jpg" class="d-block w-100" alt="/images/combi.jpg">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
+                <h1>Viajes Baratos y Seguros</h1>
+                {#<p>Some representative placeholder content for the first slide.</p>#}
             </div>
             </div>
             <div class="carousel-item">
-            <img src="/images/combi.jpg" class="d-block w-100" alt="/images/combi.jpg">
+            <img src="/images/combi_potenciada.jpg" class="d-block w-100" alt="/images/combi.jpg">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
+                <h1>La mejor calidad de combi</h1>
+                {#<p>Some representative placeholder content for the first slide.</p>#}
             </div>
             </div>
         </div>
@@ -63,6 +64,61 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    </div>
+
+    <h3>¿A donde desea viajar?</h3>
+    <div class="seacher">
+            <form class="row gy-2 gx-3 align-items-center">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Name</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="Jane Doe">
+                </div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
+                    <div class="input-group">
+                    <div class="input-group-text">@</div>
+                    <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Username">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                    <select class="form-select" id="autoSizingSelect">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="autoSizingCheck">
+                    <label class="form-check-label" for="autoSizingCheck">
+                        Remember me
+                    </label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+    </div>
+
+    <br><br>
+    <h3>Comentarios recientes</h3>
+    {% for comentario in  comentarios %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{comentario.ticket.pasajero}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{comentario.ticket.viaje}}</h6>
+                    <p class="card-text">{{comentario.comentario}}</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+            <br>
+    {% endfor %}
+
+    
 
 </div>
 {% endblock %}
