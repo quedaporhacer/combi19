@@ -108,7 +108,7 @@ class ChoferController extends AbstractController
 
         } else {
 
-            $this->addFlash('failed', 'Ese chofer se encuentra en uso!');
+            $this->addFlash('failed', 'El chofer se encuentra asociado a una combi!');
 
         }
 
