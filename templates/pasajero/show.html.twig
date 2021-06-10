@@ -79,8 +79,16 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{ ticket.id }}">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ ticket.id }}" aria-expanded="true" aria-controls="collapse{{ ticket.id }}">
-                        {{ ticket.viaje.ruta }}
-                        {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}}
+                        <div class="row">
+                            <div class="col-6">
+                                {{ ticket.viaje.ruta }}  
+                            </div>
+                            <div class="col-6">
+                            {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}} 
+                            </div>
+                        </div>
+                        {#<spam>{{ ticket.viaje.ruta }}  || hora de salida 
+                        {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}} </spam>#}
                     </button>
                     </h2>
                     <div id="collapse{{ ticket.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ ticket.id }}" data-bs-parent="#accordionExample">
