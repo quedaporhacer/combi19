@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tarjeta index{% endblock %}
+{% block title %}Tarjetas {% endblock %}
 
 {% block body %}
-    <h1>Tarjeta index</h1>
+    <h1>Tarjetas</h1>
 
     <table class="table">
         <thead>
@@ -25,13 +25,13 @@
                 <td>{{ tarjetum.propietario }}</td>
                 <td>{{ tarjetum.vencimiento ? tarjetum.vencimiento|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('tarjeta_show', {'id': tarjetum.id}) }}">show</a>
-                    <a href="{{ path('tarjeta_edit', {'id': tarjetum.id}) }}">edit</a>
+                    <a href="{{ path('tarjeta_show', {'id': tarjetum.id}) }}">Ver</a>
+                    <a href="{{ path('tarjeta_edit', {'id': tarjetum.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">No se encontraron tarjetas</td>
             </tr>
         {% endfor %}
         </tbody>

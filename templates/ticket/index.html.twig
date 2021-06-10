@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ticket index{% endblock %}
+{% block title %}Tickets{% endblock %}
 
 {% block body %}
-    <h1>Ticket index</h1>
+    <h1>Tickets</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Testeo</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -19,17 +19,17 @@
                 <td>{{ ticket.id }}</td>
                 <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('ticket_show', {'id': ticket.id}) }}">show</a>
-                    <a href="{{ path('ticket_edit', {'id': ticket.id}) }}">edit</a>
+                    <a href="{{ path('ticket_show', {'id': ticket.id}) }}">Ver</a>
+                    <a href="{{ path('ticket_edit', {'id': ticket.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No se encontraron tickets</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('ticket_new') }}">Create new</a>
+    <a href="{{ path('ticket_new') }}">Crear nuevo</a>
 {% endblock %}

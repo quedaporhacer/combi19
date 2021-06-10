@@ -4,6 +4,7 @@
 
 {% block body %}
 {{parent()}}
+    <div class="container">
     <h1>Editar Combi</h1>
 
     {% for message in app.flashes('failed') %}
@@ -17,4 +18,5 @@
 
 
     <a href="{{ path('combi_index') }}">Volver al listado</a>
+    </div>
 {% endblock %}
