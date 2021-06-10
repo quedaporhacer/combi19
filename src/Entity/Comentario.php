@@ -23,7 +23,7 @@ class Comentario
     private $comentario;
 
     /**
-     * @ORM\OneToOne(targetEntity=Ticket::class, mappedBy="comentario", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Ticket::class, mappedBy="comentario", cascade={"persist"})
      */
     private $ticket;
 
