@@ -70,7 +70,7 @@
         </div>
     </div>
 
-
+     <hr>
     <h1>Mis Viajes</h1>
 
     {% for ticket in  pasajero.tickets %}
@@ -122,7 +122,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.comentario.id) }}">
                                 <button class="btn btn-danger">Borrar</button>
                             </form>
-                           <a class="btn btn-warning" href="{{path('comentario_edit', {'id': ticket.comentario.id }) }}">Editar</a>
+                           <a class="btn btn-secondary" href="{{path('comentario_edit', {'id': ticket.comentario.id }) }}">Editar</a>
 
                     {% endif %}
                      

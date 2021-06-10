@@ -28,7 +28,44 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
-
+                {% if is_granted('ROLE_ADMIN') %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('viaje_index')}}">Viajes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('ruta_index')}}">Rutas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('lugar_index')}}">Lugares</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('combi_index')}}">Combis</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('chofer_index')}}">Choferes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('pasajero_index')}}">Pasajeros</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('insumo_index')}}">Insumos</a>
+                  </li>
+                {% endif %}
+                {% if is_granted('ROLE_PASAJERO') %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('dashboard')}}">Inicio</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Perfil</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('tarjeta_new',{'id': pasajero.id})}}">Membresia</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Pasajes</a>
+                  </li>
+                {% endif %}
+                 
                 {#<li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="">Inicio</a>
                 </li>
