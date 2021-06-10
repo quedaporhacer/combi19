@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comentario index{% endblock %}
+{% block title %}Comentarios{% endblock %}
 
 {% block body %}
-    <h1>Comentario index</h1>
+    {{parent()}}
+    <h1>Comentarios</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Comentario</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -19,13 +20,13 @@
                 <td>{{ comentario.id }}</td>
                 <td>{{ comentario.comentario }}</td>
                 <td>
-                    <a href="{{ path('comentario_show', {'id': comentario.id}) }}">show</a>
-                    <a class="btn btn-secondary" href="{{ path('comentario_edit', {'id': comentario.id}) }}">edit</a>
+                    <a href="{{ path('comentario_show', {'id': comentario.id}) }}">Ver</a>
+                    <a class="btn btn-secondary" href="{{ path('comentario_edit', {'id': comentario.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No hay comentarios</td>
             </tr>
         {% endfor %}
         </tbody>

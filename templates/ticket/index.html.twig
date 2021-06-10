@@ -3,6 +3,9 @@
 {% block title %}Tickets{% endblock %}
 
 {% block body %}
+
+    {{parent()}}
+
     <h1>Tickets</h1>
 
     <table class="table">
@@ -20,7 +23,7 @@
                 <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('ticket_show', {'id': ticket.id}) }}">Ver</a>
-                    <a href="{{ path('ticket_edit', {'id': ticket.id}) }}">Editar</a>
+                    <a class="btn btn-secondary" href="{{ path('ticket_edit', {'id': ticket.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('ticket_new') }}">Crear nuevo</a>
+    <a class="btn btn-primary" href="{{ path('ticket_new') }}">Crear nuevo</a>
 {% endblock %}

@@ -37,17 +37,17 @@
                 <td>{{ viaje.estado  }}</td>
                 <td>
                     {{ include('viaje/_delete_form.html.twig') }}
-                    <a href="{{ path('viaje_edit', {'id': viaje.id}) }}">editar</a>
+                    <a class="btn btn-secondary" href="{{ path('viaje_edit', {'id': viaje.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no se encontraron viajes</td>
+                <td colspan="4">No se encontraron viajes</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('viaje_new') }}">Crear nueva</a>
+    <a class="btn btn-primary" href="{{ path('viaje_new') }}">Crear nuevo</a>
     
 {% endblock %}

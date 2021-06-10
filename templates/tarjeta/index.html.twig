@@ -3,6 +3,9 @@
 {% block title %}Tarjetas {% endblock %}
 
 {% block body %}
+
+    {{parent()}}
+
     <h1>Tarjetas</h1>
 
     <table class="table">
@@ -13,7 +16,7 @@
                 <th>Codigo</th>
                 <th>Vencimiento</th>
                 <th>Propietario</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +29,7 @@
                 <td>{{ tarjetum.vencimiento ? tarjetum.vencimiento|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('tarjeta_show', {'id': tarjetum.id}) }}">Ver</a>
-                    <a href="{{ path('tarjeta_edit', {'id': tarjetum.id}) }}">Editar</a>
+                    <a class="btn btn-secondary" href="{{ path('tarjeta_edit', {'id': tarjetum.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

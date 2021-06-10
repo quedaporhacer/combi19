@@ -3,7 +3,9 @@
 {% block title %}Rutas{% endblock %}
 
 {% block body %}
-{{parent()}}
+
+    {{parent()}}
+
     <h1>Rutas</h1>
     {% for message in app.flashes('failed') %}
 
@@ -33,7 +35,7 @@
                 <td>{{ rutum.kilometros }}</td>
                 <td>
                      {{ include('ruta/_delete_form.html.twig') }}
-                    <a href="{{ path('ruta_edit', {'id': rutum.id}) }}">editar</a>
+                    <a class="btn btn-secondary" href="{{ path('ruta_edit', {'id': rutum.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -44,5 +46,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('ruta_new') }}">Crear nueva</a>
+    <a class="btn btn-primary" href="{{ path('ruta_new') }}">Crear nueva</a>
 {% endblock %}

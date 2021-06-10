@@ -3,7 +3,9 @@
 {% block title %}Lugares{% endblock %}
 
 {% block body %}
-{{parent()}}
+
+    {{parent()}}
+    
     <h1>Lugares</h1>
     
     {% for message in app.flashes('failed') %}
@@ -40,5 +42,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('lugar_new') }}">Crear Lugar</a>
+    <a class="btn btn-primary" href="{{ path('lugar_new') }}">Crear Lugar</a>
 {% endblock %}
