@@ -106,16 +106,16 @@ class PasajeroController extends AbstractController
      * @Route("/{id}", name="pasajero_delete", methods={"POST"})
      */
     public function delete(Request $request, Pasajero $pasajero): Response
-    {
-        if($pasajero->getTickets()->isEmpty()){
-            if ($this->isCsrfTokenValid('delete'.$pasajero->getId(), $request->request->get('_token'))) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($pasajero);
-                $entityManager->flush();
-            }
+    {       
+        if ($this->isCsrfTokenValid('delete'.$pasajero->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($pasajero);
+            $entityManager->flush();
+        }
+        /*if($pasajero->getTickets()->isEmpty()){
         }else{
             $this->addFlash('failed', 'el pasajero tiene tickets');
-        }
+        }*/
         return $this->redirectToRoute('pasajero_index');
     }
 
