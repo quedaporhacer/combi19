@@ -3,10 +3,19 @@
 {% block title %}Nueva Ruta{% endblock %}
 
 {% block body %}
-{{parent()}}
+    {{parent()}}
+    <div class="container">
+    {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            
+    {% endfor %}
     <h1>Crear nueva Ruta</h1>
 
     {{ include('ruta/_form.html.twig') }}
 
     <a href="{{ path('ruta_index') }}">volver a la lista</a>
+    </div>
 {% endblock %}

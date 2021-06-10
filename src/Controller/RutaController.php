@@ -39,18 +39,19 @@ class RutaController extends AbstractController
         $form = $this->createForm(RutaType::class, $rutum);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if($form['origen']->getData() != $form['destino']->getData()){
 
-            
+            if ($form->isSubmitted() && $form->isValid()) {
 
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($rutum);
+                $entityManager->flush();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($rutum);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('ruta_index');
+                return $this->redirectToRoute('ruta_index');
+            }
+        }else{
+            $this->addFlash('failed', 'El destino y el origen no pueden ser iguales');
         }
-
         return $this->render('ruta/new.html.twig', [
             'rutum' => $rutum,
             'form' => $form->createView(),
@@ -75,18 +76,22 @@ class RutaController extends AbstractController
     {
         $form = $this->createForm(RutaType::class, $rutum);
         $form->handleRequest($request);
+        if($form['origen']->getData() != $form['destino']->getData()){
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $repository = $this->getDoctrine()->getRepository(Viaje::class);
-            $viaje= $repository->findOneBy(['ruta' =>  $rutum ]);
-            
-            if(!$viaje){
-                $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('ruta_index');
-            }
-            $this->addFlash('failed', 'La ruta se encuentra en uso!');
+                $repository = $this->getDoctrine()->getRepository(Viaje::class);
+                $viaje= $repository->findOneBy(['ruta' =>  $rutum ]);
                 
+                if(!$viaje){
+                    $this->getDoctrine()->getManager()->flush();
+                    return $this->redirectToRoute('ruta_index');
+                }
+                $this->addFlash('failed', 'La ruta se encuentra en uso!');
+                    
+            }
+        }else{
+            $this->addFlash('failed', 'Origen y destino no pueden ser iguales');
         }
 
         return $this->render('ruta/edit.html.twig', [
