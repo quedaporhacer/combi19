@@ -71,7 +71,6 @@ class PasajeroController extends AbstractController
     public function show(Pasajero $pasajero): Response
     {
         
-        
         return $this->render('pasajero/show.html.twig', [
             'pasajero' => $pasajero,
         ]);

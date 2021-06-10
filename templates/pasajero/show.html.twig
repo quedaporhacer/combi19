@@ -65,13 +65,13 @@
                </div>
             {% else %}
                 <p> No tiene una tarjeta asociada </p>
-                <p>Si desae ser miebro Gold precione <a href="{{ path('tarjeta_new', {'id': pasajero.id}) }}">aquí</a><p>
+                <p>Si desae ser miebro Gold presione <a href="{{ path('tarjeta_new', {'id': pasajero.id}) }}">aquí</a><p>
             {% endif %}
         </div>
     </div>
 
 
-    <h1>Mi Viajes</h1>
+    <h1>Mis Viajes</h1>
 
     {% for ticket in  pasajero.tickets %}
 
@@ -103,17 +103,19 @@
                                 <p>Dejanos un comentario de como fue tu experiencia <a href="{{ path('comentario_new', {'id': ticket.id}) }}">aquí</a> </p>
                         {% endif %}
                     {% else %}
-                             Mi comentario: <br> 
+                    <hr> 
+                             <h4> Mi comentario: </h4>
                             <div class="card">
                                  {{ticket.comentario.comentario}}                        
                             </div>
                             <br>
-
-                            <form method="post" action="{{ path('comentario_delete', {'id': ticket.comentario.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                               
+                            <form style="display: inline;" method="post" action="{{ path('comentario_delete', {'id': ticket.comentario.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.comentario.id) }}">
-                                <button class="btn">Eliminar </button>
+                                <button class="btn btn-danger">Borrar</button>
                             </form>
-                           <button class="btn btn-warning">Editar</button>
+                           <a class="btn btn-warning" href="{{path('comentario_edit', {'id': ticket.comentario.id }) }}">Editar</a>
+
                     {% endif %}
                      
                     </div>

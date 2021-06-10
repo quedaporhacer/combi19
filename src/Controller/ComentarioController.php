@@ -71,7 +71,7 @@ class ComentarioController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('comentario_index');
+            return $this->redirectToRoute('pasajero_show',['id' => $comentario->getTicket()->getPasajero()->getId() ]);
         }
 
         return $this->render('comentario/edit.html.twig', [
@@ -85,7 +85,7 @@ class ComentarioController extends AbstractController
      */
     public function delete(Request $request, Comentario $comentario): Response
     {
-        dd($comentario->getTicket()->setComentario(null));
+        $comentario->getTicket()->setComentario(null);
         
         if ($this->isCsrfTokenValid('delete'.$comentario->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
