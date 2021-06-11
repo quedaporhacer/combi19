@@ -80,22 +80,34 @@ class ViajeController extends AbstractController
      */
     public function edit(Request $request, Viaje $viaje): Response
     {
+        $capacidad= $viaje->getCombi()->getCapacidad();
+        $calidad= $viaje->getCombi()->getCalidad();
+        $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
+        $viajes = $viajes->findBy(['combi' =>  $viaje->getCombi(), 'salida' => $viaje->getSalida() ]);
         $form = $this->createForm(ViajeType::class, $viaje);
-        $form->remove('salida')->remove('llegada')->remove('ruta');
+        $form->remove('salida')->remove('llegada')->remove('ruta')->remove('precio');
         $form->handleRequest($request);
-        
         if(!$viaje->inicio()){
-            if ($form->isSubmitted() && $form->isValid() ) {
-
-                $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('viaje_index');
-
-        }
+            if(!$viajes){
+                if ($form->isSubmitted() && $form->isValid() ) {
+                    if(($form['combi'])->getData()->getCapacidad()>=$capacidad){
+                        if(($form['combi'])->getData()->getCalidad()>=$calidad){
+                            $this->getDoctrine()->getManager()->flush();
+                            return $this->redirectToRoute('viaje_index');
+                        }else{
+                            $this->addFlash('failed','La calidad de la nueva combi no puede ser menor');
+                        }
+                    }else{ 
+                        $this->addFlash('failed','La capacidad de la nueva combi no puede ser menor');
+                    }    
+                }
+            }else{
+                $this->addFlash('failed','La combi se encuentra en uso');
+            }
         }else{
-            $this->addFlash('failed','el viaje ya inicio');
-        }
-
-        
+            $this->addFlash('failed','El viaje ya inicio');           
+        }  
+            
 
         return $this->render('viaje/edit.html.twig', [
             'viaje' => $viaje,

@@ -5,6 +5,13 @@
 {% block body %}
 {{parent()}}
     <div class="container">
+     {% for message in app.flashes('failed') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            
+    {% endfor %}
         <h1>Editar Viaje</h1>
 
         {{ include('viaje/_form.html.twig', {'button_label': 'Actualizar'}) }}
