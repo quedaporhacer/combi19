@@ -4,16 +4,23 @@
 
 {% block body %}
 {{parent()}}
-    <h1>Crear nuevo Lugar</h1>
+    <div class='container'>
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Crear nuevo Lugar</h1>
 
-    {% for message in app.flashes('failed') %}
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
 
-    {{ include('lugar/_form.html.twig') }}
+        {{ include('lugar/_form.html.twig') }}
 
-    <a href="{{ path('lugar_index') }}">volver al listado</a>
+        <a href="{{ path('lugar_index') }}">volver al listado</a>
+        </div>
+    </div>
 {% endblock %}

@@ -4,15 +4,22 @@
 
 {% block body %}
 {{parent()}}
-    <h1>Editar Lugar</h1>
-     {% for message in app.flashes('failed') %}
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Editar Lugar</h1>
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {{ include('lugar/_form.html.twig', {'button_label': 'Update'}) }}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {{ include('lugar/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('lugar_index') }}">volver a la lista</a>
+        <a href="{{ path('lugar_index') }}">volver a la lista</a>
+        </div>
+    </div>
 
 {% endblock %}

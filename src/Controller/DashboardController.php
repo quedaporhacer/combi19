@@ -25,4 +25,10 @@ class DashboardController extends AbstractController
             'pasajero' => $pasajero
         ]);
     }
+
+    public function search():Response
+    {
+        
+        return $this->render();
+    }
 }

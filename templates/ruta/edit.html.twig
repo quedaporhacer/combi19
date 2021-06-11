@@ -4,18 +4,25 @@
 
 {% block body %}
 {{parent()}}
-    <h1>Editar Ruta</h1>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Editar Ruta</h1>
 
-    {% for message in app.flashes('failed') %}
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
 
-    {{ include('ruta/_form.html.twig', {'button_label': 'Guardar'}) }}
+        {{ include('ruta/_form.html.twig', {'button_label': 'Guardar'}) }}
 
-    <a href="{{ path('ruta_index') }}">Volver a la lista/a>
+        <a href="{{ path('ruta_index') }}">Volver a la lista</a>
+        </div>
+    </div>
 
    
 {% endblock %}

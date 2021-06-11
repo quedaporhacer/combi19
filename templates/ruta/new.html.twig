@@ -5,17 +5,23 @@
 {% block body %}
     {{parent()}}
     <div class="container">
-    {% for message in app.flashes('failed') %}
+        <br>
+        <br>
+        <br>
+        <div class= "shadow-lg p-3 mb-5 bg-body rounded">
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-            
-    {% endfor %}
-    <h1>Crear nueva Ruta</h1>
+        {% for message in app.flashes('failed') %}
 
-    {{ include('ruta/_form.html.twig') }}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+                
+        {% endfor %}
+        <h1>Crear nueva Ruta</h1>
 
-    <a href="{{ path('ruta_index') }}">volver a la lista</a>
+        {{ include('ruta/_form.html.twig') }}
+
+        <a href="{{ path('ruta_index') }}">volver a la lista</a>
+        </div>
     </div>
 {% endblock %}

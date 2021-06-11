@@ -87,9 +87,9 @@ class ViajeController extends AbstractController
         $form = $this->createForm(ViajeType::class, $viaje);
         $form->remove('salida')->remove('llegada')->remove('ruta')->remove('precio');
         $form->handleRequest($request);
-        if(!$viaje->inicio()){
-            if(!$viajes){
-                if ($form->isSubmitted() && $form->isValid() ) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(!$viaje->inicio()){
+                if(!$viajes){
                     if(($form['combi'])->getData()->getCapacidad()>=$capacidad){
                         if(($form['combi'])->getData()->getCalidad()>=$calidad){
                             $this->getDoctrine()->getManager()->flush();
@@ -100,14 +100,13 @@ class ViajeController extends AbstractController
                     }else{ 
                         $this->addFlash('failed','La capacidad de la nueva combi no puede ser menor');
                     }    
+                }else{
+                    $this->addFlash('failed','La combi se encuentra en uso');
                 }
             }else{
-                $this->addFlash('failed','La combi se encuentra en uso');
-            }
-        }else{
-            $this->addFlash('failed','El viaje ya inicio');           
-        }  
-            
+                $this->addFlash('failed','El viaje ya inicio');           
+            }  
+        } 
 
         return $this->render('viaje/edit.html.twig', [
             'viaje' => $viaje,

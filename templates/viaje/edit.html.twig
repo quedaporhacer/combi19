@@ -5,17 +5,22 @@
 {% block body %}
 {{parent()}}
     <div class="container">
-     {% for message in app.flashes('failed') %}
+        <br>
+        <br>
+        <br>
+        <div class= "shadow-lg p-3 mb-5 bg-body rounded">
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-            
-    {% endfor %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+                
+        {% endfor %}
         <h1>Editar Viaje</h1>
 
         {{ include('viaje/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
         <a href="{{ path('viaje_index') }}">volver a la lista</a>
         </div>
+    </div>
 {% endblock %}

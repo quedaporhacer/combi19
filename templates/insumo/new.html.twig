@@ -4,9 +4,16 @@
 
 {% block body %}
 {{parent()}}
-    <h1>Crear nuevo Insumo</h1>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Crear nuevo Insumo</h1>
 
-    {{ include('insumo/_form.html.twig') }}
+        {{ include('insumo/_form.html.twig') }}
 
-    <a href="{{ path('insumo_index') }}">volver a la lista</a>
+        <a href="{{ path('insumo_index') }}">volver a la lista</a>
+        </div>
+    </div>
 {% endblock %}

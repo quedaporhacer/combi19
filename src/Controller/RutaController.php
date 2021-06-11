@@ -39,19 +39,21 @@ class RutaController extends AbstractController
         $form = $this->createForm(RutaType::class, $rutum);
         $form->handleRequest($request);
 
-        if($form['origen']->getData() != $form['destino']->getData()){
+        
 
-            if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($form['origen']->getData() != $form['destino']->getData()){
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($rutum);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('ruta_index');
+            }else{
+                $this->addFlash('failed', 'El destino y el origen no pueden ser iguales');
             }
-        }else{
-            $this->addFlash('failed', 'El destino y el origen no pueden ser iguales');
         }
+        
         return $this->render('ruta/new.html.twig', [
             'rutum' => $rutum,
             'form' => $form->createView(),
