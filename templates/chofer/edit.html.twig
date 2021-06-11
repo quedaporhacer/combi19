@@ -3,11 +3,17 @@
 {% block title %}Editar Chofer{% endblock %}
 
 {% block body %}
-    <h1>Editar Chofer</h1>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Editar Chofer</h1>
 
-    {{ include('chofer/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('chofer/_form.html.twig', {'button_label': 'Guardar'}) }}
 
-    <a href="{{ path('chofer_index') }}">Volver</a>
+        <a href="{{ path('chofer_index') }}">volver a la lista</a>
 
-    {{ include('chofer/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

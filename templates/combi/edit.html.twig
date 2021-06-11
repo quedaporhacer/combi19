@@ -5,18 +5,23 @@
 {% block body %}
 {{parent()}}
     <div class="container">
-    <h1>Editar Combi</h1>
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Editar Combi</h1>
 
-    {% for message in app.flashes('failed') %}
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
-        
-    {{ include('combi/_form.html.twig') }}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            
+        {{ include('combi/_form.html.twig') }}
 
 
-    <a href="{{ path('combi_index') }}">Volver al listado</a>
+        <a href="{{ path('combi_index') }}">Volver al listado</a>
+        </div>
     </div>
 {% endblock %}

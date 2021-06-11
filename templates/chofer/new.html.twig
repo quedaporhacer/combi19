@@ -3,9 +3,16 @@
 {% block title %}Nuevo Chofer{% endblock %}
 
 {% block body %}
-    <h1>Crear nuevo chofer</h1>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Crear nuevo chofer</h1>
 
-    {{ include('chofer/_form.html.twig') }}
+        {{ include('chofer/_form.html.twig') }}
 
-    <a href="{{ path('chofer_index') }}">Volver</a>
+        <a href="{{ path('chofer_index') }}">Volver</a>
+        </div>
+    </div>
 {% endblock %}

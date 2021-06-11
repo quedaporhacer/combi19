@@ -5,16 +5,21 @@
 {% block body %}
 {{parent()}}
     <div class= "container">
-    <h1>Crear nueva Combi</h1>
-    {% for message in app.flashes('failed') %}
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Crear nueva Combi</h1>
+        {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
 
-    {{ include('combi/_form.html.twig') }}
+        {{ include('combi/_form.html.twig') }}
 
-    <a href="{{ path('combi_index') }}">Volver a la lista</a>
+        <a href="{{ path('combi_index') }}">Volver a la lista</a>
+        </div>
     </div>
 {% endblock %}
