@@ -83,14 +83,14 @@ class CombiController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $repository = $this->getDoctrine()->getRepository(Viaje::class);
-            $viajesNoIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'No inicio' ]);
+            $viajesNoIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'No iniciado' ]);
             $viajesIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'Inicio' ]);
             
             if(!$viajesNoIniciados && !$viajesIniciados ){
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('combi_index');
             }
-            $this->addFlash('failed', 'La combi se encuentra en uso');
+            $this->addFlash('failed', 'La combi tiene viajes pendientes, o en curso');
            
         }
 

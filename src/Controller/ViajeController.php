@@ -129,14 +129,13 @@ class ViajeController extends AbstractController
         }
 
 
-        /*if(!$ticket  && !$viaje->inicio()){
+        if(!$ticket  && !$viaje->inicio()){
             if ($this->isCsrfTokenValid('delete'.$viaje->getId(), $request->request->get('_token'))) {
-                $rembolsos = $viaje->rembolso();
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($viaje);
                 $entityManager->flush();
             }
-        }*/
+        }
 
         return $this->redirectToRoute('viaje_index');
     }
