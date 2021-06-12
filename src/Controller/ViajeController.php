@@ -82,11 +82,11 @@ class ViajeController extends AbstractController
     {
         $capacidad= $viaje->getCombi()->getCapacidad();
         $calidad= $viaje->getCombi()->getCalidad();
-        $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
-        $viajes = $viajes->findBy(['combi' =>  $viaje->getCombi(), 'salida' => $viaje->getSalida() ]);
         $form = $this->createForm(ViajeType::class, $viaje);
         $form->remove('salida')->remove('llegada')->remove('ruta')->remove('precio');
         $form->handleRequest($request);
+        $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
+        $viajes = $viajes->findBy(['combi' =>  $form['combi']->getData(), 'salida' => $viaje->getSalida() ]);
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$viaje->inicio()){
                 if(!$viajes){
