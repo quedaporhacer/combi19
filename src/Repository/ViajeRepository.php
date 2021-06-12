@@ -48,36 +48,43 @@ class ViajeRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAllGreaterThanPrice(int $price): array
+
+    public function findbyRutaySalida($origen,$destino): array
     {
-        $conn = $this->getEntityManager()->getConnection();
-
+       $conn = $this->getEntityManager()->getConnection();
         $sql = '
-            SELECT * FROM product p
-            WHERE p.price > :price
-            ORDER BY p.price ASC
-            ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['price' => $price]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetchAllAssociative();
-    }
-
-
-    public function findbyRutaySalida($ruta,$form): array
-    {
-        $conn = $this->getEntityManager()->getConnection();
-        $sql = '
-        SELECT * FROM product p
-        WHERE p.price > :price
-        ORDER BY p.price ASC
+        SELECT DISTINCT v.id FROM viaje v 
+        INNER JOIN ruta r ON(v.ruta_id = r.id)
+        INNER JOIN lugar lo ON(r.origen_id = lo.id)
+        INNER JOIN lugar ld ON(r.destino_id = ld.id)
+        WHERE lo.nombre = :origen AND ld.nombre = :destino 
         ';
         $stmt = $conn->prepare($sql);
-        $stmt->execute(['price' => $price]);
+        $stmt->execute(array(
+            'origen' => $origen,
+            'destino' => $destino,
+        ));
+        
 
     // returns an array of arrays (i.e. a raw data set)
     return $stmt->fetchAllAssociative();
+
+  /*  $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT DISTINCT v.id 
+            FROM App\Entity\Viaje v 
+            INNER JOIN App\Entity\Ruta r ON v.ruta_id = r.id
+            INNER JOIN App\Entity\Lugar lo ON r.origen_id = lo.id
+            INNER JOIN App\Entity\Lugar ld ON r.destino_id = ld.id
+            WHERE lo.nombre = :origen AND ld.nombre = :destino'
+        )->setParameters(array(
+            'origen' => $origen,
+            'destino' => $destino,
+        ));
+
+        // returns an array of Product objects
+        return $query->getResult();*/
     }
 
 }

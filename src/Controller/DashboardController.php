@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pasajero;
+use App\Entity\Viaje;
+use App\Form\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,20 +28,42 @@ class DashboardController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/dashboard/busqueda", name="busqueda")
+     */
     public function search(Request $request):Response
-    {
-        $form = $this->createForm(SearchType::class, $search);
+    {   
+      
+        $form = $this->createFormBuilder(null)->add('origen')->add('destino')->getForm();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repository = $this->getDoctrine()->getRepository(Ruta::class);
+
+
+            
+            $origen=$form['origen']->getData();
+            $destino=$form['destino']->getData();
+            $repository = $this->getDoctrine()->getRepository(Viaje::class);
+           
+            $viajes = $repository->findbyRutaySalida($origen,$destino);
+
+            $i=0;
+            foreach ($viajes as $id) {
+                $arr[$i] = $repository->find($id);
+                $i=$i+1;
+            }
+            //dd($arr);
+            /*$repository = $this->getDoctrine()->getRepository(Ruta::class);
             $rutas= $repository->findBy(['destino' => ($form['ruta'])['destino']->getData(), 'origen' => ($form['ruta'])['origen']->getData() ]);
             $repository = $this->getDoctrine()->getRepository(Viaje::class);
             foreach ($rutas as $ruta){
             $viajes = $viajes + $repository->findBy(['ruta' => $ruta, 'salida'=>$form['salida']->getData()]);
-            }
+            }*/
+            
         }
-        return $this->render('dashboard/search.html.twig',[
-            'viajes' => $viajes
+        return $this->render('viaje/new.html.twig', [
+            'form' => $form->createView(),
+            'viajes' => $arr,
         ]);
     }
 }
