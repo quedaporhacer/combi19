@@ -192,10 +192,10 @@ class Ticket
 
     public function getPrecioTotal(): ?float
     {
-        $precioT=0;
+        $val=0;
         foreach($this->consumos as $c){
-        $precioT += $c->getPrecio(); 
+        $val += $c->getPrecio(); 
     }
-        return $this->viaje->getPrecio() + $precioT;
+        return $this->viaje->getPrecio() + $val;
     }
 }
