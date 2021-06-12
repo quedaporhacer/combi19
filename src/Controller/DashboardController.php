@@ -26,9 +26,20 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    public function search():Response
+    public function search(Request $request):Response
     {
-        
-        return $this->render();
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository = $this->getDoctrine()->getRepository(Ruta::class);
+            $rutas= $repository->findBy(['destino' => ($form['ruta'])['destino']->getData(), 'origen' => ($form['ruta'])['origen']->getData() ]);
+            $repository = $this->getDoctrine()->getRepository(Viaje::class);
+            foreach ($rutas as $ruta){
+            $viajes = $viajes + $repository->findBy(['ruta' => $ruta, 'salida'=>$form['salida']->getData()]);
+            }
+        }
+        return $this->render('dashboard/search.html.twig',[
+            'viajes' => $viajes
+        ]);
     }
 }
