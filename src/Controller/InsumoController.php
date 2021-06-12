@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Insumo;
+use App\Entity\Consumo;
 use App\Form\InsumoType;
 use App\Repository\InsumoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -87,10 +88,18 @@ class InsumoController extends AbstractController
      */
     public function delete(Request $request, Insumo $insumo): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$insumo->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($insumo);
-            $entityManager->flush();
+        $repository=$this->getDoctrine()->getRepository(Consumo::class);
+        $consumo= $repository->findOneBy(['insumo' =>  $insumo ]);
+
+        if(!$consumo){
+            if ($this->isCsrfTokenValid('delete'.$insumo->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($insumo);
+                $entityManager->flush();
+            }
+        }else{
+
+            $this->addFlash('failed','El insumo ya fue adquirido en una compra');
         }
 
         return $this->redirectToRoute('insumo_index');
