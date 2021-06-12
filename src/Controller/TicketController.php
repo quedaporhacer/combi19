@@ -27,9 +27,9 @@ class TicketController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="ticket_new", methods={"GET","POST"})
+     * @Route("/{id}/new", name="ticket_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Viaje $viaje): Response
     {
         $ticket = new Ticket();
         $form = $this->createForm(TicketType::class, $ticket);
@@ -37,6 +37,7 @@ class TicketController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $ticket->setViaje($viaje);
             $entityManager->persist($ticket);
             $entityManager->flush();
 

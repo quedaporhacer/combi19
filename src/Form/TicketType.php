@@ -13,7 +13,7 @@ class TicketType extends AbstractType
     {
         $builder
             //->add('testeo')
-            ->add('viaje')
+            //->add('viaje')
             //->add('comentario')
             ->add('pasajero')
             ->add('numero')
