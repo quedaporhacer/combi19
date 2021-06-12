@@ -18,18 +18,6 @@ class Consumo
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Insumo::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $insumo;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Ticket::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Ticket;
-
-    /**
      * @ORM\Column(type="float")
      */
     private $precio;
@@ -39,33 +27,21 @@ class Consumo
      */
     private $cantidad;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Ticket::class, inversedBy="consumos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ticket;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Insumo::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $insumo;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getInsumo(): ?Insumo
-    {
-        return $this->insumo;
-    }
-
-    public function setInsumo(Insumo $insumo): self
-    {
-        $this->insumo = $insumo;
-
-        return $this;
-    }
-
-    public function getTicket(): ?Ticket
-    {
-        return $this->Ticket;
-    }
-
-    public function setTicket(Ticket $Ticket): self
-    {
-        $this->Ticket = $Ticket;
-
-        return $this;
     }
 
     public function getPrecio(): ?float
@@ -88,6 +64,30 @@ class Consumo
     public function setCantidad(int $cantidad): self
     {
         $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    public function getTicket(): ?Ticket
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): self
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    public function getInsumo(): ?Insumo
+    {
+        return $this->insumo;
+    }
+
+    public function setInsumo(?Insumo $insumo): self
+    {
+        $this->insumo = $insumo;
 
         return $this;
     }

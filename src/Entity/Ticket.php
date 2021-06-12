@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +55,16 @@ class Ticket
      * @ORM\Column(type="date")
      */
     private $vencimiento;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Consumo::class, mappedBy="ticket", orphanRemoval=true)
+     */
+    private $consumos;
+
+    public function __construct()
+    {
+        $this->consumos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,5 +158,44 @@ class Ticket
     public function __toString(): ?string 
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Consumo[]
+     */
+    public function getConsumos(): Collection
+    {
+        return $this->consumos;
+    }
+
+    public function addConsumo(Consumo $consumo): self
+    {
+        if (!$this->consumos->contains($consumo)) {
+            $this->consumos[] = $consumo;
+            $consumo->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsumo(Consumo $consumo): self
+    {
+        if ($this->consumos->removeElement($consumo)) {
+            // set the owning side to null (unless already changed)
+            if ($consumo->getTicket() === $this) {
+                $consumo->setTicket(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrecioTotal(): ?float
+    {
+        $precioT=0;
+        foreach($this->consumos as $c){
+        $precioT += $c->getPrecio(); 
+    }
+        return $this->viaje->getPrecio() + $precioT;
     }
 }

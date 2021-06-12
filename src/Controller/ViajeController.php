@@ -123,7 +123,7 @@ class ViajeController extends AbstractController
         $ticket= $repository->findOneBy(['viaje' =>  $viaje ]);
 
         foreach ($viaje->getTickets() as $ticket){
-            $meesage = $ticket->getPasajero()->getUser() .',total a reombolsar: '. $ticket->getPrecio();
+            $meesage = $ticket->getPasajero()->getUser() .',total a reombolsar: '. $ticket->getPrecioTotal();
             $this->addFlash('rembolso', $meesage);  
             
         }
