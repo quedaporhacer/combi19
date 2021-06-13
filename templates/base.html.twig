@@ -64,8 +64,11 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Pasajes</a>
                   </li>
-                {% endif %}
                  
+                {% endif %}
+                  <li class="nav-item">
+                    <a href="{{path ('app_logout')}}" class="nav-link">Cerrar sesion</a>
+                  </li>
                 {#<li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="">Inicio</a>
                 </li>
