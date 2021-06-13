@@ -4,11 +4,13 @@
 
 {% block body %}
     <div class="container">
-    <h1>¿Desea adquirir la Membresia Gold?</h1>
-    <h4>Ingresar tarjeta</h4>
-
-    {{ include('tarjeta/_form.html.twig') }}
-     <button class="btn"> <a href="{{path('app_login')}}" >Cancelar</a> </button>
-    {#<a href="{{ path('tarjeta_index') }}">back to list</a>#}
+        <br><br><br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>¿Desea adquirir la Membresia Gold?</h1>
+            <h4>Ingresar tarjeta</h4>
+            {{ include('tarjeta/_form.html.twig') }}
+            <a  class="btn btn-danger" href= "{{path('app_login')}}" >Cancelar</a> 
+            {#<a href="{{ path('tarjeta_index') }}">back to list</a>#}
+        </div>
     </div>
 {% endblock %}

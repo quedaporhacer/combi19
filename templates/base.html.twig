@@ -58,17 +58,29 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Perfil</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{path('tarjeta_new',{'id': pasajero.id})}}">Membresia</a>
-                  </li>
+                  {% if pasajero.getTarjeta() %}
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="{{path('tarjeta_new_perfil',{'id': pasajero.id})}}">Membresia</a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{path('tarjeta_new',{'id': pasajero.id})}}">Membresia</a>
+                    </li>
+                  {% endif %}
+
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Pasajes</a>
                   </li>
                  
                 {% endif %}
+                {% if app.user %}
+                  <li class="nav-item">
+                    <p class="navbar-text" style="color: #C5D5D9;"> {{app.user.email}} </p >
+                  </li>
                   <li class="nav-item">
                     <a href="{{path ('app_logout')}}" class="nav-link">Cerrar sesion</a>
                   </li>
+                {% endif %}
                 {#<li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="">Inicio</a>
                 </li>
