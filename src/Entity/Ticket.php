@@ -61,6 +61,11 @@ class Ticket
      */
     private $consumos;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $precio;
+
     public function __construct()
     {
         $this->consumos = new ArrayCollection();
@@ -197,5 +202,20 @@ class Ticket
         $val += $c->getPrecio(); 
     }
         return $this->viaje->getPrecio() + $val;
+    }
+
+    public function getPrecio(): ?float
+    {
+        return $this->precio;
+    }
+
+    public function setPrecio(float $precio): self
+    {
+        if($this->pasajero->getMembresia())
+            $this->precio= ($precio * 0.9);
+        else
+            $this->precio = $precio;
+        
+        return $this;
     }
 }

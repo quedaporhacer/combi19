@@ -40,6 +40,7 @@ class TicketController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $ticket->setViaje($viaje);
+            $ticket->setPrecio($viaje->getPrecio());
             $entityManager->persist($ticket);
             $entityManager->flush();
 
@@ -92,11 +93,12 @@ class TicketController extends AbstractController
             
             date_default_timezone_set('America/Buenos_Aires');
             $now = new \DateTime();
-            $reembolso = (($ticket->getViaje()->getPrecio())/2);
+            $reembolsoT=($ticket->getPrecio());
+            $reembolsoP = ($reembolsoT/2);
             if((($ticket->getViaje()->getSalida())->modify('-2 day'))>$now){
-                $this->addFlash('success','Se reembolsara la totalidad del viaje');
+                $this->addFlash('success','Se reembolsara la totalidad del precio del viaje: $'. $reembolsoT);
             }else{
-                $this->addFlash('success','Se reembolsaran: $' . $reembolso . ' del coste del viaje');
+                $this->addFlash('success','Se reembolsara la mitad del precio del viaje: $' . $reembolsoP);
             }
 
            // dd(mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));

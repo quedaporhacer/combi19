@@ -4,11 +4,21 @@
 {% block body %}
 {{parent()}}
 <div class="container">
+    
 
+     {% for message in app.flashes('gold') %}
+
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
+    <br>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <div class="row">
         <div class="col-6">
             <h1>Mis Datos Personales</h1>
-                <table class="table table-borderless">
+                <table class="table table-hover">
                     <tbody>
                         <tr>
                             <th>Dni</th>
@@ -32,8 +42,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <a href="{{ path('pasajero_edit', {'id': pasajero.id}) }}">editar datos personales</a>
+                <a class="btn btn-secondary" href="{{ path('pasajero_edit', {'id': pasajero.id}) }}"> Editar datos </a>
         </div>
+        
         <div class="col-6">
          <h1>Mi Tarjeta</h1>
             {% if pasajero.tarjeta %}
@@ -58,30 +69,30 @@
                 </div>
                 </div>
                <div class="delete">
-                    <form method="post" action="{{ path('tarjeta_delete', {'id': pasajero.tarjeta.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su tarjeta? Dejara de tener los veneficios de la membresia Gold');">
+                    <form method="post" action="{{ path('tarjeta_delete', {'id': pasajero.tarjeta.id}) }}" onsubmit="return confirm('¿Esta seguro que desea borrar los datos de su tarjeta? Dejara de tener los beneficios de la membresia Gold');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pasajero.tarjeta.id) }}">
-                        <button class="btn">Borrar</button>
+                        <button class="btn btn-danger">Borrar</button>
                     </form>
                </div>
             {% else %}
                 <p> No tiene una tarjeta asociada </p>
-                <p>Si desae ser miebro Gold presione <a href="{{ path('tarjeta_new', {'id': pasajero.id}) }}">aquí</a><p>
+                <p>Si desea ser miembro Gold presione <a href="{{ path('tarjeta_new_perfil', {'id': pasajero.id}) }}">aquí</a><p>
             {% endif %}
         </div>
     </div>
+    </div>
 
-     <hr>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <h1>Mis Viajes</h1>
+        <br>
+
+       {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>                                        
+        {% endfor %} 
 
     {% for ticket in  pasajero.tickets %}
-
-      {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-                {{ message }}
-        </div>                                        
-    {% endfor %} 
-
-
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{ ticket.id }}">
@@ -99,17 +110,17 @@
                     </button>
                     </h2>
                     <div id="collapse{{ ticket.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ ticket.id }}" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
+                    <div class="accordion-body" style="background-color:#C5D5D9;">
                         <strong>El viaje se encuentra: {{ ticket.viaje.estado}}</strong>
                         <br>La combi que realizara el viaje es {{ticket.viaje.combi}}, a cargo del chofer {{ ticket.viaje.combi.chofer}}.
                         <br>Iniciara a las {{ ticket.viaje.salida ? ticket.viaje.salida | date('h:m') : ''}}, del dia  {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ ticket.viaje.ruta.origen }} hasta  {{ ticket.viaje.ruta.destino }}.
                         <br><strong>Descripcion: </strong> {{ ticket.viaje.ruta.descripcion }}
-                        <br><strong>Se abono: </strong> ${{ ticket.viaje.precio }}
+                        <br><strong>Se abono: </strong> ${{ ticket.precio }}
                         <br><br>
                         {% if ticket.viaje.estado == 'No iniciado' %}
                             <form method="post" action="{{ path('ticket_delete', {'id': ticket.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar los datos de su ticket?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
-                            <button class="btn btn-danger">Cacelar Viaje</button>
+                            <button class="btn btn-danger">Cancelar Viaje</button>
                             </form>
                         {% endif %}
                     
@@ -145,7 +156,7 @@
         </tr>
     {% endfor %}
 
-            
+        </div>
     </div >
 
     

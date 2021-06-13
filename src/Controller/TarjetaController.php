@@ -45,8 +45,34 @@ class TarjetaController extends AbstractController
             $entityManager->persist($tarjetum);
             $entityManager->persist($pasajero);
             $entityManager->flush();
-            $this->addFlash('gold', 'Se registro con mebresia gold!');
+            $this->addFlash('gold', 'Se registro con membresia gold!');
             return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('tarjeta/new.html.twig', [
+            'tarjetum' => $tarjetum,
+            'form' => $form->createView(),
+        ]);
+    }
+        /**
+     * @Route("/{id}/new_perfil", name="tarjeta_new_perfil", methods={"GET","POST"})
+     */
+    public function newPerfil(Pasajero $pasajero, Request $request): Response
+    {
+        
+        $tarjetum = new Tarjeta();
+        $form = $this->createForm(Tarjeta1Type::class, $tarjetum);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            //$tarjetum->setPropietario($pasajero);
+            $pasajero->setTarjeta($tarjetum);
+            $entityManager->persist($tarjetum);
+            $entityManager->persist($pasajero);
+            $entityManager->flush();
+            $this->addFlash('gold', 'Adquirio membresia gold!');
+            return $this->redirectToRoute('pasajero_show',['id' => $pasajero->getId()]);
         }
 
         return $this->render('tarjeta/new.html.twig', [
