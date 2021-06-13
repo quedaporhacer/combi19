@@ -12,6 +12,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>viaje</th>
+                <th>pasajero</th>
                 <th>Testeo</th>
                 <th>Acciones</th>
             </tr>
@@ -20,6 +22,8 @@
         {% for ticket in tickets %}
             <tr>
                 <td>{{ ticket.id }}</td>
+                <td>{{ ticket.viaje }}</td>
+                <td>{{ ticket.pasajero.user }}</td>
                 <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('ticket_show', {'id': ticket.id}) }}">Ver</a>
@@ -34,5 +38,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('ticket_new') }}">Crear nuevo</a>
+   {# <a class="btn btn-primary" href="{{ path('ticket_new') }}">Crear nuevo</a>#}
 {% endblock %}
