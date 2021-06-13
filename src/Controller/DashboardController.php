@@ -38,8 +38,6 @@ class DashboardController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             
             $origen=$form['origen']->getData();
             $destino=$form['destino']->getData();
@@ -63,7 +61,7 @@ class DashboardController extends AbstractController
         }
         return $this->render('viaje/new.html.twig', [
             'form' => $form->createView(),
-            'viajes' => $arr,
+        //    'viajes' => $arr,
         ]);
     }
 }
