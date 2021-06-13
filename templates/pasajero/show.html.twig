@@ -75,6 +75,13 @@
 
     {% for ticket in  pasajero.tickets %}
 
+      {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>                                        
+    {% endfor %} 
+
+
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{ ticket.id }}">

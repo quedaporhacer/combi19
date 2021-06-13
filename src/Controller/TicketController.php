@@ -10,12 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * @Route("/ticket")
  */
 class TicketController extends AbstractController
 {
+
+
     /**
      * @Route("/", name="ticket_index", methods={"GET"})
      */
@@ -86,6 +88,15 @@ class TicketController extends AbstractController
     {
     
         if($ticket->getViaje()->getEstado()!='Iniciado'){
+            
+            date_default_timezone_set('America/Buenos_Aires');
+            $now = new \DateTime();
+            $reembolso = (($ticket->getViaje()->getPrecio())/2);
+            if((($ticket->getViaje()->getSalida())->modify('-2 day'))>$now){
+                $this->addFlash('success','Se reembolsara la totalidad del viaje');
+            }else{
+                $this->addFlash('success','Se reembolsaran: $' . $reembolso . ' del coste del viaje');
+            }
 
            // dd(mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
            // dd(mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")) <= date("d-m-Y",strtotime($ticket->getViaje()->getSalida()."- 2 days")));
