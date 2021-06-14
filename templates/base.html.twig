@@ -51,6 +51,7 @@
                     <a class="nav-link" href="{{path('insumo_index')}}">Insumos</a>
                   </li>
                 {% endif %}
+
                 {% if is_granted('ROLE_PASAJERO') %}
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('dashboard')}}">Inicio</a>
@@ -70,6 +71,9 @@
 
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('pasajero_show',{'id': pasajero.id})}}">Pasajes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('busqueda')}}">Buscar Viaje</a>
                   </li>
                  
                 {% endif %}

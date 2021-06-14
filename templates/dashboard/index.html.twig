@@ -65,9 +65,6 @@
         </button>
     </div>
     </div>
-
-   {# {{ render(controller('App\\Controller\\DashboardController::search')) }}#}
-
     {#<h3>¿A donde desea viajar?</h3>
     <div class="seacher">
             <form class="row gy-2 gx-3 align-items-center">
@@ -107,6 +104,7 @@
 
     <br><br>
     <h3>Comentarios recientes</h3>
+    {% if comentario is defined %}
     {% for comentario in  comentarios %}
             <div class="card">
                 <div class="card-body">
@@ -117,6 +115,10 @@
             </div>
             <br>
     {% endfor %}
+    {% else %}
+        No se encuentran comentarios rencientes
+    {% endif %}
+    
 
     
 
