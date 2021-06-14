@@ -10,9 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ComentarioRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
+/**
+ * @IsGranted("ROLE_PASAJERO")
+ */
 class DashboardController extends AbstractController
 {
     /**
@@ -45,46 +48,36 @@ class DashboardController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd('gola');
+            
             
             $origen=$form['origen']->getData();
             $destino=$form['destino']->getData();
             $salida=$form['salida']->getData();
-
-            $repository = $this->getDoctrine()->getRepository(Viaje::class);
-           
-            $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
-
-            $i=0;
-            $arr=[];
-            foreach ($viajes as $id) {
-                $arr[$i] = $repository->find($id);
-                $i=$i+1;
+            if($origen!=$destino){
+                $repository = $this->getDoctrine()->getRepository(Viaje::class);
+                $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
+    
+                $i=0;
+                foreach ($viajes as $id) {
+                    $arr[$i] = $repository->find($id);
+                    $i=$i+1;
+                }
+    
+                if(!$viajes)
+                    $this->addFlash('failed','No se encontraron viajes');
+                else    
+                    return $this->render('dashboard/search.html.twig', [
+                        'form' => $form->createView(),
+                        'viajes' => $arr,
+                    ]);
+            }else{
+                $this->addFlash('failed','El origen y el destino no pueden ser iguales');
             }
-            return $this->redirectToRoute('dashboard_resultados',['viajes '=>$arr]);
-
-            /*$repository = $this->getDoctrine()->getRepository(Ruta::class);
-            $rutas= $repository->findBy(['destino' => ($form['ruta'])['destino']->getData(), 'origen' => ($form['ruta'])['origen']->getData() ]);
-            $repository = $this->getDoctrine()->getRepository(Viaje::class);
-            foreach ($rutas as $ruta){
-            $viajes = $viajes + $repository->findBy(['ruta' => $ruta, 'salida'=>$form['salida']->getData()]);
-            }*/
+            
             
         }
         return $this->render('dashboard/search.html.twig', [
             'form' => $form->createView(),
-        //    'viajes' => $arr,
         ]);
     }
-
-    /**
-     * @Route("/dashboard/{viajes}/busqueda", name="dashboard_resultados", methods={"GET"})
-     */
-    public function show(array $viajes): Response
-    {
-        
-        return $this->render('dashboard/resultados.html.twig', [
-            'viajes' => $viajes,
-        ]);
-    }    
 }

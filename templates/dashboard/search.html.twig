@@ -3,7 +3,8 @@
 {% block title %}Buscar Viajes{% endblock %}
 
 {% block body %}
-    <div class=''>
+{{parent()}}
+    <div class='container'>
         <br><br><br>
         <div class="shadow-lg p-3 mb-5 bg-body rounded">
         <h1>Buscar Viajes</h1>
@@ -15,6 +16,24 @@
             {% endfor %}
 
         {{ include('dashboard/_form.html.twig') }}
+
+
+        {% if viajes is defined %}
+            <br>
+            <h3> Viajes encontrados </h3>
+             {% for viaje in viajes %}
+                <div class="alert alert-dark" role="alert">
+                    <h4 class="alert-heading" style="display:inline;"> {{ viaje.ruta }}</h4> <button class="btn btn-primary" >Adquirir Pasaje</button>
+                    <br><p>El viaje partira de {{ viaje.ruta.origen }} hacia {{ viaje.ruta.destino }} 
+                        el dia <strong>{{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}}</strong> a las <strong>{{viaje.salida ? viaje.salida | date('h:m') : ''}}</strong>
+                        <br>Combi designada {{ viaje.combi }} a cargo del chofer {{ viaje.combi.chofer }}
+                        
+                    </p>
+                    <hr>
+                    <p class="mb-0"> Descripcion: {{ viaje.ruta.descripcion }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <!--<a href="{{ path('viaje_index') }}">volver a la lista</a>-->
         </div>
