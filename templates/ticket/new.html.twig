@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Ticket{% endblock %}
+{% block title %}Nuevo Ticket{% endblock %}
 
 {% block body %}
-    <h1>Create new Ticket</h1>
+     <div class= "container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Crear nuevo Ticket</h1>
 
-    {{ include('ticket/_form.html.twig') }}
+            {{ include('ticket/_form.html.twig') }}
 
-    <a href="{{ path('ticket_index') }}">back to list</a>
+            <a href="{{ path('ticket_index') }}">volver a la lista</a>
+        </div>
+    </div>
 {% endblock %}

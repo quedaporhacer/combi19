@@ -121,14 +121,14 @@ class ViajeController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket= $repository->findOneBy(['viaje' =>  $viaje ]);
-
-        foreach ($viaje->getTickets() as $ticket){
-            $meesage = $ticket->getPasajero()->getUser() .',total a rembolsar: '. $ticket->getPrecioTotal();
-            $this->addFlash('rembolso', $meesage);  
+        if( $viaje->getEstado() == "No iniciado"){
             
-        }
-
-        if( !$viaje->inicio()){
+            foreach ($viaje->getTickets() as $ticket){
+                $meesage = $ticket->getPasajero()->getUser() .',total a rembolsar: '. $ticket->getPrecioTotal();
+                $this->addFlash('rembolso', $meesage);  
+                
+            }
+            
             if ($this->isCsrfTokenValid('delete'.$viaje->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($viaje);

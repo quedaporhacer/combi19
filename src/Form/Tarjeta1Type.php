@@ -14,8 +14,7 @@ class Tarjeta1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numero',NumberType::class,[
-                'attr' => ['maxlength' => 16]])
+            ->add('numero')
             ->add('codigo',NumberType::class,[
                 'attr' => ['maxlength' => 3]])
             ->add('vencimiento', DateType::class, [
@@ -24,6 +23,9 @@ class Tarjeta1Type extends AbstractType
                 ])
         ;
     }
+
+    /*,NumberType::class,[
+        'attr' => ['maxlength' => 16]]*/
 
     public function configureOptions(OptionsResolver $resolver)
     {

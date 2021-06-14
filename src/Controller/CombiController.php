@@ -76,10 +76,10 @@ class CombiController extends AbstractController
      */
     public function edit(Request $request, Combi $combi): Response
     {
+        $patenteActual= $combi->getPatente();
         $form = $this->createForm(CombiType::class, $combi);
         /*$form->remove('patente')->remove('modelo')->remove('capacidad')->remove('calidad');*/
         $form->handleRequest($request);
-        
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -92,7 +92,7 @@ class CombiController extends AbstractController
             $viajesIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'En curso' ]);
             
             if(!$viajesNoIniciados && !$viajesIniciados ){
-                if(!$otherCombi){
+                if(!$otherCombi || $patente == $patenteActual){
                     $this->getDoctrine()->getManager()->flush();
                     return $this->redirectToRoute('combi_index');
                 }

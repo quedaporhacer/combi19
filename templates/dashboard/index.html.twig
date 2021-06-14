@@ -104,19 +104,19 @@
 
     <br><br>
     <h3>Comentarios recientes</h3>
-    {% if comentario is defined %}
-    {% for comentario in  comentarios %}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{comentario.ticket.pasajero}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{comentario.ticket.viaje}}</h6>
-                    <p class="card-text">{{comentario.comentario}}</p>
+    {% if comentarios is not empty %}
+        {% for comentario in  comentarios %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{comentario.ticket.pasajero}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{comentario.ticket.viaje}}</h6>
+                        <p class="card-text">{{comentario.comentario}}</p>
+                    </div>
                 </div>
-            </div>
-            <br>
-    {% endfor %}
+                <br>
+        {% endfor %}
     {% else %}
-        No se encuentran comentarios rencientes
+        No se encuentran comentarios recientes
     {% endif %}
     
 

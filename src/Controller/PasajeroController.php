@@ -90,11 +90,11 @@ class PasajeroController extends AbstractController
         $form = $this->createForm(PasajeroType::class, $pasajero);
         $form->remove('nacimiento');
         $form->handleRequest($request);
-
+        $id= $pasajero->getId();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('pasajero_show',['id'=> $pasajero->getId()]);
+            return $this->redirectToRoute('pasajero_show',['id'=> $id]);
         }
 
         return $this->render('pasajero/edit.html.twig', [

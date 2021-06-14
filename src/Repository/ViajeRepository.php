@@ -57,15 +57,15 @@ class ViajeRepository extends ServiceEntityRepository
         INNER JOIN ruta r ON(v.ruta_id = r.id)
         INNER JOIN lugar lo ON(r.origen_id = lo.id)
         INNER JOIN lugar ld ON(r.destino_id = ld.id)
-        WHERE lo.nombre = :origen AND ld.nombre = :destino 
+        WHERE lo.nombre LIKE :origen  AND ld.nombre LIKE :destino 
             AND year(v.salida) = :ano
             AND month(v.salida) = :mes
             AND day(v.salida) = :dia
         ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(array(
-            'origen' => $origen,
-            'destino' => $destino,
+            'origen' => ("%".$origen."%"),
+            'destino' => ("%".$destino."%"),
             'ano' =>$salida->format('Y'),
             'mes' =>$salida->format('m'),
             'dia' =>$salida->format('d'),

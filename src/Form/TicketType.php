@@ -6,6 +6,7 @@ use App\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class TicketType extends AbstractType
 {
@@ -18,7 +19,7 @@ class TicketType extends AbstractType
             ->add('pasajero')
             ->add('numero')
             ->add('codigo')
-            ->add('vencimiento')
+            ->add('vencimiento',DateType::class,['widget' => 'single_text'])
         ;
     }
 

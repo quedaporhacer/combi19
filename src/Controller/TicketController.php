@@ -93,7 +93,7 @@ class TicketController extends AbstractController
             
             date_default_timezone_set('America/Buenos_Aires');
             $now = new \DateTime();
-            $reembolsoT=($ticket->getPrecio());
+            $reembolsoT=($ticket->getPrecioTotal());
             $reembolsoP = ($reembolsoT/2);
             if((($ticket->getViaje()->getSalida())->modify('-2 day'))>$now){
                 $this->addFlash('success','Se reembolsara la totalidad del precio del viaje: $'. $reembolsoT);
