@@ -5,47 +5,53 @@
 {% block body %}
 
     {{parent()}}
+    
+    <div class="container">
+        <br><br><br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
 
-    <h1>Insumos</h1>
-    {% for message in app.flashes('failed') %}
+            <h1>Insumos</h1>
+            {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-            
-    {% endfor %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for insumo in insumos %}
-            <tr>
-                <td>{{ insumo.id }}</td>
-                <td>{{ insumo.nombre }}</td>
-                <td>{{ insumo.tipo }}</td>
-                <td>{{ insumo.precio }}</td>
-                <td>{{ insumo.stock }}</td>
-                <td>
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
                     
-                     {{ include('insumo/_delete_form.html.twig') }}
-                    <a class="btn btn-secondary" href="{{ path('insumo_edit', {'id': insumo.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">No se encontraron insumos</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for insumo in insumos %}
+                    <tr>
+                        <td>{{ insumo.id }}</td>
+                        <td>{{ insumo.nombre }}</td>
+                        <td>{{ insumo.tipo }}</td>
+                        <td>{{ insumo.precio }}</td>
+                        <td>{{ insumo.stock }}</td>
+                        <td>
+                            
+                            {{ include('insumo/_delete_form.html.twig') }}
+                            <a class="btn btn-secondary" href="{{ path('insumo_edit', {'id': insumo.id}) }}">Editar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No se encontraron insumos</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <a class="btn btn-primary" href="{{ path('insumo_new') }}">Crear nuevo</a>
+            <a class="btn btn-primary" href="{{ path('insumo_new') }}">Crear nuevo</a>
+        </div>
+    </div>
 {% endblock %}

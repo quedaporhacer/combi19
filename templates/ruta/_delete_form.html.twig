@@ -1,4 +1,4 @@
-<form style="display: inline"method="post" action="{{ path('ruta_delete', {'id': rutum.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar este elemento?');">
+<form style="display: inline"method="post" action="{{ path('ruta_delete', {'id': rutum.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar esta ruta?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rutum.id) }}">
     <button class="btn btn-danger">Borrar</button>
 </form>

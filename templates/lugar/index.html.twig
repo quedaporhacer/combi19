@@ -5,42 +5,46 @@
 {% block body %}
 
     {{parent()}}
-    
-    <h1>Lugares</h1>
-    
-    {% for message in app.flashes('failed') %}
-
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
+    <div class="container">
+        <br><br><br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Lugares</h1>
             
-    {% endfor %}
+            {% for message in app.flashes('failed') %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for lugar in lugars %}
-            <tr>
-                <td>{{ lugar.id }}</td>
-                <td>{{ lugar.nombre }}</td>
-                <td>
-                     {{ include('lugar/_delete_form.html.twig') }}
-                    <a class="btn btn-secondary"  href="{{ path('lugar_edit', {'id': lugar.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No hay lugares</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
 
-    <a class="btn btn-primary" href="{{ path('lugar_new') }}">Crear Lugar</a>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lugar in lugars %}
+                    <tr>
+                        <td>{{ lugar.id }}</td>
+                        <td>{{ lugar.nombre }}</td>
+                        <td>
+                            {{ include('lugar/_delete_form.html.twig') }}
+                            <a class="btn btn-secondary"  href="{{ path('lugar_edit', {'id': lugar.id}) }}">Editar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">No hay lugares</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-primary" href="{{ path('lugar_new') }}">Crear Lugar</a>
+        </div>
+    </div>
 {% endblock %}

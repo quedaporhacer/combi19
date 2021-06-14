@@ -5,46 +5,51 @@
 {% block body %}
 
     {{parent()}}
+    <div class="container">
+        <br><br><br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
 
-    <h1>Rutas</h1>
-    {% for message in app.flashes('failed') %}
+            <h1>Rutas</h1>
+            {% for message in app.flashes('failed') %}
 
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-            
-    {% endfor %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Origen</th>
-                <th>Destino</th>
-                <th>Descripcion</th>
-                <th>kilometros</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for rutum in rutas %}
-            <tr>
-                <td>{{ rutum.id }}</td>
-                <td>{{ rutum.origen }}</td>
-                <td>{{ rutum.destino }}</td>
-                <td>{{ rutum.descripcion }}</td>
-                <td>{{ rutum.kilometros }}</td>
-                <td>
-                     {{ include('ruta/_delete_form.html.twig') }}
-                    <a class="btn btn-secondary" href="{{ path('ruta_edit', {'id': rutum.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No se encontraron rutas disponibles</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Descripcion</th>
+                        <th>Kilometros</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rutum in rutas %}
+                    <tr>
+                        <td>{{ rutum.id }}</td>
+                        <td>{{ rutum.origen }}</td>
+                        <td>{{ rutum.destino }}</td>
+                        <td>{{ rutum.descripcion }}</td>
+                        <td>{{ rutum.kilometros }}</td>
+                        <td>
+                            {{ include('ruta/_delete_form.html.twig') }}
+                            <a class="btn btn-secondary" href="{{ path('ruta_edit', {'id': rutum.id}) }}">Editar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">No se encontraron rutas disponibles</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <a class="btn btn-primary" href="{{ path('ruta_new') }}">Crear nueva</a>
+            <a class="btn btn-primary" href="{{ path('ruta_new') }}">Crear nueva</a>
+        </div>
+    </div>
 {% endblock %}

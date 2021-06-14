@@ -1,4 +1,4 @@
-<form style="display: inline;" method="post" action="{{ path('insumo_delete', {'id': insumo.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar este elemento?');">
+<form style="display: inline;" method="post" action="{{ path('insumo_delete', {'id': insumo.id}) }}" onsubmit="return confirm('Estas seguro que desea borrar este insumo?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ insumo.id) }}">
     <button class="btn btn-danger">Borrar</button>
 </form>
