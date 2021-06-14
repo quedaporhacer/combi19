@@ -12,10 +12,6 @@ use App\Repository\ComentarioRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
-/**
- * @IsGranted("ROLE_PASAJERO")
- */
 class DashboardController extends AbstractController
 {
     /**
@@ -38,6 +34,8 @@ class DashboardController extends AbstractController
      */
     public function search(Request $request):Response
     {   
+        $repository = $this->getDoctrine()->getRepository(Pasajero::class);
+        $pasajero = $repository->findOneBy(['user' => $this->getUser()->getId()]);
         $form = $this->createFormBuilder(null)
             ->add('origen')
             ->add('destino')
@@ -69,6 +67,7 @@ class DashboardController extends AbstractController
                     return $this->render('dashboard/search.html.twig', [
                         'form' => $form->createView(),
                         'viajes' => $arr,
+                        'pasajero' => $pasajero,
                     ]);
             }else{
                 $this->addFlash('failed','El origen y el destino no pueden ser iguales');
@@ -78,6 +77,7 @@ class DashboardController extends AbstractController
         }
         return $this->render('dashboard/search.html.twig', [
             'form' => $form->createView(),
+            'pasajero' => $pasajero,
         ]);
     }
 }
