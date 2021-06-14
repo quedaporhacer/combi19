@@ -6,6 +6,8 @@ use App\Entity\Combi;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class CombiType extends AbstractType
 {
@@ -14,7 +16,11 @@ class CombiType extends AbstractType
         $builder
             ->add('patente')
             ->add('modelo')
-            ->add('capacidad')
+            ->add('capacidad',IntegerType::class,
+            ['constraints' => [new Positive()],
+                'attr' => [
+                'min' => 1]
+            ])
             ->add('calidad')
             ->add('chofer')
         ;

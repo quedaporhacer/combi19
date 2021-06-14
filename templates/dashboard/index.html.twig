@@ -66,7 +66,7 @@
     </div>
     </div>
 
-    {{ render(controller('App\\Controller\\DashboardController::search')) }}
+   {# {{ render(controller('App\\Controller\\DashboardController::search')) }}#}
 
     {#<h3>¿A donde desea viajar?</h3>
     <div class="seacher">
@@ -113,8 +113,6 @@
                     <h5 class="card-title">{{comentario.ticket.pasajero}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{comentario.ticket.viaje}}</h6>
                     <p class="card-text">{{comentario.comentario}}</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
             <br>

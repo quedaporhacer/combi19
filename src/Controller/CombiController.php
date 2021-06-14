@@ -52,7 +52,7 @@ class CombiController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('combi_index');
             }   
-            $this->addFlash('failed', 'La patente ya se encuentra registrado!');
+            $this->addFlash('failed', 'La patente ya se encuentra registrada!');
         }
 
         return $this->render('combi/new.html.twig', [
@@ -77,21 +77,29 @@ class CombiController extends AbstractController
     public function edit(Request $request, Combi $combi): Response
     {
         $form = $this->createForm(CombiType::class, $combi);
-        $form->remove('patente')->remove('modelo')->remove('capacidad')->remove('calidad');
+        /*$form->remove('patente')->remove('modelo')->remove('capacidad')->remove('calidad');*/
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $patente= $form->getData()->getPatente();
+            $repository=$this->getDoctrine()->getRepository(Combi::class);
+            $otherCombi= $repository->findOneBy(['patente' =>  $patente ]);
+
             $repository = $this->getDoctrine()->getRepository(Viaje::class);
             $viajesNoIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'No iniciado' ]);
-            $viajesIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'Inicio' ]);
+            $viajesIniciados= $repository->findBy(['combi' =>  $combi, 'estado' => 'En curso' ]);
             
             if(!$viajesNoIniciados && !$viajesIniciados ){
-                $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('combi_index');
-            }
+                if(!$otherCombi){
+                    $this->getDoctrine()->getManager()->flush();
+                    return $this->redirectToRoute('combi_index');
+                }
+                $this->addFlash('failed','La patente ya se encuentra registrada!');
+            }else{
             $this->addFlash('failed', 'La combi tiene viajes pendientes, o en curso');
-           
+            }
         }
 
         return $this->render('combi/edit.html.twig', [

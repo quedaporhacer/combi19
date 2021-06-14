@@ -140,8 +140,9 @@ class Viaje
         return false;
     }
 
-    public function inicio(){
-        $this->estado = "En curso";
+    public function inicio(): ?bool
+    {
+        return $this->estado == "En curso";
     }
 
     /**

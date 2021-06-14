@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TarjetaRepository::class)
- * @UniqueEntity("numero",message="Este numero ya esta siendo utilizado")
  */
 class Tarjeta
 {
@@ -22,7 +21,7 @@ class Tarjeta
     private $id;
 
     /**
-     * @ORM\Column(type="bigint",unique=true, length=16)
+     * @ORM\Column(type="bigint",unique=false, length=16)
      * 
      * @Assert\Length(
      *      min = 16,
