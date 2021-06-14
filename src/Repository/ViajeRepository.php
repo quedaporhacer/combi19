@@ -49,7 +49,7 @@ class ViajeRepository extends ServiceEntityRepository
     */
 
 
-    public function findbyRutaySalida($origen,$destino): array
+    public function findbyRutaySalida($origen,$destino,$salida): array
     {
        $conn = $this->getEntityManager()->getConnection();
         $sql = '
@@ -58,11 +58,17 @@ class ViajeRepository extends ServiceEntityRepository
         INNER JOIN lugar lo ON(r.origen_id = lo.id)
         INNER JOIN lugar ld ON(r.destino_id = ld.id)
         WHERE lo.nombre = :origen AND ld.nombre = :destino 
+            AND year(v.salida) = :ano
+            AND month(v.salida) = :mes
+            AND day(v.salida) = :dia
         ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(array(
             'origen' => $origen,
             'destino' => $destino,
+            'ano' =>$salida->format('Y'),
+            'mes' =>$salida->format('m'),
+            'dia' =>$salida->format('d'),
         ));
         
 

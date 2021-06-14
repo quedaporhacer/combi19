@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buscar Viajes{% endblock %}
+
+{% block body %}
+    <div class=''>
+        <br><br><br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <h1>Buscar Viajes</h1>
+        {% for message in app.flashes('failed') %}
+
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        {{ include('dashboard/_form.html.twig') }}
+
+        <!--<a href="{{ path('viaje_index') }}">volver a la lista</a>-->
+        </div>
+    </divs>
+{% endblock %}
