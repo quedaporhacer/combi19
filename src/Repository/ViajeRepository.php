@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Viaje;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
+
 
 /**
  * @method Viaje|null find($id, $lockMode = null, $lockVersion = null)
@@ -91,6 +94,23 @@ class ViajeRepository extends ServiceEntityRepository
 
         // returns an array of Product objects
         return $query->getResult();*/
+    }
+
+    public function findByRuta($origen,$destino,$salida): array
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->innerJoin('v.ruta','r')
+        ->innerJoin('r.origen','o')
+        ->innerJoin('r.destino','d')
+        ->where('o.nombre = :origen')
+        ->andWhere('d.nombre = :destino')
+        ->andWhere("DATE_FORMAT(v.salida, '%Y-%m-%d') = :salida")
+        ->setParameters(new ArrayCollection([
+            new Parameter('origen', $origen),
+            new Parameter('destino', $destino),
+            new Parameter('salida', $salida->format('Y-m-d'))
+            ]));
+        return $qb->getQuery()->execute();
     }
 
 }

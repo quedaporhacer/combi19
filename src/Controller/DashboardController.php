@@ -56,20 +56,20 @@ class DashboardController extends AbstractController
             if($salida > $now ){
                 if($origen!=$destino){
                     $repository = $this->getDoctrine()->getRepository(Viaje::class);
-                    $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
-        
+                   /* $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
+                    
                     $i=0;
                     foreach ($viajes as $id) {
                         $arr[$i] = $repository->find($id);
                         $i=$i+1;
-                    }
-        
+                    }*/
+                    $viajes = $repository->findbyRuta($origen,$destino,$salida);
                     if(!$viajes)
                         $this->addFlash('failed','No se encontraron viajes');
                     else    
                         return $this->render('dashboard/search.html.twig', [
                             'form' => $form->createView(),
-                            'viajes' => $arr,
+                            'viajes' => $viajes,
                             'pasajero' => $pasajero,
                         ]);
                 }else{
