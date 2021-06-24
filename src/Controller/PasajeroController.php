@@ -92,9 +92,11 @@ class PasajeroController extends AbstractController
         $form->handleRequest($request);
         $id= $pasajero->getId();
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+                $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
+                ($form['user'])['password']->getData()));
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('pasajero_show',['id'=> $id]);
+                return $this->redirectToRoute('pasajero_show',['id'=> $id]);
         }
 
         return $this->render('pasajero/edit.html.twig', [

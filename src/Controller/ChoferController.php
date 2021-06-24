@@ -82,6 +82,8 @@ class ChoferController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $chofer->getUser()->setPassword($this->passwordEncoder->encodePassword( $chofer->getUser(),
+            ($form['user'])['password']->getData()));
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('chofer_index');
