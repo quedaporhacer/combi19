@@ -91,12 +91,26 @@ class PasajeroController extends AbstractController
         $form->remove('nacimiento');
         $form->handleRequest($request);
         $id= $pasajero->getId();
+        
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $repository=$this->getDoctrine()->getRepository(User::class);
+            $email= $repository->findOneBy([
+                'email' =>  ($form['user']['email']->getData())
+            ]);
+            
+            if(!$email){
+
                 $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword( $pasajero->getUser(),
                 ($form['user'])['password']->getData()));
                 $this->getDoctrine()->getManager()->flush();
-
                 return $this->redirectToRoute('pasajero_show',['id'=> $id]);
+
+            }else{
+                $this->addFlash('failed', 'Email repetido');
+            }
+
+                
         }
 
         return $this->render('pasajero/edit.html.twig', [
