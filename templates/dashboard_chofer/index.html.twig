@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardChoferController!{% endblock %}
+
+{% block body %}
+
+{{ parent() }}
+<div class = "container">
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="example-wrapper">
+        {% for viaje in viajes %}
+            <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="{{ viaje.id }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ viaje.id }}" aria-expanded="true" aria-controls="collapse{{ viaje.id }}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ viaje.ruta }}  
+                                    </div>
+                                    <div class="col-6">
+                                    {{ viaje.salida ? viaje.salida | date('Y-m-d h:m') : ''}} 
+                                    </div>
+                                </div>
+                                {#<spam>{{ ticket.viaje.ruta }}  || hora de salida 
+                                {{ ticket.viaje.salida ? ticket.viaje.salida | date('Y-m-d h:m') : ''}} </spam>#}
+                            </button>
+                            </h2>
+                            <div id="collapse{{ viaje.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ viaje.id }}" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" style="background-color:#C5D5D9;">
+                                <strong>El viaje se encuentra: {{ viaje.estado}}</strong>
+                                <br>La combi que realizara el viaje es {{viaje.combi}}, a cargo del chofer {{viaje.combi.chofer}}.
+                                <br>Iniciara a las {{ viaje.salida ? viaje.salida | date('h:m') : ''}}, del dia  {{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ viaje.ruta.origen }} hasta  {{ viaje.ruta.destino }}.
+                                <br><strong>Descripcion: </strong> {{ viaje.ruta.descripcion }}
+                                <br><br>
+                                {% if viaje.estado == 'No iniciado' %}
+                                    <form method="post" action="" onsubmit="return confirm('Estas seguro que desea iniciar el viaje?');">
+                                        <input type="hidden" name="_token" value="">
+                                         <button class="btn btn-primary">Iniciar Viaje</button>
+                                    </form>
+
+                                {% endif %}
+                            
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

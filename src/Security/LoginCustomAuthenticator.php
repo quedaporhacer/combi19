@@ -102,7 +102,7 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator implements
             return new RedirectResponse($this->urlGenerator->generate('viaje_index'));
         }
         if($token->getUser()->isChofer() ){
-            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
+            return new RedirectResponse($this->urlGenerator->generate('dashboard_chofer'));
         }
 
 
