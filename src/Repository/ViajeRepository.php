@@ -113,4 +113,21 @@ class ViajeRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function ultimoViajeDe($combi): Viaje
+    {
+        $offset = 0;
+        $limit = 1;
+        $qb = $this->createQueryBuilder('v')
+        ->where('v.combi = :combi')
+        ->andWhere("v.estado LIKE 'No iniciado'")
+        ->orderBy('v.salida', 'ASC')
+        ->setFirstResult($offset)
+        ->setMaxResults($limit)
+        ->setParameters(new ArrayCollection([
+            new Parameter('combi', $combi->getId())
+            ]));
+        return $qb->getQuery()->execute()['0'];
+    }
+
 }
+

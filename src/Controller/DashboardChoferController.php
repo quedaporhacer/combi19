@@ -22,12 +22,14 @@ class DashboardChoferController extends AbstractController
         $repCombi = $this->getDoctrine()->getRepository(Combi::class);
         $combi= $repCombi->findOneBy(['chofer' => $chofer->getId()]);
         $repViajes = $this->getDoctrine()->getRepository(Viaje::class);
-        $viajes = $repViajes->findBy(['combi' => $combi->getId()]);
+        $viajes = $repViajes->findBy(['combi' => $combi->getId(), 'estado' => 'Finalizado']);
+        $uViaje = $repViajes->ultimoViajeDe($combi);
 
         return $this->render('dashboard_chofer/index.html.twig', [
             'controller_name' => 'DashboardChoferController',
             'chofer' => $chofer,
-            'viajes' => $viajes
+            'viajes' => $viajes,
+            'uViaje' => $uViaje
         ]);
     }
 
