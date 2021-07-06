@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Imprevisto{% endblock %}
+
+{% block body %}
+    <h1>Edit Imprevisto</h1>
+
+    {{ include('imprevisto/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('imprevisto_index') }}">back to list</a>
+
+    {{ include('imprevisto/_delete_form.html.twig') }}
+{% endblock %}

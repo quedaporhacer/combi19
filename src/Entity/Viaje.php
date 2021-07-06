@@ -58,9 +58,15 @@ class Viaje
      */
     private $estado;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Imprevisto::class, mappedBy="viaje", orphanRemoval=true)
+     */
+    private $imprevistos;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->imprevistos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +201,36 @@ class Viaje
     public function setEstado(string $estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Imprevisto[]
+     */
+    public function getImprevistos(): Collection
+    {
+        return $this->imprevistos;
+    }
+
+    public function addImprevisto(Imprevisto $imprevisto): self
+    {
+        if (!$this->imprevistos->contains($imprevisto)) {
+            $this->imprevistos[] = $imprevisto;
+            $imprevisto->setViaje($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImprevisto(Imprevisto $imprevisto): self
+    {
+        if ($this->imprevistos->removeElement($imprevisto)) {
+            // set the owning side to null (unless already changed)
+            if ($imprevisto->getViaje() === $this) {
+                $imprevisto->setViaje(null);
+            }
+        }
 
         return $this;
     }
