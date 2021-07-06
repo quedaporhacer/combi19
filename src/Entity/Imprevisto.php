@@ -23,12 +23,7 @@ class Imprevisto
     private $imprevisto;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $hora;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Viaje::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Viaje::class, inversedBy="imprevistos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $viaje;
@@ -50,27 +45,16 @@ class Imprevisto
         return $this;
     }
 
-    public function getHora(): ?\DateTimeInterface
-    {
-        return $this->hora;
-    }
-
-    public function setHora(\DateTimeInterface $hora): self
-    {
-        $this->hora = $hora;
-
-        return $this;
-    }
-
     public function getViaje(): ?Viaje
     {
         return $this->viaje;
     }
 
-    public function setViaje(Viaje $viaje): self
+    public function setViaje(?Viaje $viaje): self
     {
         $this->viaje = $viaje;
 
         return $this;
     }
+
 }
