@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chofer;
 use App\Entity\Combi;
 use App\Entity\Viaje;
+use Laminas\EventManager\ResponseCollection;
 
 class DashboardChoferController extends AbstractController
 {
@@ -33,5 +34,14 @@ class DashboardChoferController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/dashboard/{id}/viaje", name="dashboard_ver_viaje", methods={"GET"} )
+     */
+    public function verViaje(Viaje $viaje): Response
+    {
+        return $this->render('dashboard_chofer/viaje.html.twig',[
+            'viaje' => $viaje
+        ]);
+    }
 
 }
