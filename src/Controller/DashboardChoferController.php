@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chofer;
 use App\Entity\Combi;
 use App\Entity\Viaje;
+use Laminas\EventManager\ResponseCollection;
 
 class DashboardChoferController extends AbstractController
 {
@@ -23,8 +24,14 @@ class DashboardChoferController extends AbstractController
         $combi= $repCombi->findOneBy(['chofer' => $chofer->getId()]);
         $repViajes = $this->getDoctrine()->getRepository(Viaje::class);
         $viajes = $repViajes->findBy(['combi' => $combi->getId(), 'estado' => 'Finalizado']);
+        $viajes2 = $repViajes->findBy(['combi' => $combi->getId(), 'estado' => 'No Iniciado']);
+        if ($viajes2){
         $uViaje = $repViajes->ultimoViajeDe($combi);
-
+        }
+        else
+        {
+            $uViaje = NULL;
+        }
         return $this->render('dashboard_chofer/index.html.twig', [
             'controller_name' => 'DashboardChoferController',
             'chofer' => $chofer,
@@ -33,5 +40,14 @@ class DashboardChoferController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/dashboard/{id}/viaje", name="dashboard_ver_viaje", methods={"GET"} )
+     */
+    public function verViaje(Viaje $viaje): Response
+    {
+        return $this->render('dashboard_chofer/viaje.html.twig',[
+            'viaje' => $viaje
+        ]);
+    }
 
 }
