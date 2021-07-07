@@ -66,7 +66,7 @@ class ImprevistoController extends AbstractController
             $entityManager->persist($imprevisto);
             $entityManager->flush();
 
-            return $this->redirectToRoute('imprevisto_index');
+            return $this->redirectToRoute('viaje_show',['id' => $viaje->getId() ]);
         }
 
         return $this->render('imprevisto/new.html.twig', [
