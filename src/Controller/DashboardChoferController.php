@@ -25,6 +25,7 @@ class DashboardChoferController extends AbstractController
         $repViajes = $this->getDoctrine()->getRepository(Viaje::class);
         $viajes = $repViajes->findBy(['combi' => $combi->getId(), 'estado' => 'Finalizado']);
         $viajes2 = $repViajes->findBy(['combi' => $combi->getId(), 'estado' => 'No Iniciado']);
+        $eViaje= $repViajes->findOneBy(['combi' => $combi->getId(), 'estado' => 'En curso']) ;
         if ($viajes2){
         $uViaje = $repViajes->ultimoViajeDe($combi);
         }
@@ -36,7 +37,8 @@ class DashboardChoferController extends AbstractController
             'controller_name' => 'DashboardChoferController',
             'chofer' => $chofer,
             'viajes' => $viajes,
-            'uViaje' => $uViaje
+            'uViaje' => $uViaje,
+            'eViaje' => $eViaje
         ]);
     }
 
@@ -45,6 +47,44 @@ class DashboardChoferController extends AbstractController
      */
     public function verViaje(Viaje $viaje): Response
     {
+        return $this->render('dashboard_chofer/viaje.html.twig',[
+            'viaje' => $viaje
+        ]);
+    }
+
+
+    /**
+     * @Route("/dashboard/{id}/viajecurso", name="dashboard_ver_en_curso", methods={"GET"} )
+     */
+    public function verViajeEnCurso(Viaje $viaje): Response
+    {
+        return $this->render('dashboard_chofer/viajeC.html.twig',[
+            'viaje' => $viaje
+        ]);
+    }
+
+    /**
+     * @Route("/dashboard/{id}/iniciar", name="dashboard_iniciar", methods={"POST"} )
+     */
+    public function iniciar(Viaje $viaje): Response
+    {
+        date_default_timezone_set('America/Buenos_Aires');
+        $now = new \DateTime();
+        if($viaje->getSalida()<$now){
+            if($viaje->getEstado()!="Finalizado"){
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $viaje->iniciar();
+                $entityManager->persist($viaje);
+                $entityManager->flush();
+                $this->addFlash('success', 'Se inicio el viaje correctamente');
+            }else{
+                $this->addFlash('failure', 'El viaje ya se encuentra finalizado');
+            }
+        }else{
+            $this->addFlash('failure', 'Todavia no se puede iniciar');
+        }
+
         return $this->render('dashboard_chofer/viaje.html.twig',[
             'viaje' => $viaje
         ]);

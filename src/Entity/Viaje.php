@@ -235,5 +235,10 @@ class Viaje
         return $this;
     }
 
+    public function iniciar(): self 
+    {
+        $this->estado = "En curso";
+        return $this;
+    }
 
 }

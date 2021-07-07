@@ -8,6 +8,77 @@
 <div class = "container">
     <div class="shadow-lg p-3 mb-5 bg-body rounded">
         <div class="example-wrapper">
+        
+            <h2 >Viaje en curso</h2>
+            {% if eViaje %}
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="{{ eViaje.id }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ eViaje.id }}" aria-expanded="true" aria-controls="collapse{{ eViaje.id }}">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ eViaje.ruta }}  
+                            </div>
+                            <div class="col-6">
+                            {{ eViaje.salida ? eViaje.salida | date('Y-m-d h:m') : ''}} 
+                            </div>
+                        </div>
+                        {#<spam>{{ ticket.eViaje.ruta }}  || hora de salida 
+                        {{ ticket.eViaje.salida ? ticket.eViaje.salida | date('Y-m-d h:m') : ''}} </spam>#}
+                    </button>
+                    </h2>
+                    <div id="collapse{{ eViaje.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ eViaje.id }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body" style="background-color:#C5D5D9;">
+                            <strong>El viaje se encuentra: {{ eViaje.estado}}</strong>
+                            <br>La combi que realizara el viaje es {{eViaje.combi}}, a cargo del chofer {{eViaje.combi.chofer}}.
+                            <br>Iniciara a las {{ eViaje.salida ? eViaje.salida | date('h:m') : ''}}, del dia  {{ eViaje.salida ? eViaje.salida | date('Y-m-d') : ''}}, partiendo de {{ eViaje.ruta.origen }} hasta  {{ eViaje.ruta.destino }}.
+                            <br><strong>Descripcion: </strong> {{ eViaje.ruta.descripcion }}
+                            <br><br>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <a class="btn btn-primary" href="{{path('dashboard_ver_en_curso',{'id':eViaje.id })}}">Ver Viaje</a>
+            {% else %}
+                <p>No hay ningun viaje en curso</p>
+            {% endif %}
+       
+            <h2 >Proximo viaje</h2>
+            {% if uViaje %}
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="{{ uViaje.id }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ uViaje.id }}" aria-expanded="true" aria-controls="collapse{{ uViaje.id }}">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ uViaje.ruta }}  
+                            </div>
+                            <div class="col-6">
+                            {{ uViaje.salida ? uViaje.salida | date('Y-m-d h:m') : ''}} 
+                            </div>
+                        </div>
+                        {#<spam>{{ ticket.uViaje.ruta }}  || hora de salida 
+                        {{ ticket.uViaje.salida ? ticket.uViaje.salida | date('Y-m-d h:m') : ''}} </spam>#}
+                    </button>
+                    </h2>
+                    <div id="collapse{{ uViaje.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ uViaje.id }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body" style="background-color:#C5D5D9;">
+                            <strong>El viaje se encuentra: {{ uViaje.estado}}</strong>
+                            <br>La combi que realizara el viaje es {{uViaje.combi}}, a cargo del chofer {{uViaje.combi.chofer}}.
+                            <br>Iniciara a las {{ uViaje.salida ? uViaje.salida | date('h:m') : ''}}, del dia  {{ uViaje.salida ? uViaje.salida | date('Y-m-d') : ''}}, partiendo de {{ uViaje.ruta.origen }} hasta  {{ uViaje.ruta.destino }}.
+                            <br><strong>Descripcion: </strong> {{ uViaje.ruta.descripcion }}
+                            <br><br>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary" href="{{path('dashboard_ver_viaje',{'id':uViaje.id })}}">Ver Viaje</a>
+        {% else %}
+            <p> No se encontraron viajes pendientes </p>
+        {% endif %}
+
         <h2>Viajes finalizados</h2>
         {% if viajes %}
             {% for viaje in viajes %}
@@ -43,40 +114,7 @@
         {% else %}
             <p>Usted no tiene ningun viaje</p>
         {% endif %}
-        {% if uViaje %}
-            <h2 >Proximo viaje</h2>
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="{{ uViaje.id }}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ uViaje.id }}" aria-expanded="true" aria-controls="collapse{{ uViaje.id }}">
-                        <div class="row">
-                            <div class="col-6">
-                                {{ uViaje.ruta }}  
-                            </div>
-                            <div class="col-6">
-                            {{ uViaje.salida ? uViaje.salida | date('Y-m-d h:m') : ''}} 
-                            </div>
-                        </div>
-                        {#<spam>{{ ticket.uViaje.ruta }}  || hora de salida 
-                        {{ ticket.uViaje.salida ? ticket.uViaje.salida | date('Y-m-d h:m') : ''}} </spam>#}
-                    </button>
-                    </h2>
-                    <div id="collapse{{ uViaje.id }}" class="accordion-collapse collapse show" aria-labelledby="{{ uViaje.id }}" data-bs-parent="#accordionExample">
-                        <div class="accordion-body" style="background-color:#C5D5D9;">
-                            <strong>El viaje se encuentra: {{ uViaje.estado}}</strong>
-                            <br>La combi que realizara el uViaje es {{uViaje.combi}}, a cargo del chofer {{uViaje.combi.chofer}}.
-                            <br>Iniciara a las {{ uViaje.salida ? uViaje.salida | date('h:m') : ''}}, del dia  {{ uViaje.salida ? uViaje.salida | date('Y-m-d') : ''}}, partiendo de {{ uViaje.ruta.origen }} hasta  {{ uViaje.ruta.destino }}.
-                            <br><strong>Descripcion: </strong> {{ uViaje.ruta.descripcion }}
-                            <br><br>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="btn btn-primary" href="{{path('dashboard_ver_viaje',{'id':uViaje.id })}}">Ver Viaje</a>
-        {% else %}
-            <p> no se encontraron viajes pendientes </p>
-        {% endif %}
+        
         </div>
     </div>
 </div>

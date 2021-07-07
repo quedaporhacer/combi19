@@ -4,6 +4,16 @@
 
 {% block body %}
     {{parent()}}
+    {% for message in app.flashes('failure') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class = "container">
         <div class="shadow-lg p-3 mb-5 bg-body rounded">
             {{viaje}}
@@ -14,7 +24,12 @@
                     <br>Iniciara a las {{ viaje.salida ? viaje.salida | date('h:m') : ''}}, del dia  {{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}}, partiendo de {{ viaje.ruta.origen }} hasta  {{ viaje.ruta.destino }}.
                     <br><strong>Descripcion: </strong> {{ viaje.ruta.descripcion }}
                     <br><br>
-                    
+                    {% if viaje.estado == "No iniciado" %}
+                        <form method= "post" style="display: inline" action= "{{ path('dashboard_iniciar', {'id': viaje.id}) }}" onsubmit="return confirm('Estas seguro que desea iniciar el viaje?');">
+                            <button class="btn btn-primary" > Iniciar Viaje</button>
+                        </form>
+                    {% endif %}
+                    <a class="btn btn-secondary" href="{{path('dashboard_chofer')}}">Volver<a>
                 </div>
             </div>
         </div>
