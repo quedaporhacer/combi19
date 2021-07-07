@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Imprevisto</th>
                 <th>Viaje</th>
+                <th>Estado</th>
                 <th>actions</th>
 
             </tr>
@@ -20,10 +21,18 @@
             <tr>
                 <td>{{ imprevisto.id }}</td>
                 <td>{{ imprevisto.imprevisto }}</td>
+                <td>{{ imprevisto.viaje }}</td>
+                <td>{{ imprevisto.state ? 'Resuelto' : 'Sin resolver' }}</td>
+                
                
                 <td>
                     <a href="{{ path('imprevisto_show', {'id': imprevisto.id}) }}">show</a>
                     <a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">edit</a>
+
+                    {% if not imprevisto.state %}    
+                        {{ include('imprevisto/_resolve_form.html.twig') }}
+                    {% endif %}
+                        
                 </td>
             </tr>
         {% else %}

@@ -28,6 +28,16 @@ class Imprevisto
      */
     private $viaje;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $state;
+
+    public function __construct()
+    {
+        $this->state = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,5 +66,17 @@ class Imprevisto
 
         return $this;
     }
+
+    public function getState(): ?bool
+    {
+        return $this->state;
+    }
+
+    public function resolver(): self
+    {
+        $this->state = true;
+        return $this;
+    }    
+
 
 }

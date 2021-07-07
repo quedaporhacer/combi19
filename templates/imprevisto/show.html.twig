@@ -15,10 +15,6 @@
                 <th>Imprevisto</th>
                 <td>{{ imprevisto.imprevisto }}</td>
             </tr>
-            <tr>
-                <th>Hora</th>
-                <td>{{ imprevisto.hora ? imprevisto.hora|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
         </tbody>
     </table>
 
@@ -27,4 +23,5 @@
     <a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">edit</a>
 
     {{ include('imprevisto/_delete_form.html.twig') }}
+    
 {% endblock %}
