@@ -3,16 +3,18 @@
 {% block title %}Imprevisto index{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Imprevisto index</h1>
-
+    
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+    <h3>Imprevistos Pendientes</h3>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Imprevisto</th>
                 <th>Viaje</th>
-                <th>Estado</th>
-                <th>actions</th>
+                <th>Acciones</th>
 
             </tr>
         </thead>
@@ -22,8 +24,6 @@
                 <td>{{ imprevisto.id }}</td>
                 <td>{{ imprevisto.imprevisto }}</td>
                 <td>{{ imprevisto.viaje }}</td>
-                <td>{{ imprevisto.state ? 'Resuelto' : 'Sin resolver' }}</td>
-                
                
                 <td>
                     <a href="{{ path('imprevisto_show', {'id': imprevisto.id}) }}">show</a>
@@ -37,11 +37,49 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No hay imprevistos</td>
             </tr>
         {% endfor %}
+
+
+        
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('imprevisto_new') }}">Create new</a>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+    <h3>Imprevistos Resueltos</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imprevisto</th>
+                <th>Viaje</th>
+
+            </tr>
+        </thead>
+        <tbody>
+       
+            {% for imprevisto in imprevistosResueltos %}
+            <tr>
+                <td>{{ imprevisto.id }}</td>
+                <td>{{ imprevisto.imprevisto }}</td>
+                <td>{{ imprevisto.viaje }}</td>
+                {#<td>{{ imprevisto.state ? 'Resuelto' : 'Sin resolver' }}</td>#}
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay imprevistos resueltos</td>
+            </tr>
+        {% endfor %}
+
+        
+        </tbody>
+    </table>
+    </div>
+    
+
+    {#<a href="{{ path('imprevisto_new') }}">Create new</a>#}
+</div> 
 {% endblock %}

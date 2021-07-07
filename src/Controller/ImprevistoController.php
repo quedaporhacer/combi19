@@ -22,7 +22,8 @@ class ImprevistoController extends AbstractController
     public function index(ImprevistoRepository $imprevistoRepository): Response
     {
         return $this->render('imprevisto/index.html.twig', [
-            'imprevistos' => $imprevistoRepository->findAll(),
+            'imprevistos' =>  array_reverse($imprevistoRepository->findBy(['state' => false])),
+            'imprevistosResueltos' => array_reverse($imprevistoRepository->findBy(['state' => true]))
         ]);
     }
 
@@ -140,8 +141,6 @@ class ImprevistoController extends AbstractController
         $entityManager->persist($imprevisto);
         $entityManager->flush();
 
-        return $this->render('imprevisto/index.html.twig', [
-            'imprevistos' => $imprevistoRepository->findAll(),
-        ]);
+        return $this->redirectToRoute('imprevisto_index');
     }
 }
