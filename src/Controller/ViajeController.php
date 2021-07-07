@@ -7,6 +7,7 @@ use App\Entity\Ticket;
 use App\Entity\Combi;
 use App\Form\ViajeType;
 use App\Repository\ViajeRepository;
+use App\Repository\ImprevistoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
- * @IsGranted("ROLE_ADMIN")
+ * 
  * @Route("/viaje")
  */
 class ViajeController extends AbstractController
@@ -68,10 +69,13 @@ class ViajeController extends AbstractController
     /**
      * @Route("/{id}", name="viaje_show", methods={"GET"})
      */
-    public function show(Viaje $viaje): Response
+    public function show(ImprevistoRepository $imprevistoRepository, Viaje $viaje): Response
     {
         return $this->render('viaje/show.html.twig', [
             'viaje' => $viaje,
+            'pasajeros' => $viaje->getPasajeros(),
+            'imprevistos' => $imprevistoRepository->findBy(['viaje'=> $viaje->getId()])
+
         ]);
     }
 
@@ -139,4 +143,32 @@ class ViajeController extends AbstractController
         }
         return $this->redirectToRoute('viaje_index');
     }
+
+    /**
+     * @Route("/{id}/iniciar", name="viaje_iniciar", methods={"POST"} )
+     */
+    public function iniciar(Viaje $viaje): Response
+    {
+        date_default_timezone_set('America/Buenos_Aires');
+        $now = new \DateTime();
+        if($viaje->getSalida()<$now){ 
+            if($viaje->getEstado()!="Finalizado"){
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $viaje->iniciar();
+                $entityManager->persist($viaje);
+                $entityManager->flush();
+                $this->addFlash('success', 'Se inicio el viaje correctamente');
+
+            }else{
+                $this->addFlash('failed', 'El viaje ya se encuentra finalizado');
+            }
+        }else{
+            $this->addFlash('failed', 'Todavia no se puede iniciar');
+        }
+
+        return $this->redirectToRoute('viaje_show',['id' => $viaje->getId() ]);
+    }
+
+    
 }

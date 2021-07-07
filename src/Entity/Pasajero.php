@@ -52,9 +52,16 @@ class Pasajero
      */
     private $tarjeta;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $restriccion;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->restriccion = new \DateTime();
+
     }
 
     public function getId(): ?int
@@ -154,5 +161,18 @@ class Pasajero
         $this->tarjeta = $tarjeta;
 
         return $this;
+    }
+
+    public function getRestriccion(): ?\DateTimeInterface
+    {
+        return $this->restriccion;
+    }
+
+    public function setRestriccion(): self
+    {
+        $fecha = new \DateTime();
+        $this->restriccion = $fecha->add(new \DateInterval('P15D'));
+        return $this;
+        
     }
 }

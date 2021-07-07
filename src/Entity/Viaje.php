@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ViajeRepository;
+use ArrayAccess;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -241,4 +242,13 @@ class Viaje
         return $this;
     }
 
+    public function getPasajeros(): ?ArrayCollection
+    {   
+        return $this->tickets->map(function($pasajero) {
+            return $pasajero->getPasajero();
+        });
+    }
+
+
+        
 }
