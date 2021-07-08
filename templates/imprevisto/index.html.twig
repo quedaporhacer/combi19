@@ -25,7 +25,7 @@
                 <td>{{ imprevisto.imprevisto }}</td>
                 <td>{{ imprevisto.viaje }}</td>
                
-                <td>
+               {# <td>
                     <a href="{{ path('imprevisto_show', {'id': imprevisto.id}) }}">show</a>
                     <a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">edit</a>
 
@@ -33,7 +33,7 @@
                         {{ include('imprevisto/_resolve_form.html.twig') }}
                     {% endif %}
                         
-                </td>
+                </td>#}
             </tr>
         {% else %}
             <tr>

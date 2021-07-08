@@ -151,21 +151,55 @@ class ViajeController extends AbstractController
     {
         date_default_timezone_set('America/Buenos_Aires');
         $now = new \DateTime();
+        $chofer = $viaje->getCombi()->getChofer();
+        
         if($viaje->getSalida()<$now){ 
             if($viaje->getEstado()!="Finalizado"){
+                if(!$viaje->getCombi()->getChofer()->getViajando()){
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $viaje->iniciar();
-                $entityManager->persist($viaje);
-                $entityManager->flush();
-                $this->addFlash('success', 'Se inicio el viaje correctamente');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $viaje->iniciar();
+                    $chofer->iniciarViaje();
+                    $entityManager->persist($viaje);
+                    $entityManager->persist($chofer);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Se inicio el viaje correctamente');
 
+                }else {
+                    $this->addFlash('failed', 'Ya tienes un viaje iniciado');
+                }
             }else{
                 $this->addFlash('failed', 'El viaje ya se encuentra finalizado');
             }
         }else{
             $this->addFlash('failed', 'Todavia no se puede iniciar');
         }
+
+        return $this->redirectToRoute('viaje_show',['id' => $viaje->getId() ]);
+    }
+
+    /**
+     * @Route("/{id}/finalizar", name="viaje_finalizar", methods={"POST"} )
+     */
+    public function finalizar(Viaje $viaje): Response
+    {
+        date_default_timezone_set('America/Buenos_Aires');
+        $now = new \DateTime();
+        $chofer = $viaje->getCombi()->getChofer();
+        if($viaje->getEstado()=="En curso"){
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $viaje->finalizar($now);
+            $chofer->finalizarViaje();
+            $entityManager->persist($chofer);
+            $entityManager->persist($viaje);
+            $entityManager->flush();
+            $this->addFlash('success', 'Se finalizo correctamente');
+
+        }else{
+            $this->addFlash('failed', 'El viaje no se encuentra en curso');
+        }
+        
 
         return $this->redirectToRoute('viaje_show',['id' => $viaje->getId() ]);
     }

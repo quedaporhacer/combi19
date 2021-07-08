@@ -3,13 +3,28 @@
 {% block title %}Viaje{% endblock %}
 
 {% block body %}
+ {% for message in app.flashes('failed') %}
+
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
 <div class="container">
  <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <h1>Viaje {{viaje.estado}}</h1>
      
     <h3> {{viaje.ruta}} el dia {{ viaje.salida ? viaje.salida|date('d/m/Y') : '' }} a las {{ viaje.salida ? viaje.salida|date('H:i') : '' }}</h3> 
 
-     {{ include('viaje/_iniciar_form.html.twig') }}
+    {% if viaje.estado == 'No iniciado' %}
+        
+        {{ include('viaje/_iniciar_form.html.twig') }}
+       
+    {% elseif viaje.estado == 'En curso'  %}
+        {{ include('viaje/_finalizar_form.html.twig') }}   
+    {% endif %}
+
+
 
     <br><br>
        <h3> Pasajeros</h3> 
@@ -59,8 +74,12 @@
                 {% for imprevisto in imprevistos %}
                     <tr>
                         <td>{{ imprevisto.imprevisto }}</td>
-                        <td colspan="4"><a href="{{ path('imprevisto_edit', {'id': viaje.id}) }}">Editar</a>
-                        {{ include('imprevisto/_delete_form.html.twig') }}</td>
+                        {% if not imprevisto.state %}
+                            <td colspan="4"><a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">Editar</a>
+                            {{ include('imprevisto/_delete_form.html.twig') }}</td>
+                        {% else %}
+                            <td> Resuelto </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     <tr>

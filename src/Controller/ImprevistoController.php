@@ -90,14 +90,15 @@ class ImprevistoController extends AbstractController
      */
     public function edit(Request $request, Imprevisto $imprevisto): Response
     {
-        $form = $this->createForm(ImprevistoType::class, $imprevisto);
+        $form = $this->createForm(ImprevistoType::class, $imprevisto)
+            ->remove('viaje');
         $form->handleRequest($request);
 
         if(!$imprevisto->getState()){
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('imprevisto_index');
+                return $this->redirectToRoute('viaje_show',['id' => $imprevisto->getViaje()->getId() ]);
             }
             
         }else{
@@ -128,7 +129,7 @@ class ImprevistoController extends AbstractController
         }
         
 
-        return $this->redirectToRoute('imprevisto_index');
+        return $this->redirectToRoute('viaje_show',['id' => $imprevisto->getViaje()->getId() ]);
     }
 
     /**

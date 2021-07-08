@@ -34,6 +34,11 @@ class Chofer
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $viajando;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +70,30 @@ class Chofer
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getViajando(): ?bool
+    {
+        return $this->viajando;
+    }
+
+    public function setViajando(bool $viajando): self
+    {
+        $this->viajando = $viajando;
+
+        return $this;
+    } 
+
+    public function iniciarViaje(): self
+    {
+        $this->viajando = true;
+        return $this;
+    }
+    
+    public function finalizarViaje(): self
+    {
+        $this->viajando = false;
         return $this;
     } 
 }

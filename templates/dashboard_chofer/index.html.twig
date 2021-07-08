@@ -39,9 +39,9 @@
                     </div>
                 </div>
             </div>
-             <a class="btn btn-primary" href="{{path('dashboard_ver_en_curso',{'id':eViaje.id })}}">Ver Viaje</a>
+             {#<a class="btn btn-primary" href="{{path('dashboard_ver_en_curso',{'id':eViaje.id })}}">Ver Viaje</a>#}
 
-             <a class="btn btn-danger" href="{{path('viaje_show',{'id':eViaje.id })}}">Ver Viaje 2</a>   
+             <a class="btn btn-primary" href="{{path('viaje_show',{'id':eViaje.id })}}">Ver Viaje</a>   
 
 
             {% else %}
@@ -78,8 +78,8 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-primary" href="{{path('dashboard_ver_viaje',{'id':uViaje.id })}}">Ver Viaje</a>
-            <a class="btn btn-danger" href="{{path('viaje_show',{'id':uViaje.id })}}">Ver Viaje 2</a>   
+            {#<a class="btn btn-primary" href="{{path('dashboard_ver_viaje',{'id':uViaje.id })}}">Ver Viaje</a>#}
+            <a class="btn btn-primary" href="{{path('viaje_show',{'id':uViaje.id })}}">Ver Viaje </a>   
         {% else %}
             <p> No se encontraron viajes pendientes </p>
         {% endif %}

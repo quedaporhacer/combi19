@@ -242,6 +242,13 @@ class Viaje
         return $this;
     }
 
+    public function finalizar(\DateTime $llegada): self 
+    {
+        $this->estado = "Finalizado";
+        $this->llegada =  $llegada;
+        return $this;
+    }
+
     public function getPasajeros(): ?ArrayCollection
     {   
         return $this->tickets->map(function($pasajero) {
