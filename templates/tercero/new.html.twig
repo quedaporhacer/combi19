@@ -3,9 +3,17 @@
 {% block title %}New Tercero{% endblock %}
 
 {% block body %}
-    <h1>Create new Tercero</h1>
+    <br><br><br>
+    <div class="container ">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        
+            <h1>¿Desea comprar un pasaje para un tercero?</h1>
 
-    {{ include('tercero/_form.html.twig') }}
+            {{ include('tercero/_form.html.twig') }}
 
-    <a href="{{ path('tercero_index') }}">back to list</a>
+            <a class="btn btn-primary" href="{{ path('tercero_index') }}">Agregar Insumos</a>
+            <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
+            <a class="btn btn-danger" href="{{ path('tercero_index') }}">Cancelar</a>
+        </div>
+    </div>      
 {% endblock %}

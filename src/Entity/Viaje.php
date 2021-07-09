@@ -273,7 +273,7 @@ class Viaje
         $arr=$this->getTickets();
         foreach($arr as $ticket)
         {   
-            if($ticket->getPasajero()->getDni == $dni){
+            if($ticket->getPasajero()->getDni() == $dni){
                 return false;
             }
             else{

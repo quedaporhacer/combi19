@@ -78,6 +78,7 @@ class TerceroController extends AbstractController
         return $this->render('tercero/new.html.twig', [
             'tercero' => $tercero,
             'form' => $form->createView(),
+            'ticket' => $ticket,
         ]);
     }
 

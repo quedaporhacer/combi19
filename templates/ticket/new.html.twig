@@ -8,11 +8,12 @@
         <br>
         <br>
         <div class="shadow-lg p-3 mb-5 bg-body rounded">
-            <h1>Crear nuevo Ticket</h1>
+            <h1>Comprar pasaje</h1>
+            <h3> Ingrese los datos de la tarjeta </h3>
 
             {{ include('ticket/_form.html.twig') }}
 
-            <a href="{{ path('ticket_index') }}">volver a la lista</a>
+            <a href="{{ path('busqueda') }}">volver</a>
         </div>
     </div>
 {% endblock %}

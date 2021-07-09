@@ -23,7 +23,7 @@
             <h3> Viajes encontrados </h3>
              {% for viaje in viajes %}
                 <div class="alert alert-dark" role="alert">
-                    <h4 class="alert-heading" style="display:inline;"> {{ viaje.ruta }}</h4> <button class="btn btn-primary" >Adquirir Pasaje</button>
+                    <h4 class="alert-heading" style="display:inline;"> {{ viaje.ruta }}</h4> <a class="btn btn-primary" href="{{path('compra_new',{'id': viaje.id})}}"> Comprar </a>
                     <br><p>El viaje partira de {{ viaje.ruta.origen }} hacia {{ viaje.ruta.destino }} 
                         el dia <strong>{{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}}</strong> a las <strong>{{viaje.salida ? viaje.salida | date('h:m') : ''}}</strong>
                         <br>Combi designada {{ viaje.combi }} a cargo del chofer {{ viaje.combi.chofer }}

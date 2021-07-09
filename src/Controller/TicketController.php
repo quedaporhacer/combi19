@@ -39,7 +39,7 @@ class TicketController extends AbstractController
         $ticket = new Ticket();
         $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
-        dd($viaje->getPrecio());
+        
        
         $repository=$this->getDoctrine()->getRepository(Pasajero::class);
         $pasajero= $repository->findOneBy(['user' =>  $this->getUser()->getId() ]);
@@ -52,12 +52,24 @@ class TicketController extends AbstractController
             $entityManager->persist($ticket);
             $entityManager->flush();
 
-            return $this->redirectToRoute('ticket_index'); // Redireccionar a compra de terceros
+            return $this->redirectToRoute('terceroWithTicket_new',['id' => $ticket->getId() ]); // Redireccionar a compra de terceros
         }
 
         return $this->render('ticket/new.html.twig', [
             'ticket' => $ticket,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/finalizar", name="compra_finish", methods={"GET"})
+     */
+    public function finish(Ticket $ticket): Response
+    {   
+        $this->addFlash('buySuccess','La compra se realizo con exito');
+        
+        return $this->render('pasajero/show.html.twig', [
+            'pasajero' => $ticket->getPasajero(),
         ]);
     }
     
