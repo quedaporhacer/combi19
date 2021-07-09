@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
-* @Route("/testeo", name="testeo")
+* @Route("/testeo")
 */
 class TesteoController extends AbstractController
 {
@@ -29,7 +29,7 @@ class TesteoController extends AbstractController
 
 
      /**
-     * @Route("/{ticket}/{pasajero}/new", name="ruta_new", methods={"GET","POST"})
+     * @Route("/{ticket}/{pasajero}/new", name="testeo_new", methods={"GET","POST"})
      */
     public function new(Ticket $ticket,Pasajero $pasajero, Request $request): Response
     {
@@ -57,15 +57,16 @@ class TesteoController extends AbstractController
             if(!($temperatura>='38' ||  $sintomas >= 2)){
 
                 $ticket->setTesteo(true);
+                $this->addFlash('success','Paso el testeo corretamente');
             
             }else {
                 $ticket->setTesteo(false);
                 $pasajero->setRestriccion();
-                $this->addFlash(' failed','No paso el testeo');
+                $this->addFlash('failed','No paso el testeo, usuario suspendido');
             }
             $entityManager->persist($ticket);
             $entityManager->flush();
-            
+            return $this->redirectToRoute('viaje_show',['id' => $ticket->getViaje()->getId() ]);      
 
         }
         

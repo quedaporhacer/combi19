@@ -3,13 +3,22 @@
 {% block title %}Viaje{% endblock %}
 
 {% block body %}
- {% for message in app.flashes('failed') %}
+    {% for message in app.flashes('failed') %}
 
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                    
-            {% endfor %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                        
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                        
+    {% endfor %}
+
 <div class="container">
  <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <h1>Viaje {{viaje.estado}}</h1>
@@ -40,9 +49,17 @@
                 <tr>
                     <td>{{ pasajero }}</td>
                         
-                        
+                       
                     <td>  
-                        <a class="btn btn-primary" href="{{path()}}"> Realizar Testeo </a>
+                        {% if (viaje.getTicketOfPasajero(pasajero).getTesteo()) is null %}
+                               <a class="btn btn-primary" href="{{ path('testeo_new', {'ticket': viaje.getTicketOfPasajero(pasajero),'pasajero': pasajero.getId() }) }}"> Realizar Testeo </a>
+                        {% else %}
+                            {% if (viaje.getTicketOfPasajero(pasajero).getTesteo())%}
+                                <p> No es sospechoso </p>
+                            {% else %}
+                                 <p> Sospechoso </p>   
+                            {% endif %}
+                        {% endif %}
                     </td>
 
                 </tr>
@@ -78,6 +95,7 @@
                             <td colspan="4"><a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">Editar</a>
                             {{ include('imprevisto/_delete_form.html.twig') }}</td>
                         {% else %}
+
                             <td> Resuelto </td>
                         {% endif %}
                     </tr>

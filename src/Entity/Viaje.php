@@ -256,6 +256,18 @@ class Viaje
         });
     }
 
+    public function getTicketOfPasajero(Pasajero $pasajero): Ticket
+    {   
+        $arr=$this->getTickets();
+        foreach($arr as $ticket)
+        {   
+            if($ticket->getPasajero() == $pasajero){
+                return $ticket;
+            }
+        }
+        return false;
+    }
+
 
         
 }
