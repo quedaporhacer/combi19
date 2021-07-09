@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tercero index{% endblock %}
+
+{% block body %}
+    <h1>Tercero index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Dni</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Precio</th>
+                <th>Testeo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tercero in terceros %}
+            <tr>
+                <td>{{ tercero.id }}</td>
+                <td>{{ tercero.dni }}</td>
+                <td>{{ tercero.nombre }}</td>
+                <td>{{ tercero.apellido }}</td>
+                <td>{{ tercero.precio }}</td>
+                <td>{{ tercero.testeo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('tercero_show', {'id': tercero.id}) }}">show</a>
+                    <a href="{{ path('tercero_edit', {'id': tercero.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tercero_new') }}">Create new</a>
+{% endblock %}

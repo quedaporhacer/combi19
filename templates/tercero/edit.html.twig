@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tercero{% endblock %}
+
+{% block body %}
+    <h1>Edit Tercero</h1>
+
+    {{ include('tercero/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tercero_index') }}">back to list</a>
+
+    {{ include('tercero/_delete_form.html.twig') }}
+{% endblock %}

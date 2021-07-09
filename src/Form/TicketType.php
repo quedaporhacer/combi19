@@ -16,7 +16,7 @@ class TicketType extends AbstractType
             //->add('testeo')
             //->add('viaje')
             //->add('comentario')
-            ->add('pasajero')
+            //->add('pasajero')
             ->add('numero')
             ->add('codigo')
             ->add('vencimiento',DateType::class,['widget' => 'single_text'])

@@ -268,6 +268,10 @@ class Viaje
         return false;
     }
 
+    public function isUnique(int $dni): bool
+    {   
+        return true;
+    }
 
         
 }

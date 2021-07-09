@@ -66,9 +66,15 @@ class Ticket
      */
     private $precio;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tercero::class, mappedBy="ticket", orphanRemoval=true)
+     */
+    private $terceros;
+
     public function __construct()
     {
         $this->consumos = new ArrayCollection();
+        $this->terceros = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +222,36 @@ class Ticket
         else
             $this->precio = $precio;
         
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tercero[]
+     */
+    public function getTerceros(): Collection
+    {
+        return $this->terceros;
+    }
+
+    public function addTercero(Tercero $tercero): self
+    {
+        if (!$this->terceros->contains($tercero)) {
+            $this->terceros[] = $tercero;
+            $tercero->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTercero(Tercero $tercero): self
+    {
+        if ($this->terceros->removeElement($tercero)) {
+            // set the owning side to null (unless already changed)
+            if ($tercero->getTicket() === $this) {
+                $tercero->setTicket(null);
+            }
+        }
+
         return $this;
     }
 }

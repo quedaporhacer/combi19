@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Pasajero;
 use App\Entity\Ticket;
 use App\Entity\Viaje;
 use App\Form\TicketType;
@@ -28,23 +29,30 @@ class TicketController extends AbstractController
         ]);
     }
 
+    
+
     /**
-     * @Route("/{id}/new", name="ticket_new", methods={"GET","POST"})
+     * @Route("/{id}/new", name="compra_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Viaje $viaje): Response
+    public function builde(Request $request, Viaje $viaje): Response
     {
         $ticket = new Ticket();
         $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
+        dd($viaje->getPrecio());
+       
+        $repository=$this->getDoctrine()->getRepository(Pasajero::class);
+        $pasajero= $repository->findOneBy(['user' =>  $this->getUser()->getId() ]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $ticket->setPasajero($pasajero);
             $ticket->setViaje($viaje);
-            $ticket->setPrecio($viaje->getPrecio());
+            $ticket->setPrecio($viaje->getPrecio()); 
             $entityManager->persist($ticket);
             $entityManager->flush();
 
-            return $this->redirectToRoute('ticket_index');
+            return $this->redirectToRoute('ticket_index'); // Redireccionar a compra de terceros
         }
 
         return $this->render('ticket/new.html.twig', [
@@ -52,6 +60,7 @@ class TicketController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
 
     /**
      * @Route("/{id}", name="ticket_show", methods={"GET"})

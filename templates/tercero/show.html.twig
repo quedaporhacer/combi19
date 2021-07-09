@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tercero{% endblock %}
+
+{% block body %}
+    <h1>Tercero</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tercero.id }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ tercero.dni }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ tercero.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ tercero.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ tercero.precio }}</td>
+            </tr>
+            <tr>
+                <th>Testeo</th>
+                <td>{{ tercero.testeo ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tercero_index') }}">back to list</a>
+
+    <a href="{{ path('tercero_edit', {'id': tercero.id}) }}">edit</a>
+
+    {{ include('tercero/_delete_form.html.twig') }}
+{% endblock %}
