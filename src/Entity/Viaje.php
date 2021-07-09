@@ -270,6 +270,22 @@ class Viaje
 
     public function isUnique(int $dni): bool
     {   
+        $arr=$this->getTickets();
+        foreach($arr as $ticket)
+        {   
+            if($ticket->getPasajero()->getDni == $dni){
+                return false;
+            }
+            else{
+                $arr2=$ticket->getTerceros;
+                foreach($arr2 as $tercero)
+                {
+                    if($tercero->getDni == $dni){
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 

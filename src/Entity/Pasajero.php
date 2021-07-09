@@ -53,7 +53,7 @@ class Pasajero
     private $tarjeta;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date",)
      */
     private $restriccion;
 
