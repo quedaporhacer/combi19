@@ -92,7 +92,7 @@
                     <tr>
                         <td>{{ imprevisto.imprevisto }}</td>
                         {% if not imprevisto.state %}
-                            <td colspan="4"><a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">Editar</a>
+                            <td colspan="4"><a style="display:inline;" class="btn btn-primary" href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">Editar</a>
                             {{ include('imprevisto/_delete_form.html.twig') }}</td>
                         {% else %}
 

@@ -3,11 +3,14 @@
 {% block title %}Edit Imprevisto{% endblock %}
 
 {% block body %}
+<br><br>
+    <div class="container">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
     <h1>Edit Imprevisto</h1>
 
-    {{ include('imprevisto/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('imprevisto/_form.html.twig', {'button_label': 'Guardar'}) }}
 
-    <a href="{{ path('imprevisto_index') }}">back to list</a>
-
-    {{ include('imprevisto/_delete_form.html.twig') }}
+    {#<a href="{{ path('imprevisto_index') }}">back to list</a>#}
+    </div>
+    </div>
 {% endblock %}

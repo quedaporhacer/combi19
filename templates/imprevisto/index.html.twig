@@ -3,52 +3,54 @@
 {% block title %}Imprevisto index{% endblock %}
 
 {% block body %}
+<br><br><br>
 <div class="container">
-    <h1>Imprevisto index</h1>
-    
     <div class="shadow-lg p-3 mb-5 bg-body rounded">
-    <h3>Imprevistos Pendientes</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Imprevisto</th>
-                <th>Viaje</th>
-                <th>Acciones</th>
-
-            </tr>
-        </thead>
-        <tbody>
-        {% for imprevisto in imprevistos %}
-            <tr>
-                <td>{{ imprevisto.id }}</td>
-                <td>{{ imprevisto.imprevisto }}</td>
-                <td>{{ imprevisto.viaje }}</td>
-               
-               {# <td>
-                    <a href="{{ path('imprevisto_show', {'id': imprevisto.id}) }}">show</a>
-                    <a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">edit</a>
-
-                    {% if not imprevisto.state %}    
-                        {{ include('imprevisto/_resolve_form.html.twig') }}
-                    {% endif %}
-                        
-                </td>#}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No hay imprevistos</td>
-            </tr>
-        {% endfor %}
-
-
+        <h1>Imprevisto </h1>
         
-        </tbody>
-    </table>
-    </div>
+        <br>
+        <h3> Pendientes</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Imprevisto</th>
+                    <th>Viaje</th>
+                    <th>Acciones</th>
 
-    <div class="shadow-lg p-3 mb-5 bg-body rounded">
-    <h3>Imprevistos Resueltos</h3>
+                </tr>
+            </thead>
+            <tbody>
+            {% for imprevisto in imprevistos %}
+                <tr>
+                    <td>{{ imprevisto.id }}</td>
+                    <td>{{ imprevisto.imprevisto }}</td>
+                    <td>{{ imprevisto.viaje }}</td>
+                
+                <td>
+                        {#<a href="{{ path('imprevisto_show', {'id': imprevisto.id}) }}">show</a>
+                        <a href="{{ path('imprevisto_edit', {'id': imprevisto.id}) }}">edit</a>#}
+
+                        {% if not imprevisto.state %}    
+                            {{ include('imprevisto/_resolve_form.html.twig') }}
+                        {% endif %}
+                            
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No hay imprevistos</td>
+                </tr>
+            {% endfor %}
+
+
+            
+            </tbody>
+        </table>
+   
+
+    <br>
+    <h3>Resueltos</h3>
     <table class="table">
         <thead>
             <tr>
@@ -78,6 +80,7 @@
         </tbody>
     </table>
     </div>
+</div>
     
 
     {#<a href="{{ path('imprevisto_new') }}">Create new</a>#}

@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Imprevisto{% endblock %}
+{% block title %}Nuevo Imprevisto{% endblock %}
 
 {% block body %}
-    <h1>Create new Imprevisto</h1>
+    <br><br>
+    <div class="container">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Notificar Imprevisto</h1>
 
-    {{ include('imprevisto/_form.html.twig') }}
+            {{ include('imprevisto/_form.html.twig') }}
 
-    <a href="{{ path('imprevisto_index') }}">back to list</a>
+            {#<a href="{{ path('imprevisto_index') }}">back to list</a>#}
+        </div>
+    </div>
 {% endblock %}
