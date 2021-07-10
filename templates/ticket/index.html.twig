@@ -69,7 +69,6 @@
             </thead>
             <tbody>
             {% for ticket in ticketsCobrados %}
-                 {% if not ticket.reembolso ==  true %}
                     <tr>
                         {#<td>{{ ticket.id }}</td>#}
                         <td>{{ ticket.viaje }}</td>
@@ -81,7 +80,6 @@
                         <td>{{ ticket.precioTotal }}</td>
                         
                     </tr>
-                {% endif %}
             {% else %}
                 <tr>
                     <td colspan="3">No hay cobros realizados    </td>
