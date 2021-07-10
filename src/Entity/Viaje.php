@@ -289,5 +289,22 @@ class Viaje
         return true;
     }
 
+    public function asientosOcupados(): int
+    {   
+        $cont=0;
+        $tickets=$this->tickets;
+        $cont=$cont+count($tickets);
+        foreach($tickets as $ticket){
+            $arr=$ticket->getTerceros();
+            $cont=$cont+count($arr);
+        }
+        return $cont;
+    }
+
+    public function asientosDisponibles(): int
+    {   
+        return $this->asientosOcupados()-$this->combi->getCapacidad();
+    }
+
         
 }

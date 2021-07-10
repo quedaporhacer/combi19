@@ -5,38 +5,40 @@
 {% block body %}
 
     {{parent()}}
+    <br>
+    <div class="container">
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
 
-    <h1>Tickets</h1>
+        <h1>Pasajes</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>viaje</th>
-                <th>pasajero</th>
-                <th>Testeo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.viaje }}</td>
-                <td>{{ ticket.pasajero.user }}</td>
-                <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('ticket_show', {'id': ticket.id}) }}">Ver</a>
-                    <a class="btn btn-secondary" href="{{ path('ticket_edit', {'id': ticket.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No se encontraron tickets</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>viaje</th>
+                    <th>pasajero</th>
+                    <th>fecha</th>
+                    <th>Testeo</th>
 
+                </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.viaje }}</td>
+                    <td>{{ ticket.pasajero.user }}</td>
+                    <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No se encontraron tickets</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+     </div>   
+    </div>
    {# <a class="btn btn-primary" href="{{ path('ticket_new') }}">Crear nuevo</a>#}
 {% endblock %}
