@@ -277,10 +277,10 @@ class Viaje
                 return false;
             }
             else{
-                $arr2=$ticket->getTerceros;
+                $arr2=$ticket->getTerceros();
                 foreach($arr2 as $tercero)
                 {
-                    if($tercero->getDni == $dni){
+                    if($tercero->getDni() == $dni){
                         return false;
                     }
                 }
