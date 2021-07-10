@@ -63,6 +63,7 @@ class TesteoController extends AbstractController
             }else {
                 $ticket->setTesteo(false);
                 $pasajero->setRestriccion();
+                //seter al ticket el rembolso
                 $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
             }
             $entityManager->persist($ticket);
@@ -112,6 +113,7 @@ class TesteoController extends AbstractController
             
             }else {
                 $tercero->setTesteo(false);
+                //set rembolso de tercero
                 $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
             }
             $entityManager->persist($ticket);

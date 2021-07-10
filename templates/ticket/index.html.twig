@@ -14,22 +14,30 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
+                   {# <th>Id</th>#}
                     <th>viaje</th>
                     <th>pasajero</th>
                     <th>fecha</th>
-                    <th>Testeo</th>
+                    <th>numero</th>
+                    <th>vencimiento</th>
+                    <th>codigo</th>
+                    <th>Monto a Cobrar</th>
+                    <th>Accion</th>
 
                 </tr>
             </thead>
             <tbody>
             {% for ticket in tickets %}
                 <tr>
-                    <td>{{ ticket.id }}</td>
+                    {#<td>{{ ticket.id }}</td>#}
                     <td>{{ ticket.viaje }}</td>
                     <td>{{ ticket.pasajero.user }}</td>
                     <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ ticket.testeo ? 'Yes' : 'No' }}</td>
+                    <td>{{ ticket.numero }}</td>
+                    <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ticket.codigo }}</td>
+                    <td>{{ ticket.precioTotal }}</td>
+                    <td> <a class="btn btn-primary"> Cobrar </a> <td>
                 </tr>
             {% else %}
                 <tr>

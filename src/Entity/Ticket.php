@@ -201,18 +201,34 @@ class Ticket
         return $this;
     }
 
-    public function getPrecioTotal(): ?float
-    {
-        $val=0;
-        foreach($this->consumos as $consumo){
-        $val += $consumo->getPrecio(); 
-    }
-        return $this->precio + $val;
-    }
-
     public function getPrecio(): ?float
     {
         return $this->precio;
+    }
+
+    public function getPrecioConsumo(): ?float
+    {
+        $val=0;
+        foreach($this->consumos as $consumo){
+            $val += $consumo->getPrecio(); 
+        }
+        return  $val;
+    }
+
+    public function getPrecioTerceros()
+    {
+        $val=0;
+        foreach($this->terceros as $tercero){
+            $val = $val + $tercero->getPrecio();
+        }
+        return $val;
+    }
+
+    public function getPrecioTotal(): ?float
+    {
+        return $this->getPrecio() 
+            + $this->getPrecioConsumo() 
+            + $this->getPrecioTerceros();
     }
 
     public function setPrecio(float $precio): self
