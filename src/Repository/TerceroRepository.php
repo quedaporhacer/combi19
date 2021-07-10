@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Tercero;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
+
 
 /**
  * @method Tercero|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +50,16 @@ class TerceroRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findTercerosBy($viaje): array
+    {
+        $qb = $this->createQueryBuilder('t')
+        ->innerJoin('t.ticket','tk')
+        ->innerJoin('tk.viaje','v')
+        ->where('v.id = :viaje')
+        ->setParameters(new ArrayCollection([
+            new Parameter('viaje', $viaje->getId())
+            ]));
+        return $qb->getQuery()->execute();
+    }
 }

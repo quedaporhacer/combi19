@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pasajero;
+use App\Entity\Tercero;
 use App\Entity\Ticket;
 use App\Form\TesteoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,7 +63,7 @@ class TesteoController extends AbstractController
             }else {
                 $ticket->setTesteo(false);
                 $pasajero->setRestriccion();
-                $this->addFlash('failed','No paso el testeo, usuario suspendido');
+                $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
             }
             $entityManager->persist($ticket);
             $entityManager->flush();
@@ -73,6 +74,55 @@ class TesteoController extends AbstractController
         return $this->render('testeo/index.html.twig', [
             'form' => $form->createView(),
             'pasajero' => $pasajero, 
+            'controller_name' => 'TesteoController'
+        ]);
+    }
+
+     /**
+     * @Route("/tercero/{ticket}/{tercero}/new", name="testeoTercero_new", methods={"GET","POST"})
+     */
+    public function newTercero(Ticket $ticket,Tercero $tercero, Request $request): Response
+    {
+        $form = $this->createForm(TesteoType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+
+            $temperatura = $form->getData()['temperatura'];
+
+
+            $sintomas=0;
+            $i=0;
+            foreach($form->getData() as $val){
+                if($i < 5){
+                    $i++;
+                    if ($val) {
+                        $sintomas++;
+                    }    
+                }
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            if(!($temperatura>='38' ||  $sintomas >= 2)){
+
+                //Rembolsar al principal
+                $tercero->setTesteo(true);
+                $this->addFlash('success','Paso el testeo corretamente');
+            
+            }else {
+                $tercero->setTesteo(false);
+                $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
+            }
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+            return $this->redirectToRoute('viaje_show',['id' => $ticket->getViaje()->getId() ]);      
+
+        }
+        
+        return $this->render('testeo/index.html.twig', [
+            'form' => $form->createView(),
+            'pasajero' => $tercero, 
             'controller_name' => 'TesteoController'
         ]);
     }

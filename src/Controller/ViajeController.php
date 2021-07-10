@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Viaje;
 use App\Entity\Ticket;
 use App\Entity\Combi;
+use App\Entity\Tercero;
 use App\Form\ViajeType;
 use App\Repository\ViajeRepository;
 use App\Repository\ImprevistoRepository;
+use App\Repository\TerceroRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,11 +72,15 @@ class ViajeController extends AbstractController
      * @Route("/{id}", name="viaje_show", methods={"GET"})
      */
     public function show(ImprevistoRepository $imprevistoRepository, Viaje $viaje): Response
-    {
+    {   
+        $repository= $this->getDoctrine()->getRepository(Tercero::class);  
+        $terceros = $repository->findTercerosBy($viaje);
+
         return $this->render('viaje/show.html.twig', [
             'viaje' => $viaje,
             'pasajeros' => $viaje->getPasajeros(),
-            'imprevistos' => $imprevistoRepository->findBy(['viaje'=> $viaje->getId()])
+            'imprevistos' => $imprevistoRepository->findBy(['viaje'=> $viaje->getId()]),
+            'terceros' => $terceros,
 
         ]);
     }
