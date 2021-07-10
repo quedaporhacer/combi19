@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('reembolsar_tercero', {'id': tercero.id}) }}" onsubmit="return confirm('Estas seguro que desea realizar el reembolso?');">
+    {#<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ imprevisto.id) }}">#}
+    <button class="btn btn-danger">Reembolsar</button>
+</form>

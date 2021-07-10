@@ -8,15 +8,6 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/combi19/src/Controller/ReembolsoController.php'|file_link(0) }}">src/Controller/ReembolsoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/combi19/templates/reembolso/index.html.twig'|file_link(0) }}">templates/reembolso/index.html.twig</a></code></li>
-    </ul>
-</div>
 
   <div class="container">
     <div class="shadow-lg p-3 mb-5 bg-body rounded">
@@ -44,7 +35,7 @@
                     <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ ticket.codigo }}</td>
                     <td>{{ ticket.descripcionReembolso }}</td>
-                    <td> <a class="btn btn-primary"> Reembolsar </a> <td>
+                    <td> {{ include('reembolso/_reembolsar_form.html.twig') }} <td>
                 </tr>
             {% else %}
                 <tr>
@@ -58,7 +49,54 @@
                     <td>{{ tercero.ticket.vencimiento ? tercero.ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ tercero.ticket.codigo }}</td>
                     <td>{{ tercero.descripcionReembolso }}</td>
-                    <td> <a class="btn btn-primary"> Reembolsar </a> <td>
+                    <td> {{ include('reembolso/_reembolsar_tercero_form.html.twig') }} <td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No se encontraron reembolsos pendientes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <h3>Reembolsados</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>fecha</th>
+                    <th>numero</th>
+                    <th>vencimiento</th>
+                    <th>codigo</th>
+                    <th>descripcion</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for ticket in ticketsReembolsados %}
+                <tr>
+                    <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ticket.numero }}</td>
+                    <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m') : '' }}</td>
+                     <td>{{ ticket.codigo }}</td>
+                    <td>{{ ticket.descripcionReembolso }}</td>
+
+                    
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No se encontraron reembolsos pendientes</td>
+                </tr>
+            {% endfor %}
+            {% for tercero in terceroReembolsados    %}
+                <tr>
+                    <td>{{ tercero.ticket.viaje.salida ? tercero.ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ tercero.ticket.numero }}</td>
+                    <td>{{ tercero.ticket.vencimiento ? tercero.ticket.vencimiento|date('Y-m') : '' }}</td>
+                     <td>{{ tercero.ticket.codigo }}</td>
+                    <td>{{ tercero.descripcionReembolso }}</td>
+
+                    
                 </tr>
             {% else %}
                 <tr>
