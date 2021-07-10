@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('consumo_delete', {'id': consumo.id}) }}" onsubmit="return confirm('Esta seguro que desea cancelar esta compra?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consumo.id) }}">
+    <button class="btn btn-danger">Cancelar</button>
+</form>

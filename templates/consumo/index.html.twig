@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Insumos para el viaje{% endblock %}
+
+{% block body %}
+    <div class= "container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Insumos para el viaje</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for consumo in consumos %}
+                    <tr>
+                        <td>{{ consumo.id }}</td>
+                        <td>{{consumo.insumo.nombre}}</td>
+                        <td>{{ consumo.precio }}</td>
+                        <td>{{ consumo.cantidad }}</td>
+                        <td>{{include('consumo/_delete_form.html.twig')}}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No tiene consumos</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class= "btn btn-primary" href="{{ path('consumo_new',{'id': ticket}) }}">Comprar Insumos</a>
+            <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
+            <a class= "btn btn-secondary" href ="{{path('terceroWithTicket_new',{'id': ticket.id}) }}">Agregar Terceros</a>
+        </div>
+    </div>
+{% endblock %}

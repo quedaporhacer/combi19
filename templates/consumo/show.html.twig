@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consumo{% endblock %}
+
+{% block body %}
+    <h1>Consumo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ consumo.id }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ consumo.precio }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ consumo.cantidad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('consumo_index') }}">back to list</a>
+
+    <a href="{{ path('consumo_edit', {'id': consumo.id}) }}">edit</a>
+
+    {{ include('consumo/_delete_form.html.twig') }}
+{% endblock %}
