@@ -71,6 +71,16 @@ class Ticket
      */
     private $terceros;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $reembolso;
+
+    /**
+     * @ORM\Column(type="string", length=10000, nullable=true)
+     */
+    private $descripcionReembolso;
+
     public function __construct()
     {
         $this->consumos = new ArrayCollection();
@@ -267,6 +277,30 @@ class Ticket
                 $tercero->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReembolso(): ?bool
+    {
+        return $this->reembolso;
+    }
+
+    public function setReembolso(?bool $reembolso): self
+    {
+        $this->reembolso = $reembolso;
+
+        return $this;
+    }
+
+    public function getDescripcionReembolso(): ?string
+    {
+        return $this->descripcionReembolso;
+    }
+
+    public function setDescripcionReembolso(?string $descripcionReembolso): self
+    {
+        $this->descripcionReembolso = $descripcionReembolso;
 
         return $this;
     }

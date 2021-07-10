@@ -63,7 +63,8 @@ class TesteoController extends AbstractController
             }else {
                 $ticket->setTesteo(false);
                 $pasajero->setRestriccion();
-                //seter al ticket el rembolso
+                $ticket->setReembolso(false); // ha reembolsar
+                $ticket->setDescripcionReembolso('El pasajero registrado '.$pasajero->getUser().' con dni '.$pasajero->getDni().' se le debe reembolsar porque es sospechoso de covid'); // ha reembolsar
                 $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
             }
             $entityManager->persist($ticket);
@@ -107,13 +108,13 @@ class TesteoController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             if(!($temperatura>='38' ||  $sintomas >= 2)){
 
-                //Rembolsar al principal
                 $tercero->setTesteo(true);
                 $this->addFlash('success','Paso el testeo corretamente');
             
             }else {
                 $tercero->setTesteo(false);
-                //set rembolso de tercero
+                $tercero->setReembolso(false); // ha reembolsar
+                $tercero->setDescripcionReembolso('Se debe reembolsar ya que el pasajero invitado/tercero '.$tercero->getNombre().' '.$tercero->getNombre().' con dni '.$tercero->getDni().' fue sospechado de covid'); // ha reembolsar
                 $this->addFlash('failed','No paso el testeo, usuario inhabilitado para el viaje');
             }
             $entityManager->persist($ticket);
