@@ -35,6 +35,7 @@ class DashboardController extends AbstractController
      */
     public function search(Request $request):Response
     {   
+        
         $repository = $this->getDoctrine()->getRepository(Pasajero::class);
         $pasajero = $repository->findOneBy(['user' => $this->getUser()->getId()]);
         $form = $this->createFormBuilder(null)
@@ -55,23 +56,21 @@ class DashboardController extends AbstractController
             $now = new \DateTime();
             if($salida > $now ){
                 if($origen!=$destino){
-                    $repository = $this->getDoctrine()->getRepository(Viaje::class);
-                   /* $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
-                    
-                    $i=0;
-                    foreach ($viajes as $id) {
-                        $arr[$i] = $repository->find($id);
-                        $i=$i+1;
-                    }*/
-                    $viajes = $repository->findbyRuta($origen,$destino,$salida);
-                    if(!$viajes)
-                        $this->addFlash('failed','No se encontraron viajes');
-                    else    
-                        return $this->render('dashboard/search.html.twig', [
-                            'form' => $form->createView(),
-                            'viajes' => $viajes,
-                            'pasajero' => $pasajero,
-                        ]);
+                    if($pasajero->puedeViajar($salida)){
+                        
+                        $repository = $this->getDoctrine()->getRepository(Viaje::class);
+                        $viajes = $repository->findbyRuta($origen,$destino,$salida);
+                        if(!$viajes)
+                            $this->addFlash('failed','No se encontraron viajes');
+                        else    
+                            return $this->render('dashboard/search.html.twig', [
+                                'form' => $form->createView(),
+                                'viajes' => $viajes,
+                                'pasajero' => $pasajero,
+                            ]);
+                    }else{
+                        $this->addFlash('failed','Usted se encuentra suspendido por sospechado de covid hasta la fecha '.$pasajero->getRestriccion()->format('Y-m-d'));
+                    }        
                 }else{
                     $this->addFlash('failed','El origen y el destino no pueden ser iguales');
                 }
@@ -86,4 +85,14 @@ class DashboardController extends AbstractController
             'pasajero' => $pasajero,
         ]);
     }
+
+
+       /* $viajes = $repository->findbyRutaySalida($origen,$destino,$salida);
+                    
+                    $i=0;
+                    foreach ($viajes as $id) {
+                        $arr[$i] = $repository->find($id);
+                        $i=$i+1;
+                    }*/
 }
+        

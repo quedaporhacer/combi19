@@ -98,7 +98,7 @@ class Insumo
 
     public function __toString(): ?string
     {
-        return $this->nombre."-".$this->precio."$" ;
+        return $this->nombre."  $".$this->precio."  (".$this->stock.") " ;
     }
 
 }

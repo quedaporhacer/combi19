@@ -48,62 +48,58 @@
                 </tr>
             </thead>
             <tbody>
-            {% for pasajero in pasajeros %}
-                <tr>
-                    <td>{{ pasajero.dni }}</td>
-                    <td>{{ pasajero.user.nombre }}</td>
-                    <td>{{ pasajero.user.apellido }}</td>
+            {% if not pasajeros is empty or not terceros is empty %}
+                {% for pasajero in pasajeros %}
+                    <tr>
+                        <td>{{ pasajero.dni }}</td>
+                        <td>{{ pasajero.user.nombre }}</td>
+                        <td>{{ pasajero.user.apellido }}</td>
+                            
                         
-                       
-                    <td>  
-                        {% if (viaje.getTicketOfPasajero(pasajero).getTesteo()) is null %}
-                               <a class="btn btn-primary" href="{{ path('testeo_new', {'ticket': viaje.getTicketOfPasajero(pasajero),'pasajero': pasajero.getId() }) }}"> Realizar Testeo </a>
-                        {% else %}
-                            {% if (viaje.getTicketOfPasajero(pasajero).getTesteo())%}
-                                <p> No es sospechoso </p>
+                        <td>  
+                            {% if (viaje.getTicketOfPasajero(pasajero).getTesteo()) is null %}
+                                <a class="btn btn-primary" href="{{ path('testeo_new', {'ticket': viaje.getTicketOfPasajero(pasajero),'pasajero': pasajero.getId() }) }}"> Realizar Testeo </a>
                             {% else %}
-                                 <p> Sospechoso </p>   
+                                {% if (viaje.getTicketOfPasajero(pasajero).getTesteo())%}
+                                    <p> No es sospechoso </p>
+                                {% else %}
+                                    <p> Sospechoso </p>   
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
+                {% endfor %}
+                {% for tercero in terceros %}
+                    <tr>
+                    <td>{{ tercero.dni }}</td>
+                    <td>{{ tercero.nombre }}</td>
+                    <td>{{ tercero.apellido }}</td>
+                        
+                        <td>  
+                            {% if tercero.testeo is null %}
+
+                                <a class="btn btn-primary" href="{{ path('testeoTercero_new', {'ticket': tercero.ticket ,'tercero': tercero.getId() }) }}"> Realizar Testeo </a>
+
+                            {% else %}
+
+                                {% if tercero.testeo %}
+                                    <p> No es sospechoso </p>
+                                {% else %}
+                                    <p> Sospechoso </p>   
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
             {% else %}
                 <tr>
                     <td colspan="4">No hay pasajeros</td>
                 </tr>
-            {% endfor %}
-            {% for tercero in terceros %}
-                <tr>
-                   <td>{{ tercero.dni }}</td>
-                   <td>{{ tercero.nombre }}</td>
-                   <td>{{ tercero.apellido }}</td>
-                    
-                        
-                        
-                       
-                    <td>  
-                        {% if tercero.testeo is null %}
-
-                               <a class="btn btn-primary" href="{{ path('testeoTercero_new', {'ticket': tercero.ticket ,'tercero': tercero.getId() }) }}"> Realizar Testeo </a>
-
-                        {% else %}
-
-                            {% if tercero.testeo %}
-                                <p> No es sospechoso </p>
-                            {% else %}
-                                 <p> Sospechoso </p>   
-                            {% endif %}
-
-                        {% endif %}
-                    </td>
-
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">No hay pasajeros</td>
-                </tr>
-            {% endfor %}
+            {% endif %}
                 
             </tbody>
         </table>

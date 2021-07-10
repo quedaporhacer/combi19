@@ -175,4 +175,9 @@ class Pasajero
         return $this;
         
     }
+
+    public function puedeViajar( \DateTime $salida ): bool 
+    {
+        return $this->restriccion < $salida;
+    }
 }

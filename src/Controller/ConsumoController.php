@@ -50,13 +50,19 @@ class ConsumoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $precio = ($form['cantidad']->getData() * $form['insumo']->getData()->getPrecio());
-            $consumo->setPrecio($precio);
-            $consumo->setTicket($ticket);
-            $entityManager->persist($consumo);
-            $entityManager->flush();
-
+            if($form['cantidad']->getData()<=$form['insumo']->getData()->getStock()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $precio = ($form['cantidad']->getData() * $form['insumo']->getData()->getPrecio());
+                $insumo= $form['insumo']->getData();
+                $insumo->setStock($insumo->getStock()-$form['cantidad']->getData());
+                $consumo->setPrecio($precio);
+                $consumo->setTicket($ticket);
+                $entityManager->persist($insumo);
+                $entityManager->persist($consumo);
+                $entityManager->flush();
+            }else{
+               $this->addFlash('failure','Ya no quedan mas unidades de este insumo');
+            }
 
 
             return $this->redirectToRoute('compra',['id' => $ticket->getId()]);
