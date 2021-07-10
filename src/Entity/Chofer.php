@@ -39,6 +39,11 @@ class Chofer
      */
     private $viajando;
 
+    public function __construct()
+    {
+        $this->viajando = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
