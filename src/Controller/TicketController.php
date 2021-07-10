@@ -127,6 +127,9 @@ class TicketController extends AbstractController
             
             if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
+                foreach ($ticket->getTerceros() as $tercero){
+                    $entityManager->remove($tercero);
+                }
                 $entityManager->remove($ticket);
                 $entityManager->flush();
             }
@@ -138,4 +141,22 @@ class TicketController extends AbstractController
         }    
         return $this->redirectToRoute('pasajero_show',['id' => $ticket->getPasajero()->getId() ]);
     }
+
+
+    /**
+     * @Route("/{id}/cancelar", name="ticket_compra_cancelar", methods={"POST"})
+     */
+    public function cancelarCompra(Request $request, Ticket $ticket): Response
+    { 
+        if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach ($ticket->getTerceros() as $tercero){
+                $entityManager->remove($tercero);
+            }
+            $entityManager->remove($ticket);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('dashboard');
+    }
+
 }
