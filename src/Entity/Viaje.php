@@ -306,5 +306,18 @@ class Viaje
         return $this->asientosOcupados()-$this->combi->getCapacidad();
     }
 
-        
+    public function pasajeroCompro(Pasajero $pasajero): bool
+    {
+
+        foreach ($this->getTickets() as $ticket){
+
+            if($pasajero->getId() == $ticket->getPasajero()->getId()){
+                return true;
+            }
+             
+        }
+        return false; 
+    }
+
+
 }

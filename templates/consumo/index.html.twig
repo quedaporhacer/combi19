@@ -3,6 +3,14 @@
 {% block title %}Insumos para el viaje{% endblock %}
 
 {% block body %}
+    {{parent()}}
+   {% for message in app.flashes('failure') %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            
+    {% endfor %}
     <div class= "container">
         <br>
         <br>
