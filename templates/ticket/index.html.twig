@@ -10,7 +10,7 @@
     <div class="shadow-lg p-3 mb-5 bg-body rounded">
 
         <h1>Pasajes</h1>
-
+        <h3> Pendientes de cobro</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -42,6 +42,49 @@
             {% else %}
                 <tr>
                     <td colspan="3">No se encontraron tickets</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+     </div>   
+
+
+     <div class="shadow-lg p-3 mb-5 bg-body rounded">
+
+        <h3> Cobrados </h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                   {# <th>Id</th>#}
+                    <th>viaje</th>
+                    <th>pasajero</th>
+                    <th>fecha</th>
+                    <th>numero</th>
+                    <th>vencimiento</th>
+                    <th>codigo</th>
+                    <th>Monto Cobrado</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for ticket in ticketsCobrados %}
+                 {% if not ticket.reembolso ==  true %}
+                    <tr>
+                        {#<td>{{ ticket.id }}</td>#}
+                        <td>{{ ticket.viaje }}</td>
+                        <td>{{ ticket.pasajero.user }}</td>
+                        <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ ticket.numero }}</td>
+                        <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ ticket.codigo }}</td>
+                        <td>{{ ticket.precioTotal }}</td>
+                        
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No hay cobros realizados    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -6,6 +6,7 @@ use App\Entity\Pasajero;
 use App\Entity\Ticket;
 use App\Entity\Viaje;
 use App\Form\TicketType;
+use App\Repository\TerceroRepository;
 use App\Repository\TicketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +25,12 @@ class TicketController extends AbstractController
      */
     public function index(TicketRepository $ticketRepository): Response
     {
+        $ticketACobrar = $ticketRepository->findBy(['cobro'=>false]);
+        $ticketCobrados = $ticketRepository->findBy(['cobro'=>true]);
+
         return $this->render('ticket/index.html.twig', [
-            'tickets' => $ticketRepository->findAll(),
+            'tickets' => $ticketACobrar,
+            'ticketsCobrados' => $ticketCobrados,
         ]);
     }
 
@@ -157,6 +162,26 @@ class TicketController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('dashboard');
+    }
+
+    /**
+     * @Route("/{id}/cobrar", name="ticket_cobrar", methods={"POST"})
+     */
+    public function reembolsar(Ticket $ticket, TerceroRepository $terceroRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $terceros = $terceroRepository->findBy(['ticket' => $ticket->getId()]);
+
+        foreach($terceros as $tercero){ //Seter que se combraron todos los pasajes de terceros
+            $tercero->setCobro(true);
+            $entityManager->persist($tercero);
+        }
+
+        $ticket->setCobro(true);
+        $entityManager->persist($ticket);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('ticket_index');
     }
 
 }

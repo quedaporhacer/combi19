@@ -81,10 +81,16 @@ class Ticket
      */
     private $descripcionReembolso;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $cobro;
+
     public function __construct()
     {
         $this->consumos = new ArrayCollection();
         $this->terceros = new ArrayCollection();
+        $this->cobro = false;
     }
 
     public function getId(): ?int
@@ -301,6 +307,18 @@ class Ticket
     public function setDescripcionReembolso(?string $descripcionReembolso): self
     {
         $this->descripcionReembolso = $descripcionReembolso;
+
+        return $this;
+    }
+
+    public function getCobro(): ?bool
+    {
+        return $this->cobro;
+    }
+
+    public function setCobro(bool $cobro): self
+    {
+        $this->cobro = $cobro;
 
         return $this;
     }

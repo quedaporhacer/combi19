@@ -58,6 +58,16 @@ class Tercero
      */
     private $descripcionReembolso;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $cobro;
+
+    public function __construct()
+    {
+        $this->cobro = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +165,18 @@ class Tercero
     public function setDescripcionReembolso(?string $descripcionReembolso): self
     {
         $this->descripcionReembolso = $descripcionReembolso;
+
+        return $this;
+    }
+
+    public function getCobro(): ?bool
+    {
+        return $this->cobro;
+    }
+
+    public function setCobro(bool $cobro): self
+    {
+        $this->cobro = $cobro;
 
         return $this;
     }

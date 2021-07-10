@@ -23,6 +23,7 @@
                     <th>numero</th>
                     <th>vencimiento</th>
                     <th>codigo</th>
+                    <th>monto</th>
                     <th>descripcion</th>
                      <th>accion</th>
                 </tr>
@@ -34,6 +35,7 @@
                     <td>{{ ticket.numero }}</td>
                     <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ ticket.codigo }}</td>
+                     <td>${{ ticket.precio }}</td>
                     <td>{{ ticket.descripcionReembolso }}</td>
                     <td> {{ include('reembolso/_reembolsar_form.html.twig') }} <td>
                 </tr>
@@ -48,6 +50,7 @@
                     <td>{{ tercero.ticket.numero }}</td>
                     <td>{{ tercero.ticket.vencimiento ? tercero.ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ tercero.ticket.codigo }}</td>
+                     <td>${{ tercero.precio }}</td>
                     <td>{{ tercero.descripcionReembolso }}</td>
                     <td> {{ include('reembolso/_reembolsar_tercero_form.html.twig') }} <td>
                 </tr>
@@ -68,6 +71,7 @@
                     <th>numero</th>
                     <th>vencimiento</th>
                     <th>codigo</th>
+                    <th>monto</th>
                     <th>descripcion</th>
                     
                 </tr>
@@ -79,6 +83,7 @@
                     <td>{{ ticket.numero }}</td>
                     <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ ticket.codigo }}</td>
+                     <td>${{ ticket.precio }}</td>
                     <td>{{ ticket.descripcionReembolso }}</td>
 
                     
@@ -94,6 +99,7 @@
                     <td>{{ tercero.ticket.numero }}</td>
                     <td>{{ tercero.ticket.vencimiento ? tercero.ticket.vencimiento|date('Y-m') : '' }}</td>
                      <td>{{ tercero.ticket.codigo }}</td>
+                     <td>${{ tercero.precio }}</td>
                     <td>{{ tercero.descripcionReembolso }}</td>
 
                     

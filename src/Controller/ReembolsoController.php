@@ -20,11 +20,11 @@ class ReembolsoController extends AbstractController
     public function index(): Response
     {   
         $repositoryTicket=$this->getDoctrine()->getRepository(Ticket::class );
-        $ticketsAReembolsar = $repositoryTicket->findBy(['reembolso'=> false]);
+        $ticketsAReembolsar = $repositoryTicket->findBy(['reembolso'=> false,'cobro' => true]);
         $ticketsReembolsados = $repositoryTicket->findBy(['reembolso'=> true]);
 
         $repositoryTercero=$this->getDoctrine()->getRepository(Tercero::class);
-        $terceroAReembolsar = $repositoryTercero->findBy(['reembolso'=> false]);
+        $terceroAReembolsar = $repositoryTercero->findBy(['reembolso'=> false, 'cobro' => true]);
         $terceroReembolsados = $repositoryTercero->findBy(['reembolso'=> true]);
 
         return $this->render('reembolso/index.html.twig', [
