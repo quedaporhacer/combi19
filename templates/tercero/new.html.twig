@@ -18,7 +18,7 @@
 
             {{ include('tercero/_form.html.twig') }}
 
-            <a class="btn btn-primary" href="{{ path('tercero_index') }}">Agregar Insumos</a>
+            <a class="btn btn-primary" href="{{ path('compra',{'id': ticket.id}) }}">Agregar Insumos</a>
             <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
             <a class="btn btn-danger" href="{{ path('tercero_index') }}">Cancelar</a>
         </div>

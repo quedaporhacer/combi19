@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Consumo{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    <div class= "container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Comprar insumos</h1>
+            <table class="table">
+            {{ include('consumo/_form.html.twig') }}
+            <nbsp>
+            <a class="btn btn-secondary" href="{{ path('compra', {'id':ticket })}}">Volver</a>
+            </table>
+        </div>
+    </div>
+{% endblock %}
