@@ -3,6 +3,7 @@
 {% block title %}Viaje{% endblock %}
 
 {% block body %}
+    {{parent()}}
     {% for message in app.flashes('failed') %}
 
                         <div class="alert alert-danger">
