@@ -13,11 +13,19 @@
                     </div>
                     
             {% endfor %}
+            <div class="shadow-lg p-3 mb-5 bg-body rounded">
+              {% for message in app.flashes('success') %}
+
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                    
+            {% endfor %}
         
             <h1>¿Desea comprar un pasaje para un tercero?</h1>
 
             {{ include('tercero/_form.html.twig') }}
-
+            <br>
             <a class="btn btn-primary" href="{{ path('compra',{'id': ticket.id}) }}">Agregar Insumos</a>
             <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
             {{ include('tercero/_cancel_buy_form.html.twig') }}

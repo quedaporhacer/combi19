@@ -47,8 +47,9 @@
             </table>
 
             <a class= "btn btn-primary" href="{{ path('consumo_new',{'id': ticket}) }}">Comprar Insumos</a>
-            <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
             <a class= "btn btn-secondary" href ="{{path('terceroWithTicket_new',{'id': ticket.id}) }}">Agregar Terceros</a>
+            <a class="btn btn-success" href="{{ path('compra_finish',{'id': ticket.id}) }}">Finalizar Compra</a>
+            {{ include('consumo/_cancel_buy_form.html.twig') }}
         </div>
     </div>
 {% endblock %}

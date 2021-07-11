@@ -114,7 +114,10 @@ class ConsumoController extends AbstractController
         $red = $consumo->getTicket();
         if ($this->isCsrfTokenValid('delete'.$consumo->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $insumo = $consumo->getInsumo();
+            $insumo->setStock($insumo->getStock()+$consumo->getCantidad());
             $entityManager->remove($consumo);
+            $entityManager->persist($insumo);
             $entityManager->flush();
         }
         $this->addFlash('failed','La compra fue cancelada correctamente ');
