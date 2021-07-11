@@ -4,6 +4,8 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pasajero;
 use App\Entity\Viaje;
+use App\Entity\Ruta;
+use App\Form\SearchType2;
 use App\Form\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,20 +40,24 @@ class DashboardController extends AbstractController
         
         $repository = $this->getDoctrine()->getRepository(Pasajero::class);
         $pasajero = $repository->findOneBy(['user' => $this->getUser()->getId()]);
-        $form = $this->createFormBuilder(null)
+        /* $form = $this->createFormBuilder(null)
             ->add('origen')
             ->add('destino')
             ->add('salida', DateType::class, 
             ['widget' => 'single_text']
             )
             ->getForm();
-
+        */
+        $ruta= new Ruta();
+        $form= $this->createForm(SearchType2::class, $ruta);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $origen=$form['origen']->getData();
-            $destino=$form['destino']->getData();
+            
+            $origen=$form['origen']->getData()->getNombre();
+            $destino=$form['destino']->getData()->getNombre();
             $salida=$form['salida']->getData();
+       
             date_default_timezone_set('America/Buenos_Aires');
             $now = new \DateTime();
             if($salida > $now ){

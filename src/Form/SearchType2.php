@@ -2,30 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Viaje;
+use App\Entity\Ruta;
 use App\Form\RutaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class SearchType extends AbstractType
+class SearchType2 extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('salida')
-            ->add('llegada')
-            ->add('precio')
-            ->add('estado')
-            ->add('combi')
-            ->add('ruta',RutaType::class)
+            ->add('origen')
+            ->add('destino')
+            ->add('salida', DateType::class, 
+            ['widget' => 'single_text',
+             'mapped' => false]
+            )
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Viaje::class,
+            'data_class' => Ruta::class,
         ]);
     }
 }
