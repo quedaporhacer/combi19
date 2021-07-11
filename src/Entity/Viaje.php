@@ -306,6 +306,11 @@ class Viaje
         return $this->asientosOcupados()-$this->combi->getCapacidad();
     }
 
+    public function lleno(): int
+    {   
+        return $this->asientosDisponibles() == 0;
+    }
+
     public function pasajeroCompro(Pasajero $pasajero): bool
     {
 

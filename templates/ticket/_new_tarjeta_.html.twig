@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Ticket{% endblock %}
+
+{% block body %}
+     <div class= "container">
+        <br>
+        <br>
+        <br>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>Comprar pasaje</h1>
+            <h3> ¿Desea utilizar su tarjeta actual? </h3>
+
+            {#<h4>Mi Tarjeta actual</h4>#}
+           
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Tarjeta de Credito</div>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title"> **** **** ****  {{tarjeta.numero | slice(12,4) }}</h5>
+                            <p class="card-text"> <div class="row">
+                                <div class="col-sm-6">
+                                    
+                                        <spam><strong>Fecha de vencimiento:</strong> {{ tarjeta.vencimiento ? tarjeta.vencimiento|date('Y-m') : ''}}</spam>
+                                    
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    
+                                        <spam><strong>Nombre:</strong>  </spam>
+                                    
+                                </div>
+
+                            </p>
+                    </div>
+                </div>
+                </div>
+
+            {{ include('ticket/_form.html.twig') }}
+
+            <br> <a class="btn btn-secondary" href="{{ path('compra_new',{'id': viaje.getId}) }}"> Ingresar nueva tarjeta </a>    
+            
+            <br><a href="{{ path('busqueda') }}">volver</a>
+        </div>
+    </div>
+{% endblock %}

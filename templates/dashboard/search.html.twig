@@ -26,7 +26,7 @@
                 <div class="alert alert-dark" role="alert">
                     <h4 class="alert-heading" style="display:inline;"> {{ viaje.ruta }}</h4>   
                     
-                    {% if not viaje.pasajeroCompro(pasajero) %} <a class="btn btn-primary" href="{{path('compra_new',{'id': viaje.id})}}"> Comprar </a> {% endif %}
+                    {% if not viaje.pasajeroCompro(pasajero) %} <a class="btn btn-primary" href="{{path('tarjeta_compra_new',{'id': viaje.id})}}"> Comprar </a> {% endif %}
 
                     <br><p>El viaje partira de {{ viaje.ruta.origen }} hacia {{ viaje.ruta.destino }} 
                         el dia <strong>{{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}}</strong> a las <strong>{{viaje.salida ? viaje.salida | date('h:m') : ''}}</strong>

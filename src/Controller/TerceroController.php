@@ -62,17 +62,25 @@ class TerceroController extends AbstractController
 
         $form->handleRequest($request); 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($ticket->getViaje()->isUnique($form['dni']->getData())){
-                $entityManager = $this->getDoctrine()->getManager();
-                $tercero->setTicket($ticket);
-                $tercero->setPrecio($ticket->getPrecio());  // {Rancio}
-                $entityManager->persist($tercero);
-                $entityManager->flush();
-                $this->addFlash('success','el invitado ha sido agregado exitosamente');
-                return $this->redirectToRoute('terceroWithTicket_new',['id'=> $ticket->getId()]);
+
+            if(!$ticket->getViaje()->lleno()){ // el viaje no debe ir lleno
+
+                if($ticket->getViaje()->isUnique($form['dni']->getData())){ //dni unico en todo el viaje
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $tercero->setTicket($ticket);
+                    $tercero->setPrecio($ticket->getPrecio()); 
+                    $entityManager->persist($tercero);
+                    $entityManager->flush();
+                    $this->addFlash('success','el invitado ha sido agregado exitosamente');
+                    return $this->redirectToRoute('terceroWithTicket_new',['id'=> $ticket->getId()]);
+                }else{
+                    $this->addFlash('failed','el dni ya se encuentra en el viaje');
+                }   
+
             }else{
-                $this->addFlash('failed','el dni ya se encuentra en el viaje');
-            }                
+                $this->addFlash('failed','el viaje no tiene mas asientos disponibles');
+            }
+                         
         }
 
         return $this->render('tercero/new.html.twig', [

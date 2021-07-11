@@ -322,4 +322,13 @@ class Ticket
 
         return $this;
     }
+
+    public function setTarjeta(Tarjeta $tarjeta): self
+    {
+        $this->numero = $tarjeta->getNumero();
+        $this->codigo = $tarjeta->getCodigo();
+        $this->vencimiento = $tarjeta->getVencimiento();
+
+        return $this;
+    }
 }
