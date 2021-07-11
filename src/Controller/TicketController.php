@@ -6,6 +6,7 @@ use App\Entity\Pasajero;
 use App\Entity\Ticket;
 use App\Entity\Viaje;
 use App\Form\TicketType;
+use App\Repository\PasajeroRepository;
 use App\Repository\TerceroRepository;
 use App\Repository\TicketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,52 @@ class TicketController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/gold/{id}/new", name="tarjeta_compra_new", methods={"GET","POST"})
+     */
+    public function tarjeta(Request $request, Viaje $viaje,PasajeroRepository $pasajeroRepository): Response
+    {
+        $pasajero = $pasajeroRepository->findOneBy(['user'=>$this->getUser()->getId()]);
+       
+        if($pasajero->getTarjeta() == null){
+            return $this->redirectToRoute('compra_new',['id' => $viaje->getId() ]); // Redirecto a ingreso de tarjeta
+        }else{
+
+            $tarjeta = $pasajero->getTarjeta();
+            $ticket = new Ticket();
+            $form = $this->createForm(TicketType::class, $ticket)
+                ->remove('numero')
+                ->remove('codigo')
+                ->remove('vencimiento');
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                if(!$viaje->lleno()){
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $ticket->setPasajero($pasajero);
+                    $ticket->setViaje($viaje);
+                    $ticket->setPrecio($viaje->getPrecio());
+                    $ticket->setTarjeta($tarjeta); //set tarjeta
+                    $entityManager->persist($ticket);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('terceroWithTicket_new',['id' => $ticket->getId() ]); // Redireccionar a compra de terceros
+                }else{
+                    $this->addFlash('failed','No quedan asientos disponibles para este viaje');
+                }
     
+                
+            }
+            return $this->render('ticket/_new_tarjeta_.html.twig', [
+                'tarjeta' => $tarjeta,
+                'viaje' => $viaje,
+                'form' => $form->createView(),
+            ]);
+
+        }
+        
+    }
 
     /**
      * @Route("/{id}/new", name="compra_new", methods={"GET","POST"})
@@ -50,14 +96,20 @@ class TicketController extends AbstractController
         $pasajero= $repository->findOneBy(['user' =>  $this->getUser()->getId() ]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $ticket->setPasajero($pasajero);
-            $ticket->setViaje($viaje);
-            $ticket->setPrecio($viaje->getPrecio()); 
-            $entityManager->persist($ticket);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('terceroWithTicket_new',['id' => $ticket->getId() ]); // Redireccionar a compra de terceros
+            if(!$viaje->lleno()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $ticket->setPasajero($pasajero);
+                $ticket->setViaje($viaje);
+                $ticket->setPrecio($viaje->getPrecio()); 
+                $entityManager->persist($ticket);
+                $entityManager->flush();
+                return $this->redirectToRoute('terceroWithTicket_new',['id' => $ticket->getId() ]); // Redireccionar a compra de terceros
+            }else{
+                $this->addFlash('failed','No quedan asientos disponibles para este viaje');
+            }
+
+            
         }
 
         return $this->render('ticket/new.html.twig', [
