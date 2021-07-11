@@ -90,7 +90,7 @@ class ViajeController extends AbstractController
      */
     public function edit(Request $request, Viaje $viaje): Response
     {
-        $capacidad= $viaje->getCombi()->getCapacidad();
+        $capacidad= $viaje->asientosOcupados();
         $calidad= $viaje->getCombi()->getCalidad();
         $form = $this->createForm(ViajeType::class, $viaje);
         $form->remove('salida')->remove('llegada')->remove('ruta')->remove('precio');
@@ -108,7 +108,7 @@ class ViajeController extends AbstractController
                             $this->addFlash('failed','La calidad de la nueva combi no puede ser menor');
                         }
                     }else{ 
-                        $this->addFlash('failed','La capacidad de la nueva combi no puede ser menor');
+                        $this->addFlash('failed','Esta combi no tiene suficientes asientos para la cantidad de pasajes ya vendidos');
                     }    
                 }else{
                     $this->addFlash('failed','La combi se encuentra en uso');
