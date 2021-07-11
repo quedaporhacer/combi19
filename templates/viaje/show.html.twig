@@ -60,7 +60,11 @@
                         
                         <td>  
                             {% if (viaje.getTicketOfPasajero(pasajero).getTesteo()) is null %}
-                                <a class="btn btn-primary" href="{{ path('testeo_new', {'ticket': viaje.getTicketOfPasajero(pasajero),'pasajero': pasajero.getId() }) }}"> Realizar Testeo </a>
+                                {% if  viaje.estado != "Finalizado" %}
+                                    <a class="btn btn-primary" href="{{ path('testeo_new', {'ticket': viaje.getTicketOfPasajero(pasajero),'pasajero': pasajero.getId() }) }}"> Realizar Testeo </a>
+                                {% else %}
+                                    <p> Se Ausento </p>
+                                 {% endif %}
                             {% else %}
                                 {% if (viaje.getTicketOfPasajero(pasajero).getTesteo())%}
                                     <p> No es sospechoso </p>
@@ -80,9 +84,11 @@
                         
                         <td>  
                             {% if tercero.testeo is null %}
-
-                                <a class="btn btn-primary" href="{{ path('testeoTercero_new', {'ticket': tercero.ticket ,'tercero': tercero.getId() }) }}"> Realizar Testeo </a>
-
+                                {% if  viaje.estado != "Finalizado" %}
+                                    <a class="btn btn-primary" href="{{ path('testeoTercero_new', {'ticket': tercero.ticket ,'tercero': tercero.getId() }) }}"> Realizar Testeo </a>
+                                {% else %}
+                                    <p> Se Ausento </p>
+                                {% endif %}
                             {% else %}
 
                                 {% if tercero.testeo %}
@@ -105,8 +111,9 @@
                 
             </tbody>
         </table>
-        <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
-
+        {% if viaje.estado == "En curso" %}
+            <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
+        {% endif  %} 
     {#<a href="{{ path('viaje_index') }}">volver a la lista</a>
 
     <a href="{{ path('viaje_edit', {'id': viaje.id}) }}">Editar</a>
@@ -137,15 +144,15 @@
                 {% else %}
                     <tr>
                         <td colspan="4">No hay imprevistos</td>
-                        
                     </tr>
                 {% endfor %}
                     
                 </tbody>
                 
             </table>
-            <a href="{{ path('imprevistoWithViaje_new', {'id': viaje.id}) }}">Agregar Imprevisto</a>
-
+            {% if viaje.estado == "En curso" %}
+                <a href="{{ path('imprevistoWithViaje_new', {'id': viaje.id}) }}">Agregar Imprevisto</a>
+             {% endif %}
        
 
         
