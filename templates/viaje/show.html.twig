@@ -4,6 +4,23 @@
 
 {% block body %}
     {{parent()}}
+    
+
+<div class="container">
+ <div class="shadow-lg p-3 mb-5 bg-body rounded">
+    <h1>Viaje {{viaje.estado}}</h1>
+    
+     
+    <h3> {{viaje.ruta}} el dia {{ viaje.salida ? viaje.salida|date('d/m/Y') : '' }} a las {{ viaje.salida ? viaje.salida|date('H:i') : '' }}</h3> 
+
+    {% if viaje.estado == 'No iniciado' %}
+        
+        {{ include('viaje/_iniciar_form.html.twig') }}
+       
+    {% elseif viaje.estado == 'En curso'  %}
+        {{ include('viaje/_finalizar_form.html.twig') }}   
+    {% endif %}
+
     {% for message in app.flashes('failed') %}
 
                         <div class="alert alert-danger">
@@ -19,21 +36,6 @@
                         </div>
                         
     {% endfor %}
-
-<div class="container">
- <div class="shadow-lg p-3 mb-5 bg-body rounded">
-    <h1>Viaje {{viaje.estado}}</h1>
-     
-    <h3> {{viaje.ruta}} el dia {{ viaje.salida ? viaje.salida|date('d/m/Y') : '' }} a las {{ viaje.salida ? viaje.salida|date('H:i') : '' }}</h3> 
-
-    {% if viaje.estado == 'No iniciado' %}
-        
-        {{ include('viaje/_iniciar_form.html.twig') }}
-       
-    {% elseif viaje.estado == 'En curso'  %}
-        {{ include('viaje/_finalizar_form.html.twig') }}   
-    {% endif %}
-
 
 
     <br><br>
@@ -103,6 +105,7 @@
                 
             </tbody>
         </table>
+        <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
 
     {#<a href="{{ path('viaje_index') }}">volver a la lista</a>
 

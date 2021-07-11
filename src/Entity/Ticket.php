@@ -42,17 +42,17 @@ class Ticket
     private $comentario;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint",nullable=true)
      */
     private $numero;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $codigo;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date",nullable=true)
      */
     private $vencimiento;
 

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Pasajero;
+use App\Entity\Ticket;
 use App\Entity\User;
+use App\Entity\Viaje;
 use App\Form\PasajeroType;
 use App\Form\UserType;
 use App\Repository\PasajeroRepository;
@@ -60,6 +62,43 @@ class PasajeroController extends AbstractController
         }
 
         return $this->render('pasajero/new.html.twig', [
+            'pasajero' => $pasajero,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/new/express", name="pasajero_expres_new", methods={"GET","POST"})
+     */
+    public function newExpres(Viaje $viaje, Request $request): Response
+    {
+ 
+        $pasajero = new Pasajero();
+        $form = $this->createForm(PasajeroType::class, $pasajero);
+        $form['user']->remove('password');
+        $ticket = new Ticket();   
+            
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
+            $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword($pasajero->getUser(),'combi19'));
+            $entityManager->persist($pasajero);
+            
+            $ticket->setPasajero($pasajero);
+            $ticket->setViaje($viaje);
+            $ticket->setPrecio($viaje->getPrecio());
+            $ticket->setCobro(true);
+            $entityManager->persist($ticket); 
+
+            $entityManager->flush();
+            $this->addFlash('success', 'Se registro correctamente');
+            return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
+        }
+
+        return $this->render('pasajero/_new_express.html.twig', [
             'pasajero' => $pasajero,
             'form' => $form->createView(),
         ]);
