@@ -82,7 +82,7 @@ class PasajeroController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$viaje->lleno()){
-                if($viaje()->isUnique($form['dni']->getData())){
+                //if($viaje()->isUnique($form['dni']->getData())){
 
         
                     $entityManager = $this->getDoctrine()->getManager();
@@ -100,9 +100,8 @@ class PasajeroController extends AbstractController
                     $entityManager->flush();
                     $this->addFlash('success', 'Se registro correctamente');
                     return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
-                }else {
-                    $this->addFlash('failed','El dni ya se encuentra registrado');
-                }
+               /*this->addFlash('failed','El dni ya se encuentra registrado');
+                }*/
 
             }else{
                 $this->addFlash('failed','No quedan lugares disponibles');
