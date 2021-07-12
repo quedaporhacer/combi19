@@ -46,7 +46,7 @@ class TesteoController extends AbstractController
             $sintomas=0;
             $i=0;
             foreach($form->getData() as $val){
-                if($i < 5){
+                if($i < 4){
                     $i++;
                     if ($val) {
                         $sintomas++;
