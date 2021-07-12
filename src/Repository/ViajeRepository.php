@@ -104,7 +104,7 @@ class ViajeRepository extends ServiceEntityRepository
         ->innerJoin('r.destino','d')
         ->where('o.nombre = :origen')
         ->andWhere('d.nombre = :destino')
-        ->andWhere("DATE_FORMAT(v.salida, '%Y-%m-%d') = :salida")
+        ->andWhere("DATE_FORMAT(v.salida, '%Y-%m-%d') = :salida OR v.estado LIKE 'En curso'")
         ->setParameters(new ArrayCollection([
             new Parameter('origen', $origen),
             new Parameter('destino', $destino),

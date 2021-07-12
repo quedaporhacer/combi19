@@ -43,16 +43,29 @@ class Ticket
 
     /**
      * @ORM\Column(type="bigint",nullable=true)
+     * @Assert\Length(
+     *      min = 16,
+     *      max = 16,
+     *      minMessage = "el numero ingresado no es valido",
+     *      maxMessage = "el numero ingresado no es valido",
+     *      exactMessage = "el numero ingresado debe ser de 16 caracteres"
      */
     private $numero;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 3,
+     *      minMessage = "el numero ingresado no es valido",
+     *      maxMessage = "el numero ingresado no es valido",
+     *      exactMessage = "el numero ingresado debe ser de 3 caracteres")
      */
     private $codigo;
 
     /**
      * @ORM\Column(type="date",nullable=true)
+     * @Assert\GreaterThan("today", message="la tarjeta esta vencida")
      */
     private $vencimiento;
 

@@ -65,7 +65,7 @@
                             <h5 class="card-title"> De {{viaje.ruta.origen }} a {{viaje.ruta.destino }}</h5>
                             <p class="card-text"> Iniciado a las {{ viaje.salida ? viaje.salida | date('h:m') : ''}}, del dia  {{ viaje.salida ? viaje.salida | date('Y-m-d') : ''}} y 
                             finalizado a las {{ viaje.llegada ? viaje.salida | date('h:m') : ''}}, del dia  {{ viaje.llegada ? viaje.salida | date('Y-m-d') : ''}}</p>
-                            <a href="{{path('viaje_show',{'id':uViaje.id })}}" class="btn btn-primary">Ver viaje</a>
+                            <a href="{{path('viaje_show',{'id':viaje.id })}}" class="btn btn-primary">Ver viaje</a>
                         </div>
                         
                     </div>

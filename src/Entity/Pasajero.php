@@ -25,6 +25,14 @@ class Pasajero
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "el numero ingresado no es valido",
+     *      maxMessage = "el numero ingresado no es valido",
+     *      exactMessage = "el numero ingresado debe ser de 8 caracteres"
+     * 
+     * )
      */
     private $dni;
 

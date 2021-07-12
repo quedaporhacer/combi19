@@ -25,6 +25,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="email", type="string", length=180, unique=true)
+     * @Assert\Email(message="El valor ingresado no es un email valido")
      */
     private $email;
 
