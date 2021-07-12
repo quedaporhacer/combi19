@@ -12,7 +12,14 @@
                         {{ message }}
                     </div>
                     
-            {% endfor %}
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                    
+                {% endfor %}
             <div class="shadow-lg p-3 mb-5 bg-body rounded">
               {% for message in app.flashes('success') %}
 

@@ -71,14 +71,14 @@ class TerceroController extends AbstractController
                     $tercero->setPrecio($ticket->getPrecio()); 
                     $entityManager->persist($tercero);
                     $entityManager->flush();
-                    $this->addFlash('success','el invitado ha sido agregado exitosamente');
+                    $this->addFlash('success','El pasajero invitado ha sido agregado exitosamente');
                     return $this->redirectToRoute('terceroWithTicket_new',['id'=> $ticket->getId()]);
                 }else{
-                    $this->addFlash('failed','el dni ya se encuentra en el viaje');
+                    $this->addFlash('failed','El dni ya se encuentra en el viaje');
                 }   
 
             }else{
-                $this->addFlash('failed','el viaje no tiene mas asientos disponibles');
+                $this->addFlash('failed','El viaje no tiene mas asientos disponibles');
             }
                          
         }
