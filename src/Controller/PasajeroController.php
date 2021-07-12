@@ -81,7 +81,7 @@ class PasajeroController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($viaje->lleno()){
+            if(!$viaje->lleno()){
                 $entityManager = $this->getDoctrine()->getManager();
 
                 $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);

@@ -154,7 +154,7 @@
                 </tbody>
                 
             </table>
-            {% if not viaje.estado == "Finalizado" %}
+            {% if viaje.estado != "Finalizado" %}
                 <a href="{{ path('imprevistoWithViaje_new', {'id': viaje.id}) }}">Agregar Imprevisto</a>
              {% endif %}
        

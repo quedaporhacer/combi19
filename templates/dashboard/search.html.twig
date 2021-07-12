@@ -26,8 +26,12 @@
                 <div class="alert alert-dark" role="alert">
                     <h4 class="alert-heading" style="display:inline;"> {{ viaje.ruta }}</h4>   
                     
-                    {% if not viaje.pasajeroCompro(pasajero) %} 
-                        <a class="btn btn-primary" href="{{path('tarjeta_compra_new',{'id': viaje.id})}}"> Comprar </a> 
+                    {% if not viaje.pasajeroCompro(pasajero) %}
+                        {% if not viaje.lleno %}
+                        <a class="btn btn-primary" href="{{path('tarjeta_compra_new',{'id': viaje.id})}}"> Comprar </a>
+                        {% else %}
+                        <p>No quedan pasajes disponibles</p>
+                        {% endif %}
                     {% else %}
                         <p> Ya posee este pasaje </p>
                     {% endif %}
