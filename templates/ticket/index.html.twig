@@ -38,7 +38,7 @@
                         <td>{{ ticket.vencimiento ? ticket.vencimiento|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ ticket.codigo }}</td>
                         <td>{{ ticket.precioTotal }}</td>
-                        <td> <a class="btn btn-primary"> Cobrar </a> <td>
+                        <td> {{ include('ticket/_cobrar_form.html.twig') }} <td>
                     </tr>
                 {% endif %}    
             {% else %}
