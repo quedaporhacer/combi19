@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReembolsoController!{% endblock %}
+{% block title %}Reembolso index{% endblock %}
 
 {% block body %}
+{{parent()}}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
+<br><br><br>
 
   <div class="container">
     <div class="shadow-lg p-3 mb-5 bg-body rounded">
@@ -29,6 +30,7 @@
                 </tr>
             </thead>
             <tbody>
+            {% if not ticketsAReembolsar is empty or not terceroAReembolsar is empty %}
             {% for ticket in ticketsAReembolsar %}
                 <tr>
                     <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
@@ -38,10 +40,6 @@
                      <td>${{ ticket.precio }}</td>
                     <td>{{ ticket.descripcionReembolso }}</td>
                     <td> {{ include('reembolso/_reembolsar_form.html.twig') }} <td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">No se encontraron reembolsos pendientes</td>
                 </tr>
             {% endfor %}
             {% for tercero in terceroAReembolsar %}
@@ -54,11 +52,10 @@
                     <td>{{ tercero.descripcionReembolso }}</td>
                     <td> {{ include('reembolso/_reembolsar_tercero_form.html.twig') }} <td>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">No se encontraron reembolsos pendientes</td>
-                </tr>
             {% endfor %}
+            {% else %}
+                <td colspan="3">No se encontraron reembolsos pendientes</td>
+            {% endif %}
             </tbody>
         </table>
 
@@ -77,6 +74,7 @@
                 </tr>
             </thead>
             <tbody>
+            {% if not ticketsReembolsados is empty or not terceroReembolsados is empty %}
             {% for ticket in ticketsReembolsados %}
                 <tr>
                     <td>{{ ticket.viaje.salida ? ticket.viaje.salida|date('Y-m-d H:i:s') : '' }}</td>
@@ -87,10 +85,6 @@
                     <td>{{ ticket.descripcionReembolso }}</td>
 
                     
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">No se encontraron reembolsos pendientes</td>
                 </tr>
             {% endfor %}
             {% for tercero in terceroReembolsados    %}
@@ -104,11 +98,10 @@
 
                     
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">No se encontraron reembolsos pendientes</td>
-                </tr>
             {% endfor %}
+            {% else %}
+                <td colspan="3">No se encontraron viajes reembolsados</td>
+            {% endif %}
             </tbody>
         </table>
      </div>   

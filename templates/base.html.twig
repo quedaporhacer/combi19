@@ -53,6 +53,12 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{{path('ticket_index')}}">Pasajes</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('imprevisto_index')}}">Imprevistos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{path('reembolso_index')}}">Reembolsos</a>
+                  </li>
                 {% endif %}
 
                 {% if is_granted('ROLE_PASAJERO') %}

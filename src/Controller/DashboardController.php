@@ -14,6 +14,7 @@ use App\Repository\ComentarioRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Validator\Constraints\DateTime;
+//use Symfony\Component\Validator\Constraints\DateTimeZone;
 
 class DashboardController extends AbstractController
 {
@@ -53,14 +54,15 @@ class DashboardController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             
-            
             $origen=$form['origen']->getData()->getNombre();
             $destino=$form['destino']->getData()->getNombre();
             $salida=$form['salida']->getData();
        
             date_default_timezone_set('America/Buenos_Aires');
             $now = new \DateTime();
-            if($salida > $now ){
+            $salida;
+            //dd($now,$salida,$now->format('ymd') <= $salida->format('ymd'));
+            if($now->format('ymd') <= $salida->format('ymd')){
                 if($origen!=$destino){
                     if($pasajero->puedeViajar($salida)){
                         

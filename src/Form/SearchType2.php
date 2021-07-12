@@ -18,8 +18,9 @@ class SearchType2 extends AbstractType
             ->add('destino')
             ->add('salida', DateType::class, 
             ['widget' => 'single_text',
-             'mapped' => false]
-            )
+             'mapped' => false
+             //'model_timezone' => 'America/Buenos_Aires'
+             ])
         ;
     }
 
