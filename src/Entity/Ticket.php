@@ -6,6 +6,7 @@ use App\Repository\TicketRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TicketRepository::class)
@@ -48,7 +49,7 @@ class Ticket
      *      max = 16,
      *      minMessage = "el numero ingresado no es valido",
      *      maxMessage = "el numero ingresado no es valido",
-     *      exactMessage = "el numero ingresado debe ser de 16 caracteres"
+     *      exactMessage = "el numero ingresado debe ser de 16 caracteres")
      */
     private $numero;
 
