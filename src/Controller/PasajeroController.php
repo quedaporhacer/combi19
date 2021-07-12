@@ -81,21 +81,26 @@ class PasajeroController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            if($viaje->lleno()){
+                $entityManager = $this->getDoctrine()->getManager();
 
-            $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
-            $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword($pasajero->getUser(),'combi19'));
-            $entityManager->persist($pasajero);
-            
-            $ticket->setPasajero($pasajero);
-            $ticket->setViaje($viaje);
-            $ticket->setPrecio($viaje->getPrecio());
-            $ticket->setCobro(true);
-            $entityManager->persist($ticket); 
+                $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
+                $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword($pasajero->getUser(),'combi19'));
+                $entityManager->persist($pasajero);
+                
+                $ticket->setPasajero($pasajero);
+                $ticket->setViaje($viaje);
+                $ticket->setPrecio($viaje->getPrecio());
+                $ticket->setCobro(true);
+                $entityManager->persist($ticket); 
 
-            $entityManager->flush();
-            $this->addFlash('success', 'Se registro correctamente');
-            return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
+                $entityManager->flush();
+                $this->addFlash('success', 'Se registro correctamente');
+                return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
+
+            }else{
+                $this->addFlash('failed','No quedan lugares disponibles');
+            }
         }
 
         return $this->render('pasajero/_new_express.html.twig', [

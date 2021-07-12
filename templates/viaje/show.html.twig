@@ -112,7 +112,11 @@
             </tbody>
         </table>
         {% if viaje.estado == "En curso" %}
-            <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
+            {% if not viaje.lleno %}
+                <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
+            {% else %}
+                <p> No quedan lugares disponibles para ingresar pasajeros</p>
+            {% endif %}        
         {% endif  %} 
     {#<a href="{{ path('viaje_index') }}">volver a la lista</a>
 
