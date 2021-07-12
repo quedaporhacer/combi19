@@ -113,7 +113,7 @@
         </table>
         {% if viaje.estado == "En curso" %}
             {% if not viaje.lleno %}
-                <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Resgistrar Express </a>
+                <a class="btn btn-primary" href="{{path('pasajero_expres_new',{'id':viaje.id})}}"> Registrar Express </a>
             {% else %}
                 <p> No quedan lugares disponibles para ingresar pasajeros</p>
             {% endif %}        

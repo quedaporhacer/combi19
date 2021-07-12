@@ -33,7 +33,7 @@ class ConsumoController extends AbstractController
     public function compra(ConsumoRepository $consumoRepository, Ticket $ticket): Response
     {
         return $this->render('consumo/index.html.twig', [
-            'consumos' => $consumoRepository->findAll(),
+            'consumos' => $consumoRepository->findBy(['ticket'=> $ticket->getId()]),
             'ticket' => $ticket,
             'pasajero' => $ticket->getPasajero()
         ]);
@@ -61,7 +61,7 @@ class ConsumoController extends AbstractController
                 $entityManager->persist($consumo);
                 $entityManager->flush();
             }else{
-               $this->addFlash('failure','Ya no quedan mas unidades de este insumo');
+               $this->addFlash('failure','La cantidad que pidio del insumo es mayor al stock actual');
             }
 
 

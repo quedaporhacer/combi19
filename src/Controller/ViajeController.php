@@ -99,11 +99,11 @@ class ViajeController extends AbstractController
         $viajes = $viajes->findBy(['combi' =>  $form['combi']->getData(), 'salida' => $viaje->getSalida() ]);
 
         //Chequeo de calidad
-        $cambio= $calidad == ($form['combi'])->getData()->getCalidad(); //Guardamos si cambio la calidad
+        $cambio= $calidad != ($form['combi'])->getData()->getCalidad(); //Guardamos si cambio la calidad
         $vacia = ($viaje->asientosOcupados()==0); //guardamos si esta vacia
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if(!$viaje->inicio()){
+            if($viaje->getEstado() == "No iniciado"){
                 if(!$viajes){
                     if(($form['combi'])->getData()->getCapacidad()>= $asientosOcupados){
 
