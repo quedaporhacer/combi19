@@ -82,21 +82,27 @@ class PasajeroController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$viaje->lleno()){
-                $entityManager = $this->getDoctrine()->getManager();
+                if($viaje()->isUnique($form['dni']->getData())){
 
-                $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
-                $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword($pasajero->getUser(),'combi19'));
-                $entityManager->persist($pasajero);
-                
-                $ticket->setPasajero($pasajero);
-                $ticket->setViaje($viaje);
-                $ticket->setPrecio($viaje->getPrecio());
-                $ticket->setCobro(true);
-                $entityManager->persist($ticket); 
+        
+                    $entityManager = $this->getDoctrine()->getManager();
 
-                $entityManager->flush();
-                $this->addFlash('success', 'Se registro correctamente');
-                return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
+                    $pasajero->getUser()->setRoles(["ROLE_PASAJERO"]);
+                    $pasajero->getUser()->setPassword($this->passwordEncoder->encodePassword($pasajero->getUser(),'combi19'));
+                    $entityManager->persist($pasajero);
+                    
+                    $ticket->setPasajero($pasajero);
+                    $ticket->setViaje($viaje);
+                    $ticket->setPrecio($viaje->getPrecio());
+                    $ticket->setCobro(true);
+                    $entityManager->persist($ticket); 
+
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Se registro correctamente');
+                    return $this->redirectToRoute('viaje_show',['id' => $viaje->getId()]);
+                }else {
+                    $this->addFlash('failed','El dni ya se encuentra registrado');
+                }
 
             }else{
                 $this->addFlash('failed','No quedan lugares disponibles');
