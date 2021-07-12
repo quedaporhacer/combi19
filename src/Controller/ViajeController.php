@@ -90,22 +90,30 @@ class ViajeController extends AbstractController
      */
     public function edit(Request $request, Viaje $viaje): Response
     {
-        $capacidad= $viaje->asientosOcupados();
+        $asientosOcupados= $viaje->asientosOcupados();
         $calidad= $viaje->getCombi()->getCalidad();
         $form = $this->createForm(ViajeType::class, $viaje);
         $form->remove('salida')->remove('llegada')->remove('ruta')->remove('precio');
         $form->handleRequest($request);
         $viajes = $this->getDoctrine()->getRepository(Viaje::class);    
         $viajes = $viajes->findBy(['combi' =>  $form['combi']->getData(), 'salida' => $viaje->getSalida() ]);
+
+        //Chequeo de calidad
+        $cambio= $calidad == ($form['combi'])->getData()->getCalidad(); //Guardamos si cambio la calidad
+        $vacia = ($viaje->asientosOcupados()==0); //guardamos si esta vacia
+
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$viaje->inicio()){
                 if(!$viajes){
-                    if(($form['combi'])->getData()->getCapacidad()>=$capacidad){
-                        if(($form['combi'])->getData()->getCalidad()>=$calidad){
+                    if(($form['combi'])->getData()->getCapacidad()>= $asientosOcupados){
+
+                        if($vacia || !($vacia || $cambio)){ //Chequeo de calidad
+
                             $this->getDoctrine()->getManager()->flush();
                             return $this->redirectToRoute('viaje_index');
+
                         }else{
-                            $this->addFlash('failed','La calidad de la nueva combi no puede ser menor');
+                            $this->addFlash('failed','La calidad de la nueva combi no puede ser menor si ya se vendieron pasajes');
                         }
                     }else{ 
                         $this->addFlash('failed','Esta combi no tiene suficientes asientos para la cantidad de pasajes ya vendidos');
